@@ -1,0 +1,66 @@
+.container {
+    padding-top:2em;
+    width: 80%;
+}
+
+@media (min-width: 1024px) {
+    .container-full {
+        padding: 4em;
+    }
+}
+
+.row{
+    padding-top:1em;
+}
+
+.user_opt .btn {
+    margin-top: 6px;
+    margin-left: 4px;
+    padding: 0px 0px 0px 0px;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.user_opt .btn:hover { 
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.user_opt .btn:active{ 
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.cust_id {
+    float: left;
+    font-size: 20px;
+}
+
+.bill_sum {
+    color: #28B22C;
+    float: left;
+    margin-left: 30px;
+    font-size: 20px;
+}
+
+.last_activity {
+    float: left;
+    margin-left: 30px;
+    font-size: 20px;
+}
+
+.navtabs li a{
+    color: #000000;
+}
+
+.navtabs li a:hover{
+    background-color: #80bfff !important;
+}
+
+.navtabs .alter_tab {
+    background-color: #f2f2f2;
+}
+
+.nav-pills>li.active>a {
+    background-color: none !important;
+}
