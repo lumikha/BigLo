@@ -77,7 +77,7 @@
 							<div class="panel-body">
 								<h3 class="text-info text-center">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-									: Business Name ,Customer Name, Email, Contacts, Chargify ID.
+									: Business Name, Customer Name, Email, Contacts, Chargify ID.
 								</h3><br>
 							</div>
 						</div>
@@ -93,7 +93,7 @@
 								<span ng-if="search" ng-hide="result.length">
 									<h6 class="text-info">
 										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-										: Business Name , Email, Contacts, Chargify ID.
+										: Business Name, Customer Name, Email, Contacts, Chargify ID.
 									</h6>
 									<h3><p>Opps, No Results Found ...</p></h3>
 									<br>
