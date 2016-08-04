@@ -13,6 +13,7 @@
         $sales_date = "";
         $sales_agent = "";
         $sales_center = "";
+        $cust_search_state ="";
     } else {
         //echo $_GET['id'];
         $i=0;
@@ -81,17 +82,26 @@
             $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
             $fin2 = explode('-',$fin[0]);
             $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
+
+            //for agent search customerID
+            if($result_customer_id_search[0]->state == "trialing") {
+                $cust_search_state = "Trial Ended: ".$result_customer_id_search[0]->trial_ended_at;
+            } elseif($result_customer_id_search[0]->state == "active") {
+                $cust_search_state = "Next Billing: ".$result_customer_id_search[0]->next_billing_at;
+            } else {
+                $cust_search_state = "Cancelled At: ".$result_customer_id_search[0]->canceled_at;
+            }
     }
 ?>
     <div class="row">
         <ul class="navtabs nav nav-pills nav-justified">
-            <li id="tab1"><a href=#>Account</a></li>
-            <li id="tab2" class="alter_tab"><a href="#">Sales</a></li>
-            <li id="tab3"><a href="#">Provisioning</a></li>
-            <li id="tab4" class="alter_tab"><a href="#">Billing</a></li>
-            <li id="tab5"><a href="#">Support</a></li>
-            <li id="tab6" class="alter_tab"><a href="#">Dashboard</a></li>
-            <li id="tab7"><a href="#">Admin</a></li>
+            <li id="cust_tab1" class="active" onclick="cust_onNavTab1()"><a href=#>Account</a></li>
+            <li id="cust_tab2" class="alter_tab" onclick="cust_onNavTab2()"><a href="#">Sales</a></li>
+            <li id="cust_tab3"><a href="#" onclick="cust_onNavTab3()">Provisioning</a></li>
+            <li id="cust_tab4" class="alter_tab" onclick="cust_onNavTab4()"><a href="#">Billing</a></li>
+            <li id="cust_tab5"><a href="#" onclick="cust_onNavTab5()">Support</a></li>
+            <li id="cust_tab6" class="alter_tab" onclick="cust_onNavTab6()"><a href="#">Dashboard</a></li>
+            <li id="cust_tab7"><a href="#" onclick="cust_onNavTab7()">Admin</a></li>
         </ul>
     </div>
     <div class="row">
@@ -111,7 +121,13 @@
             <div class="col-md-5">
                 <select class="form-control" placeholder="Product">
                     <optgroup label="Current">
-                        <?php echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>"; ?>
+                        <?php 
+                        if(isset($_GET['id'])) {
+                            echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>"; 
+                        } else {
+                            echo "<option value=''>Product</option>";
+                        }
+                        ?>
                     </optgroup>
                     <optgroup label="Available Plans">
                         <option value="prod_001">Basic Plan</option>
@@ -157,7 +173,7 @@
     </form>
 
     <!-- Customer's Sales Info -->
-    <form id="sales_form" action="" method="POST" style="margin-top: -60px;">
+    <form id="cust_sales_form" action="" method="POST" style="margin-top: -60px;">
         <div class="row">
             <div class="col-md-1" style="float: right;">
                 <button class="btn btn-danger" type="submit" name="submit_ticket">Ticket</button>
@@ -187,7 +203,15 @@
                 <select class="form-control">
                     <optgroup label="Current">
                     <?php
-                        echo "<option value='".$result_customer_id[0]->product->handle."'>".$result_customer_id[0]->product->name."</option>";
+                    if(isset($_GET['id'])) {
+                        if(empty($result_customer_id_search[0]->product->handle)) { 
+                            echo "<option value=''>None</option>";
+                        } else {
+                            echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>";
+                        }
+                    } else {
+                        echo "<option value=''>Product</option>";
+                    }
                     ?>
                     </optgroup>
                     <optgroup label="Available Plans">
@@ -205,11 +229,15 @@
                 <select class="form-control">
                     <optgroup label="Current">
                     <?php
+                    if(isset($_GET['id'])) {
                         if(empty($result_customer_id_search[0]->components)) { 
                             echo "<option value=''>None</option>";
                         } else {
                             echo "<option value='".$result_customer_id_search[0]->components->name."'>".$result_customer_id_search[0]->components->id."</option>";
                         }
+                    } else {
+                        echo "<option value=''>Component</option>";
+                    }
                     ?>    
                     </optgroup>
                     <optgroup label="Available Components">
@@ -221,11 +249,15 @@
                 <select class="form-control">
                     <optgroup label="Current">
                     <?php
+                    if(isset($_GET['id'])) {
                         if(empty($result_customer_id_search[0]->coupon_code)) { 
                             echo "<option value=''>None</option>";
                         } else {
                             echo "<option value='".$result_customer_id_search[0]->coupon_code."'>".$result_customer_id_search[0]->coupon_code->name."</option>"; 
                         }
+                    } else {
+                        echo "<option value=''>Coupon</option>";
+                    }
                     ?>    
                     </optgroup>
                     <optgroup label="Available Coupons">

@@ -3,7 +3,7 @@
 ?>
 <html>
 <head>
-	<title></title>
+	<title>LiLDip | Search</title>
 </head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -61,8 +61,6 @@
 	
 </script>
 <body>
-
-	
 		<div ng-app="myapp">
 			<div ng-controller="newController">
 			<div class="well-lg">
@@ -85,9 +83,9 @@
 					<span name="output" id="output">
 							<ul style="list-style: none;">
 								<li ng-if="search" ng-cloak ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
-									<a href="?id={{ user.chargify_id }}" name="value"><h3>
+									<a href="customer?id={{ user.chargify_id }}" name="value"><h3>
 									{{user.business_name}}</h3></a>
-									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{user.business_email}}
+									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="customer?id={{ user.chargify_id }}">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{user.business_email}}
 									<hr class="featurette-divider">
 								</li>
 								<span ng-if="search" ng-hide="result.length">
