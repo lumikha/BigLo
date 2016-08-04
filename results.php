@@ -72,36 +72,36 @@
 					<span ng-hide="!search">
 					<h4><strong>Results:</strong></h4><br>
 					</span>
-					<span ng-if="!search" >
+					<span ng-hide="search">
 						<div class="panel panel-info">
 							<div class="panel-body">
 								<h3 class="text-info text-center">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-									: Business Name, Customer Name, Email, Contacts, Chargify ID.
+									: Business Name ,Customer Name, Email, Contacts, Chargify ID.
 								</h3><br>
 							</div>
 						</div>
 					</span>
 					<span name="output" id="output">
 							<ul style="list-style: none;">
-								<li ng-if="search" ng-cloak ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
+								<li ng-if="search" ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
 									<a href="customer?id={{ user.chargify_id }}" name="value"><h3>
 									{{user.business_name}}</h3></a>
-									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="customer?id={{ user.chargify_id }}">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{user.business_email}}
+									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="customer?id={{ user.chargify_id }}">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{business_email}}
 									<hr class="featurette-divider">
 								</li>
-								<span ng-if="search" ng-hide="result.length">
+								<span ng-hide="result.length || !search">
 									<h6 class="text-info">
 										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-										: Business Name, Customer Name, Email, Contacts, Chargify ID.
+										: Business Name , Customer Name, Email, Contacts, Chargify ID.
 									</h6>
 									<h3><p>Opps, No Results Found ...</p></h3>
 									<br>
 								</span>
 							</ul>
-					</span>
-						<br> 
-						<span ng-hide="!(users | filter:search).length || !search">
+					</span> 
+					<br>
+						<span ng-hide="!search">
 						<button class="btn btn-info" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
 					        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					    </button>
