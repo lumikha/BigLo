@@ -48,20 +48,6 @@
 		    }
 		});
 
-	function check(){
-		var search = document.forms["myForm"]["search"].value;
-		if(search == null || search=="" || search==" "){	
-			//document.getElementById('output').style.visibility = "hidden";
-			//jQuery("#output").fadeOut();
-			$("#hint").show();
-		}
-		else{
-			$("#hint").hide();
-			//document.getElementById('output').style.visibility = "visible";
-			//jQuery("#output").fadeIn();
-		}
-	}
-
 	$(document).ready(function() {
 	  // toggle advanced search
 	  $("#toggleContainer").hide();
@@ -74,7 +60,7 @@
 	
 	
 </script>
-<body onload="check();">
+<body>
 
 	
 		<div ng-app="myapp">
@@ -99,7 +85,7 @@
 					<span name="output" id="output">
 							<ul style="list-style: none;">
 								<li ng-if="search" ng-cloak ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
-									<a href="?id={{ user._id }}" name="value"><h3>
+									<a href="?id={{ user.chargify_id }}" name="value"><h3>
 									{{user.business_name}}</h3></a>
 									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{user.business_email}}
 									<hr class="featurette-divider">
