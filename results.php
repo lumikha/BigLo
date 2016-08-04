@@ -12,8 +12,9 @@
 
 
 	<style type="text/css">
-		.hidden{
-	  	display: none; 
+		[ng-cloak]
+		{
+		 display: none !important;
 		}
 
 	</style>
@@ -29,7 +30,7 @@
 
 			$scope.currentPage = 0;
     		$scope.pageSize = 10;
-    		$scope.q = '<?php echo $search; ?>';
+    		$scope.search = '<?php echo $search; ?>';
 
     		$scope.getData = function () {
 		      return $filter('filter')($scope.users, $scope.q)
@@ -52,8 +53,10 @@
 		if(search == null || search=="" || search==" "){	
 			//document.getElementById('output').style.visibility = "hidden";
 			//jQuery("#output").fadeOut();
+			$("#hint").show();
 		}
 		else{
+			$("#hint").hide();
 			//document.getElementById('output').style.visibility = "visible";
 			//jQuery("#output").fadeIn();
 		}
@@ -80,21 +83,38 @@
 			<div class="row">
 				<div class="col-md-offset-1 col-md-6">
 					<form name="myForm">
-						<input type="text" class="form-control" onkeyup="return check();" id="search" size="30" name="search" ng-model="q" placeholder="Search">
+						<input type="text" class="form-control" onkeyup="return check();" id="search" size="30" name="search" ng-model="search" placeholder="Search">
 					</form>
 					<h4><strong>Results:</strong></h4><br>
+					<span ng-if="!search" >
+						<div class="panel panel-info">
+							<div class="panel-body">
+								<h3 class="text-info text-center">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									: Business Name ,Customer Name, Email, Contacts, Chargify ID.
+								</h3><br>
+							</div>
+						</div>
+					</span>
 					<span name="output" id="output">
 							<ul style="list-style: none;">
-								<li ng-repeat="user in result = (users | filter:q | startFrom:currentPage*pageSize | limitTo:pageSize)">
+								<li ng-if="search" ng-cloak ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
 									<a href="?id={{ user._id }}" name="value"><h3>
 									{{user.business_name}}</h3></a>
 									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{user.business_email}}
 									<hr class="featurette-divider">
 								</li>
-								<h3><p ng-hide="result.length">Opps, No Results Found ...</p></h3><br>
+								<span ng-if="search" ng-hide="result.length">
+									<h6 class="text-info">
+										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+										: Business Name , Email, Contacts, Chargify ID.
+									</h6>
+									<h3><p>Opps, No Results Found ...</p></h3>
+									<br>
+								</span>
 							</ul>
-					</span> 
-
+					</span>
+						<br> 
 						<button class="btn btn-info" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
 					        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					    </button>
