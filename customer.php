@@ -19,6 +19,7 @@
         $i=0;
         while(isset($result_db_customers->rows[$i])) {
             if($result_db_customers->rows[$i]->value->chargify_id == $_GET['id']) {
+                $customer_db_id = $result_db_customers->rows[$i]->value->_id;
                 $business_name = $result_db_customers->rows[$i]->value->business_name;
                 $email = $result_db_customers->rows[$i]->value->customer_email;
                 $fname = $result_db_customers->rows[$i]->value->customer_first_name;
@@ -92,6 +93,46 @@
                 $cust_search_state = "Cancelled At: ".$result_customer_id_search[0]->canceled_at;
             }
     }
+
+    if(isset($_POST['upd_acc'])) {
+        $bname = stripslashes($_POST['acc-b-name']);
+        $prod = $_POST['acc-prod'];
+        $fname = $_POST['acc-fname'];
+        $lname = $_POST['acc-lname'];
+
+        $test = true;
+        $customer = new ChargifyCustomer(NULL, $test);
+
+        $customer->id = $_GET['id'];
+        $customer->organization = $bname;
+        $customer->first_name = $fname;
+        $customer->last_name = $lname;
+
+        try {
+            $result_upd_cus = $customer->update();
+
+            $client_customer = new couchClient ('http://127.0.0.1:5984','bigloco-customers');
+
+            try {
+                $doc = $client_customer->getDoc($customer_db_id);
+              } catch (Exception $e) {
+                echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
+              }
+
+            $doc->business_name = @$bname;
+            $doc->customer_first_name = @$fname;
+            $doc->customer_last_name = @$lname;
+
+            try {
+                $client_customer->storeDoc($doc);
+            } catch (Exception $e) {
+                echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
+            }
+
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
+    }
 ?>
     <div class="row">
         <ul class="navtabs nav nav-pills nav-justified">
@@ -113,13 +154,13 @@
     </div>
 
     <!-- Customer's Account Info -->
-    <form id="cust_account_form">
+    <form  action="" method="POST" id="cust_account_form">
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
+                <input type="text" name="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
             </div>
             <div class="col-md-5">
-                <select class="form-control" placeholder="Product">
+                <select class="form-control" name="acc-prod" placeholder="Product">
                     <optgroup label="Current">
                         <?php 
                         if(isset($_GET['id'])) {
@@ -141,12 +182,12 @@
                 </select>
             </div>
             <div class="col-md-1">
-                <button class="btn btn-danger" type="submit">Ticket</button>
+                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2">
-                 <select class="form-control">
+                 <select name="acc-salut" class="form-control">
                  <?php
                     if($salutation == "Mr.") {
                         echo "<option value='Mr.'>Mr</option>";
@@ -159,15 +200,15 @@
                  </select>
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>">
+                <input type="text" name="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>">
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>">
+                <input type="text" name="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Title">
+                <input type="text" name="acc-title" class="form-control" placeholder="Title">
             </div>
         </div>
     </form>
