@@ -69,7 +69,9 @@
 					<form name="myForm">
 						<input type="text" class="form-control" onkeyup="return check();" id="search" size="30" name="search" ng-model="search" placeholder="Search">
 					</form>
+					<span ng-hide="!search">
 					<h4><strong>Results:</strong></h4><br>
+					</span>
 					<span ng-if="!search" >
 						<div class="panel panel-info">
 							<div class="panel-body">
@@ -99,6 +101,7 @@
 							</ul>
 					</span>
 						<br> 
+						<span ng-hide="!(users | filter:search).length || !search">
 						<button class="btn btn-info" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
 					        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					    </button>
@@ -106,6 +109,7 @@
 						<button class="btn btn-info" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">
 					        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 					    </button>
+						</span>
 				</div>
 			</div>
 			</div>
