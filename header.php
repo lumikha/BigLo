@@ -28,10 +28,11 @@
 <body>
 <div class="container-full">
      <div class="col-xs-9" >
-         <p class="hello">Hello <?php echo $fname; ?>!</p>
+        
          <div class="user_opt dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span class="caret" style="margin-left:70px"></span>
+             <p class="hello">Hello <?php echo $fname; ?>!
+                <span class="caret" style="margin-left:0"></span></p>
             </button>
             <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu1">
                 <li><a href="#">My Profile</a></li>
