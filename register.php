@@ -184,6 +184,7 @@ $err_msg = "";
       $saved_subscription = $new_subscription->create();
       $doc->chargify_id = @$saved_customer->id;
       $doc->business_name = @$_POST['bussiness-name'];
+      $doc->salutation = @$_POST['salut'];
       $doc->customer_first_name = @$_POST['bfname'];
       $doc->customer_last_name = @$_POST['blname'];
       $doc->customer_email = @$_POST['c-eadd'];
@@ -317,8 +318,9 @@ $err_msg = "";
               <input type="text" class="form-control" id="biz-city" name="biz-city" onkeypress="return KeyPressBCity(event)" onclick="clickField3()">
             </div>
             <div class="col-lg-3">
-              <label>State</label>
-              <select class="form-control" id="biz-state" name="biz-state">
+              <label>State</label>&nbsp;&nbsp;<span class="hido" id="hido4-state"><p id="error4-state" class="error"></p></span>
+              <select class="form-control" id="biz-state" name="biz-state" onchange="ChangeState()">
+                <option value='' disabled selected>Select</option>
                 <option value="AL">AL</option> 
                 <option value="AK">AK</option>
                 <option value="AZ">AZ</option> 
@@ -481,7 +483,7 @@ $err_msg = "";
          <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data" onsubmit="return checkFields_enroll2();">
           <input type="hidden" name="created_doc_id" 
           value="<?php if(empty($err_msg)){echo $created_doc_id;}else{echo $_POST['created_doc_id'];} ?>">
-          <input type="hidden" name="product-handle" value="plan_003">
+          <input type="hidden" name="product-handle" value="prod_001">
           <input type="hidden" name="sales-center" value="BIGLO_SALES_CENTER">
           <input type="hidden" id="option_1_hidden_value" 
           value="<?php if(empty($err_msg)){echo $p2_state;}else{echo $_POST['c-state'];} ?>">
@@ -491,18 +493,40 @@ $err_msg = "";
             <div class="form-group">
               <div class="col-lg-12">
                 <label>Business Name</label>
-                <input type="text" class="form-control" id="bussiness-name" name="bussiness-name" value="<?php if(empty($err_msg)){echo $p2_bname;}else{echo $_POST['bussiness-name'];} ?>" >
+                <input type="text" class="form-control" id="bussiness-name" name="bussiness-name" value="<?php if(empty($err_msg)){echo $p2_bname;}else{echo $_POST['bussiness-name'];} ?>" readonly>
               </div>
             </div>
 
             <div class="form-group">
               <div class="col-lg-6">
+                <label>Salutation</label>&nbsp;&nbsp;<span class="hido" id="hido-sal"><p id="error-sal" class="error"></p></span>
+                <select name="salut" id="salut" class="form-control" onchange="ChangeSal()">
+                <?php 
+                  $arr_sltn = array('Mr','Mrs','Ms','Miss','Dr','Herr','Monsieur','Hr','Frau','A V M','Admiraal','Admiral','Air Cdre','Air Commodore','Air Marshal','Air Vice Marshal','Alderman','Alhaji','Ambassador','Baron','Barones','Brig','Brig Gen','Brig General','Brigadier','Brigadier General','Brother','Canon','Capt','Captain','Cardinal','Cdr','Chief','Cik','Cmdr','Col','Col Dr','Colonel','Commandant','Commander','Commissioner','Commodore','Comte','Comtessa','Congressman','Conseiller','Consul','Conte','Contessa','Corporal','Councillor','Count','Countess','Crown Prince','Crown Princess','Dame','Datin','Dato','Datuk','Datuk Seri','Deacon','Deaconess','Dean','Dhr','Dipl Ing','Doctor','Dott','Dott sa','Dr','Dr Ing','Dra','Drs','Embajador','Embajadora','En','Encik','Eng','Eur Ing','Exma Sra','Exmo Sr','F O','Father','First Lieutient','First Officer','Flt Lieut','Flying Officer','Fr','Frau','Fraulein','Fru','Gen','Generaal','General','Governor','Graaf','Gravin','Group Captain','Grp Capt','H E Dr','H H','H M','H R H','Hajah','Haji','Hajim','Her Highness','Her Majesty','Herr','High Chief','His Highness','His Holiness','His Majesty','Hon','Hr','Hra','Ing','Ir','Jonkheer','Judge','Justice','Khun Ying','Kolonel','Lady','Lcda','Lic','Lieut','Lieut Cdr','Lieut Col','Lieut Gen','Lord','M','M L','M R','Madame','Mademoiselle','Maj Gen','Major','Master','Mevrouw','Miss','Mlle','Mme','Monsieur','Monsignor','Mr','Mrs','Ms','Mstr','Nti','Pastor','President','Prince','Princess','Princesse','Prinses','Prof','Prof Dr','Prof Sir','Professor','Puan','Puan Sri','Rabbi','Rear Admiral','Rev','Rev Canon','Rev Dr','Rev Mother','Reverend','Rva','Senator','Sergeant','Sheikh','Sheikha','Sig','Sig na','Sig ra','Sir','Sister','Sqn Ldr','Sr','Sr D','Sra','Srta','Sultan','Tan Sri','Tan Sri Dato','Tengku','Teuku','Than Puying','The Hon Dr','The Hon Justice','The Hon Miss','The Hon Mr','The Hon Mrs','The Hon Ms','The Hon Sir','The Very Rev','Toh Puan','Tun','Vice Admiral','Viscount','Viscountess','Wg Cdr');
+
+                    if(!empty($err_msg)) {
+                      echo "<option value='".$_POST['salut']."'>".$_POST['salut']."</option>";
+                    } else {
+                      echo "<option value='' disabled selected>Select</option>";
+                    } ?>
+                    <?php
+                      $count_sltn = 0;
+                      while(!empty($arr_sltn[$count_sltn])) {
+                        echo "<option value='".$arr_sltn[$count_sltn]."'>".$arr_sltn[$count_sltn]."</option>";
+                        $count_sltn++;
+                      } 
+                    ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-6">
                 <label>First Name</label>&nbsp;&nbsp;<span class="hido" id="hido1"><p id="error1" class="error"></p></span>
-                <input type="text" class="form-control" id="bfname" name="bfname" value="<?php if(!empty($err_msg)){echo $_POST['bfname'];} ?>">
+                <input type="text" class="form-control" id="bfname" name="bfname" onkeypress="return KeyPressFName(event)" onclick="clickField1()" value="<?php if(!empty($err_msg)){echo $_POST['bfname'];} ?>">
               </div>
               <div class="col-lg-6">
                 <label>Last Name</label>&nbsp;&nbsp;<span class="hido" id="hido2"><p id="error2" class="error"></p></span>
-                <input type="text" class="form-control" id="blname" name="blname" value="<?php if(!empty($err_msg)){echo $_POST['blname'];} ?>">
+                <input type="text" class="form-control" id="blname" name="blname" onkeypress="return KeyPressLName(event)" onclick="clickField2()" value="<?php if(!empty($err_msg)){echo $_POST['blname'];} ?>">
               </div>
             </div>
 
@@ -513,14 +537,14 @@ $err_msg = "";
               </div>
               <div class="col-lg-6">
                 <label>Contact Number</label>&nbsp;&nbsp;<span class="hido" id="hido4"><p id="error4" class="error"></p></span>
-                <input type="text" class="form-control" id="c-phone" name="c-phone" maxlength="10" value="<?php if(!empty($err_msg)){echo $_POST['c-phone'];} ?>">
+                <input type="text" class="form-control" id="c-phone" name="c-phone" maxlength="10" onkeypress="return KeyPressPhone(event)" onclick="clickField4()" value="<?php if(!empty($err_msg)){echo $_POST['c-phone'];} ?>">
               </div>
             </div>
 
             <div class="form-group">
               <div class="col-lg-6">
                 <label>Billing Address 1</label>&nbsp;&nbsp;<span class="hido" id="hido5"><p id="error5" class="error"></p></span>
-                <input type="text" class="form-control" id="c-street" name="c-street" value="<?php if(empty($err_msg)){echo $p2_street;}else{echo $_POST['c-street'];} ?>">
+                <input type="text" class="form-control" id="c-street" name="c-street" onkeypress="return KeyPressStreet(event)" onclick="clickField5()" value="<?php if(empty($err_msg)){echo $p2_street;}else{echo $_POST['c-street'];} ?>">
               </div>
               <div class="col-lg-6">
                 <label>Suite/Apartment Number</label>
@@ -531,16 +555,19 @@ $err_msg = "";
             <div class="form-group">
               <div class="col-lg-6">
                 <label>City</label>&nbsp;&nbsp;<span class="hido" id="hido6"><p id="error6" class="error"></p></span>
-                <input type="text" class="form-control" id="c-city" name="c-city" value="<?php if(empty($err_msg)){echo $p2_city;}else{echo $_POST['c-city'];} ?>">
+                <input type="text" class="form-control" id="c-city" name="c-city" onkeypress="return KeyPressCity(event)" onclick="clickField6()" value="<?php if(empty($err_msg)){echo $p2_city;}else{echo $_POST['c-city'];} ?>">
               </div>
               <div class="col-lg-3">
-               <label> State</label>
-                <select class="form-control" name="c-state">
+               <label>State</label>&nbsp;&nbsp;<span class="hido" id="hido7-state"><p id="error7-state" class="error"></p></span>
+                <select class="form-control" name="c-state" id="c-state" onchange="ChangeState()">
                   <?php if(empty($err_msg) && !empty($p2_state)) {
                     echo "<option value='' id='option_1'>".$p2_state."</option>";
                   } else if(!empty($err_msg) && empty($p2_state)) {
-                    echo "<option value='' id='option_1'>".$_POST['c-state']."</option>";
-                  } else { ?>
+                    echo "<option value='".$_POST['c-state']."' id='option_1'>".$_POST['c-state']."</option>";
+                  } else {  
+                    echo "<option value='' disabled selected>Select</option>";
+                  } ?>
+                  
                   <option value="AL">AL</option> 
                   <option value="AK">AK</option>
                   <option value="AZ">AZ</option> 
@@ -592,49 +619,49 @@ $err_msg = "";
                   <option value="WV">WV</option> 
                   <option value="WI">WI</option> 
                   <option value="WY">WY</option>
-                  <?php } ?>
                 </select>
               </div>
               <div class="col-lg-3">
                 <label>Zip</label>&nbsp;&nbsp;<span class="hido" id="hido7"><p id="error7" class="error"></p></span>
-                <input type="text" class="form-control" id="c-zip" name="c-zip" maxlength="6" value="<?php if(empty($err_msg)){echo $p2_zip;}else{echo $_POST['c-zip'];} ?>">
+                <input type="text" class="form-control" id="c-zip" name="c-zip" maxlength="6" onkeypress="return KeyPressZip(event)" onclick="clickField7()" value="<?php if(empty($err_msg)){echo $p2_zip;}else{echo $_POST['c-zip'];} ?>">
               </div>
             </div>
 
             <div class="form-group">
               <div class="col-lg-6">
                 <label>Card Number</label>&nbsp;&nbsp;<span class="hido" id="hido8"><p id="error8" class="error"></p></span>
-                <input type="text" class="form-control" id="card-number" name="card-number" value="<?php if(!empty($err_msg)){echo $_POST['card-number'];} ?>">
+                <input type="text" class="form-control" id="card-number" name="card-number" onkeypress="return KeyPressCCNumber(event)" onclick="clickField8()" value="<?php if(!empty($err_msg)){echo $_POST['card-number'];} ?>">
               </div>
               <div class="col-lg-2">
                <label> CVC </label>
-                <input type="text" class="form-control" id="card-cvc" name="card-cvc" maxlength="4" value="<?php if(!empty($err_msg)){echo $_POST['card-cvc'];} ?>">
+                <input type="text" class="form-control" id="card-cvc" name="card-cvc" maxlength="3" onkeypress="return KeyPressCVC(event)" onclick="clickField9()" value="<?php if(!empty($err_msg)){echo $_POST['card-cvc'];} ?>">
               </div>
               <div class="col-lg-4">
                 <label>Exp. Date (mm/yy)</label>
                 <div style="display: inline;">
-                  <input type="text" class="form-control" style="float: left; width: 45%;"  maxlength="2" id="card-expiry-month" name="card-expiry-month" value="<?php if(!empty($err_msg)){echo $_POST['card-expiry-month'];} ?>">
-                  <input type="text" class="form-control" style="float: left; width: 45%; margin-left: 5%;" maxlength="2" id="card-expiry-year" name="card-expiry-year" value="<?php if(!empty($err_msg)){echo $_POST['card-expiry-year'];} ?>">
+                  <input type="text" class="form-control" style="float: left; width: 45%;"  maxlength="2" id="card-expiry-month" name="card-expiry-month" onkeypress="return KeyPressCCExpiryMM(event)" onclick="clickField10()" value="<?php if(!empty($err_msg)){echo $_POST['card-expiry-month'];} ?>">
+                  <input type="text" class="form-control" style="float: left; width: 45%; margin-left: 5%;" maxlength="2" id="card-expiry-year" name="card-expiry-year" onkeypress="return KeyPressCCExpiryYY(event)" onclick="clickField11()" value="<?php if(!empty($err_msg)){echo $_POST['card-expiry-year'];} ?>">
                 </div>
               </div>
             </div>
 
             <div class="form-group">
               <div class="col-lg-6">
-                <label>Sales Agent</label>
-                <select class="form-control" id="sales-agent" name="sales-agent">
+                <label>Sales Agent</label>&nbsp;&nbsp;<span class="hido" id="hido12"><p id="error12" class="error"></p></span>
+                <select class="form-control" id="sales-agent" name="sales-agent" onchange="ChangeAgent()">
                 <?php 
                   if(!empty($err_msg)) {
                   echo "
                     <optgroup>
                       <option value='".$_POST['sales-agent']."'>".$_POST['sales-agent']."</option>
                     </optgroup>"; 
+                  } else {
+                    echo "<option value='' disabled selected>Select</option>";
                   }
                 ?>
-                  <optgroup>
-                    <option value="Juan">Juan</option>
-                    <option value="Jose">Jose</option>
-                  </optgroup>
+                  <option value="Bethany">Bethany</option>
+                  <option value="Gem">Gem</option>
+                  <option value="Jasper">Jasper</option>
                 </select>
               </div>
               <div class="col-lg-3">

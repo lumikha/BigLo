@@ -1,16 +1,27 @@
 function checkFields_enroll2(){
 	var checkError = new Array();
-	var bfname = document.getElementById("bfname").value,
+	var salut = document.getElementById("salut").value,
+		bfname = document.getElementById("bfname").value,
 		blname = document.getElementById("blname").value,
 		ceadd = document.getElementById("c-eadd").value,
 		cphone = document.getElementById("c-phone").value,
 		cstreet = document.getElementById("c-street").value,
 		ccity = document.getElementById("c-city").value,
+		cstate = document.getElementById("c-state").value,
 		czip = document.getElementById("c-zip").value,
 		cardnum = document.getElementById("card-number").value,
 		cvc = document.getElementById("card-cvc").value,
 		cardexpirymonth = document.getElementById("card-expiry-month").value,
-		cardexpiryyear = document.getElementById("card-expiry-year").value;
+		cardexpiryyear = document.getElementById("card-expiry-year").value,
+		sagent = document.getElementById("sales-agent").value;
+
+	if (salut) {
+	    $('#hido-sal').addClass('hido'); }
+	else {
+	    $('#hido-sal').removeClass('hido');
+	    $('#hido-sal').removeClass('hidob'); 
+	    document.getElementById("error-sal").innerHTML = "Required field.";
+	    checkError.push("1sal"); }
 
 	if (bfname) {
 	    if(/^\s/.test(bfname)) {
@@ -100,6 +111,14 @@ function checkFields_enroll2(){
 	    document.getElementById("error6").innerHTML = "Required field.";
 	    checkError.push("6"); }
 
+	if (cstate) {
+	        $('#hido7-state').addClass('hido'); }
+	else {
+	    $('#hido7-state').removeClass('hido');
+	    $('#hido7-state').removeClass('hidob'); 
+	    document.getElementById("error7-state").innerHTML = "Required.";
+	    checkError.push("7state"); }
+
 	if (czip) {
 	        $('#hido7').addClass('hido'); }
 	else {
@@ -140,19 +159,30 @@ function checkFields_enroll2(){
 	    document.getElementById("error11").innerHTML = "YY Required field.";
 	    checkError.push("11"); }
 
+	if (sagent) {
+	    $('#hido12').addClass('hido'); }
+	else {
+	    $('#hido12').removeClass('hido');
+	    $('#hido12').removeClass('hidob'); 
+	    document.getElementById("error12").innerHTML = "Required field.";
+	    checkError.push("12"); }
+
 	if(checkError != "")
     {
+    	if(checkError[0] == "1sal") { $('#salut').focus(); }
         if(checkError[0] == "1" || checkError[0] == "1a") { $('#bfname').focus(); }
         if(checkError[0] == "2" || checkError[0] == "2a") { $('#blname').focus(); }
         if(checkError[0] == "3" || checkError[0] == "3a" || checkError[0] == "3b" || checkError[0] == "3c") { $('#c-eadd').focus(); }
         if(checkError[0] == "4") { $('#c-phone').focus(); }
         if(checkError[0] == "5" || checkError[0] == "5a") { $('#c-street').focus(); }
         if(checkError[0] == "6" || checkError[0] == "6a") { $('#c-city').focus(); }
+        if(checkError[0] == "7state") { $('#c-state').focus(); }
         if(checkError[0] == "7") { $('#c-zip').focus(); }
         if(checkError[0] == "8") { $('#card-number').focus(); }
         if(checkError[0] == "9") { $('#card-cvc').focus(); }
         if(checkError[0] == "10") { $('#card-expiry-month').focus(); }
         if(checkError[0] == "11") { $('#card-expiry-year').focus(); }
+        if(checkError[0] == "12") { $('#sales-agent').focus(); }
         $('#error_check_all').removeClass('hido');
 		$('#error_check_all').removeClass('hidob'); 
 		document.getElementById("error_check_all").innerHTML = "Please complete all the required fields.";
@@ -164,6 +194,10 @@ function checkFields_enroll2(){
     }
 }
 
+	function ChangeSal(){
+		$('#hido-sal').addClass('hidob');
+	}
+
 	function KeyPressFName(evt){
 		var charCode = (evt.which) ? evt.which : event.keyCode
 		$('#hido1').addClass('hidob');
@@ -172,14 +206,6 @@ function checkFields_enroll2(){
 	function KeyPressLName(evt){
 		var charCode = (evt.which) ? evt.which : event.keyCode
 		$('#hido2').addClass('hidob');
-	}
-
-	function KeyPressEAdd(evt){
-		var charCode = (evt.which) ? evt.which : event.keyCode
-		$('#hido3').removeClass('hido');
-	    $('#hido3').removeClass('hidob'); 
-		document.getElementById("emailvalidity").value = "changed";
-		document.getElementById("error3").innerHTML = "Click button &#8646; validate email.";
 	}
 
 	function KeyPressPhone(evt){
@@ -203,6 +229,10 @@ function checkFields_enroll2(){
 	function KeyPressCity(evt){
 		var charCode = (evt.which) ? evt.which : event.keyCode
 		$('#hido6').addClass('hidob');
+	}
+
+	function ChangeState(){
+		$('#hido7-state').addClass('hidob');
 	}
 
 	function KeyPressZip(evt){
@@ -270,9 +300,12 @@ function checkFields_enroll2(){
             return true; }
 	}
 
+	function ChangeAgent(){
+		$('#hido12').addClass('hidob');
+	}
+
 function clickField1(){$('#hido1').addClass('hidob');}
 function clickField2(){$('#hido2').addClass('hidob');}
-function clickField3(){$('#hido3').addClass('hidob');}
 function clickField4(){$('#hido4').addClass('hidob');}
 function clickField5(){$('#hido5').addClass('hidob');}
 function clickField6(){$('#hido6').addClass('hidob');}

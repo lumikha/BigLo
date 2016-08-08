@@ -3,6 +3,7 @@ function checkFields_enroll1(){
 	var bizname = document.getElementById("biz-name").value,
 		bizstreet = document.getElementById("biz-street").value,
 		bizcity = document.getElementById("biz-city").value,
+		bizstate = document.getElementById("biz-state").value,
 		bizzip = document.getElementById("biz-zip").value,
 		bizpnumber = document.getElementById("biz-pnumber").value,
 		bizeadd = document.getElementById("biz-eadd").value,
@@ -49,6 +50,14 @@ function checkFields_enroll1(){
 	    $('#hido3').removeClass('hidob'); 
 	    document.getElementById("error3").innerHTML = "Required field.";
 	    checkError.push("3"); }
+
+	if (bizstate) {
+	        $('#hido4-state').addClass('hido'); }
+	else {
+	    $('#hido4-state').removeClass('hido');
+	    $('#hido4-state').removeClass('hidob'); 
+	    document.getElementById("error4-state").innerHTML = "Required.";
+	    checkError.push("4-state"); }
 
 	if (bizzip) {
 	        $('#hido4').addClass('hido'); }
@@ -128,6 +137,7 @@ function checkFields_enroll1(){
         if(checkError[0] == "1" || checkError[0] == "1a") { $('#biz-name').focus(); }
         if(checkError[0] == "2" || checkError[0] == "2a") { $('#biz-street').focus(); }
         if(checkError[0] == "3" || checkError[0] == "3a") { $('#biz-city').focus(); }
+        if(checkError[0] == "4-state") { $('#biz-state').focus(); }
         if(checkError[0] == "4") { $('#biz-zip').focus(); }
         if(checkError[0] == "5" || checkError[0] == "5a") { $('#biz-pnumber').focus(); }
         if(checkError[0] == "6" || checkError[0] == "6a" || checkError[0] == "6b") { $('#biz-eadd').focus(); }
@@ -160,6 +170,10 @@ function checkFields_enroll1(){
 		$('#hido3').addClass('hidob');
 	}
 
+	function ChangeState(){
+		$('#hido4-state').addClass('hidob');
+	}
+
 	function KeyPressBZip(evt){
 		var charCode = (evt.which) ? evt.which : event.keyCode
 		$('#hido4').addClass('hidob');
@@ -190,16 +204,6 @@ function checkFields_enroll1(){
 		var charCode = (evt.which) ? evt.which : event.keyCode
 		$('#hido6').addClass('hidob');
 	}
-
-/*
-	function KeyPressBEAdd(evt){
-		var charCode = (evt.which) ? evt.which : event.keyCode
-		$('#hido6').removeClass('hido');
-	    $('#hido6').removeClass('hidob'); 
-		document.getElementById("emailvalidity").value = "changed";
-		document.getElementById("error6").innerHTML = "Click button &#8646; validate email.";
-	}
-*/
 
 	function alltime() {
 		$('#spinner').prop('hidden', true);

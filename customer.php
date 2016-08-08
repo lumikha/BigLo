@@ -25,7 +25,7 @@
                 $fname = $result_db_customers->rows[$i]->value->customer_first_name;
                 $lname = $result_db_customers->rows[$i]->value->customer_last_name;
                 $chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
-                //$salutation = $result_db_users->rows[$i]->value->Salutation;
+                $salutation = $result_db_customers->rows[$i]->value->salutation;
                 $sales_date = $result_db_customers->rows[$i]->value->sale_date;
                 $sales_agent = $result_db_customers->rows[$i]->value->sale_agent;
                 $sales_center = $result_db_customers->rows[$i]->value->sale_center;
@@ -175,15 +175,12 @@
                 <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
             </div>
             <div class="col-md-5">
-                <select class="form-control" name="acc-prod" placeholder="Product">
+                <select class="form-control" name="acc-prod" id="acc-prod" placeholder="Product">
+                <?php if(isset($_GET['id'])) { ?>
                     <optgroup label="Current">
-                        <?php 
-                        if(isset($_GET['id'])) {
-                            echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>"; 
-                        } else {
-                            echo "<option value=''>Product</option>";
-                        }
-                        ?>
+                    <?php 
+                        echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>"; 
+                    ?>
                     </optgroup>
                     <optgroup label="Available Plans">
                         <option value="prod_001">Basic Plan</option>
@@ -194,6 +191,9 @@
                         <option value="plan_004">Enterprise Plan</option>
                         <option value="plan_007">Upgrade Enterprise Plan</option>
                     </optgroup>
+                <?php } else { 
+                    echo "<option value='' disabled selected>Product</option>";
+                } ?>
                 </select>
             </div>
             <div class="col-md-1">
@@ -202,21 +202,31 @@
         </div>
         <div class="row">
             <div class="col-md-2">
-                 <select name="acc-salut" class="form-control">
-                 <?php
-                    $arr_sltn = array('Mr','Mrs','Ms','Miss','Dr','Herr','Monsieur','Hr','Frau','A V M','Admiraal','Admiral','Air Cdre','Air Commodore','Air Marshal','Air Vice Marshal','Alderman','Alhaji','Ambassador','Baron','Barones','Brig','Brig Gen','Brig General','Brigadier','Brigadier General','Brother','Canon','Capt','Captain','Cardinal','Cdr','Chief','Cik','Cmdr','Col','Col Dr','Colonel','Commandant','Commander','Commissioner','Commodore','Comte','Comtessa','Congressman','Conseiller','Consul','Conte','Contessa','Corporal','Councillor','Count','Countess','Crown Prince','Crown Princess','Dame','Datin','Dato','Datuk','Datuk Seri','Deacon','Deaconess','Dean','Dhr','Dipl Ing','Doctor','Dott','Dott sa','Dr','Dr Ing','Dra','Drs','Embajador','Embajadora','En','Encik','Eng','Eur Ing','Exma Sra','Exmo Sr','F O','Father','First Lieutient','First Officer','Flt Lieut','Flying Officer','Fr','Frau','Fraulein','Fru','Gen','Generaal','General','Governor','Graaf','Gravin','Group Captain','Grp Capt','H E Dr','H H','H M','H R H','Hajah','Haji','Hajim','Her Highness','Her Majesty','Herr','High Chief','His Highness','His Holiness','His Majesty','Hon','Hr','Hra','Ing','Ir','Jonkheer','Judge','Justice','Khun Ying','Kolonel','Lady','Lcda','Lic','Lieut','Lieut Cdr','Lieut Col','Lieut Gen','Lord','M','M L');
+                <select name="acc-salut" class="form-control">
+                <?php
+                    $arr_sltn = array('Mr','Mrs','Ms','Miss','Dr','Herr','Monsieur','Hr','Frau','A V M','Admiraal','Admiral','Air Cdre','Air Commodore','Air Marshal','Air Vice Marshal','Alderman','Alhaji','Ambassador','Baron','Barones','Brig','Brig Gen','Brig General','Brigadier','Brigadier General','Brother','Canon','Capt','Captain','Cardinal','Cdr','Chief','Cik','Cmdr','Col','Col Dr','Colonel','Commandant','Commander','Commissioner','Commodore','Comte','Comtessa','Congressman','Conseiller','Consul','Conte','Contessa','Corporal','Councillor','Count','Countess','Crown Prince','Crown Princess','Dame','Datin','Dato','Datuk','Datuk Seri','Deacon','Deaconess','Dean','Dhr','Dipl Ing','Doctor','Dott','Dott sa','Dr','Dr Ing','Dra','Drs','Embajador','Embajadora','En','Encik','Eng','Eur Ing','Exma Sra','Exmo Sr','F O','Father','First Lieutient','First Officer','Flt Lieut','Flying Officer','Fr','Frau','Fraulein','Fru','Gen','Generaal','General','Governor','Graaf','Gravin','Group Captain','Grp Capt','H E Dr','H H','H M','H R H','Hajah','Haji','Hajim','Her Highness','Her Majesty','Herr','High Chief','His Highness','His Holiness','His Majesty','Hon','Hr','Hra','Ing','Ir','Jonkheer','Judge','Justice','Khun Ying','Kolonel','Lady','Lcda','Lic','Lieut','Lieut Cdr','Lieut Col','Lieut Gen','Lord','M','M L','M R','Madame','Mademoiselle','Maj Gen','Major','Master','Mevrouw','Miss','Mlle','Mme','Monsieur','Monsignor','Mr','Mrs','Ms','Mstr','Nti','Pastor','President','Prince','Princess','Princesse','Prinses','Prof','Prof Dr','Prof Sir','Professor','Puan','Puan Sri','Rabbi','Rear Admiral','Rev','Rev Canon','Rev Dr','Rev Mother','Reverend','Rva','Senator','Sergeant','Sheikh','Sheikha','Sig','Sig na','Sig ra','Sir','Sister','Sqn Ldr','Sr','Sr D','Sra','Srta','Sultan','Tan Sri','Tan Sri Dato','Tengku','Teuku','Than Puying','The Hon Dr','The Hon Justice','The Hon Miss','The Hon Mr','The Hon Mrs','The Hon Ms','The Hon Sir','The Very Rev','Toh Puan','Tun','Vice Admiral','Viscount','Viscountess','Wg Cdr');
 
+                    if(isset($_GET['id'])) { ?> 
+                        <optgroup label="Current"> 
+                        <?php 
+                            echo "<option value='".$salutation."'>".$salutation."</option>"
+                        ?> 
+                        </optgroup> 
+                        <optgroup label="Salutations">
+                        <?php
 
-
-                    if($salutation == "Mr.") {
-                        echo "<option value='Mr.'>Mr</option>";
-                        echo "<option value='Ms.'>Ms</option>";
+                        $count_sltn = 0;
+                        while(!empty($arr_sltn[$count_sltn])) {
+                            echo "<option value='".$arr_sltn[$count_sltn]."'>".$arr_sltn[$count_sltn]."</option>";
+                            $count_sltn++;
+                        } ?>
+                        </optgroup>
+                        <?php
                     } else {
-                        echo "<option value='Ms.'>Mr</option>";
-                        echo "<option value='Mr.'>Ms</option>";
+                        echo "<option value='' disabled selected>Salutation</option>";
                     }
-                 ?>
-                 </select>
+                ?>
+                </select>
             </div>
             <div class="col-md-5">
                 <input type="text" name="acc-fname" id="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>">
