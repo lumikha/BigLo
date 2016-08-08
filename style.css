@@ -64,3 +64,18 @@
 .nav-pills>li.active>a {
     background-color: none !important;
 }
+
+.hello
+{
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+
+/*caret*/
+
+.caret
+{
+    margin-left: 170px;
+
+}
