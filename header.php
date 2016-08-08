@@ -24,14 +24,13 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:800px)"/>
 <body>
 <div class="container-full">
-     <div class="col-xs-9" >
-         <p class="hello">Hello <?php echo $fname; ?>!</p>
-         <div class="user_opt dropdown">
+    <div class="col-md">
+        <p style="float: left;">Hello <?php echo $fname; ?>!</p>
+        <div class="user_opt dropdown" style="float: left;">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span class="caret" style="margin-left:70px"></span>
+                <span class="caret"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu1">
                 <li><a href="#">My Profile</a></li>
@@ -43,7 +42,7 @@
         </div>
     </div>
     <?php if(!isset($_SESSION['user_now_db_customer_id'])) { ?>
-    <div class="col-xs-3">
+    <div class="col-md-2 col-md-offset-7">
         <div ng-app="myapp" id="search_result_view" style="position: absolute;" >
             <div ng-controller="newController">
                 <div id="toggleContainer">
