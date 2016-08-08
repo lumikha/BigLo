@@ -134,6 +134,15 @@
         }
     }
 ?>
+<link rel="stylesheet" type="text/css" href="js/field_trappings/error_msg.css"/>
+    <style>
+        .error_head {
+            color: #e60000;
+            font-size: 30px;
+            margin-bottom: -5px;
+        }
+    </style>
+
     <div class="row">
         <ul class="navtabs nav nav-pills nav-justified">
             <li id="cust_tab1" class="active" onclick="cust_onNavTab1()"><a href=#>Account</a></li>
@@ -147,6 +156,11 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+        <span class="hido" id="hido1"><p id="error1" class="error_head"></p></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <p class="cust_id" id="cust_id" title=""><?php echo $chargifyID; ?></p>
             <p class="bill_sum"><?php echo $billing_sum; ?></p>
             <p class="last_activity"><?php echo $char_upd_at; ?></p>
@@ -154,10 +168,11 @@
     </div>
 
     <!-- Customer's Account Info -->
-    <form  action="" method="POST" id="cust_account_form">
+    <form  action="" method="POST" id="cust_account_form" onsubmit="return checkFields_cust_tab1();">
         <div class="row">
+            <input type="text" value="<?php echo $chargifyID; ?>" id="cID" hidden>
             <div class="col-md-6">
-                <input type="text" name="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
+                <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
             </div>
             <div class="col-md-5">
                 <select class="form-control" name="acc-prod" placeholder="Product">
@@ -189,6 +204,10 @@
             <div class="col-md-2">
                  <select name="acc-salut" class="form-control">
                  <?php
+                    $arr_sltn = array('Mr','Mrs','Ms','Miss','Dr','Herr','Monsieur','Hr','Frau','A V M','Admiraal','Admiral','Air Cdre','Air Commodore','Air Marshal','Air Vice Marshal','Alderman','Alhaji','Ambassador','Baron','Barones','Brig','Brig Gen','Brig General','Brigadier','Brigadier General','Brother','Canon','Capt','Captain','Cardinal','Cdr','Chief','Cik','Cmdr','Col','Col Dr','Colonel','Commandant','Commander','Commissioner','Commodore','Comte','Comtessa','Congressman','Conseiller','Consul','Conte','Contessa','Corporal','Councillor','Count','Countess','Crown Prince','Crown Princess','Dame','Datin','Dato','Datuk','Datuk Seri','Deacon','Deaconess','Dean','Dhr','Dipl Ing','Doctor','Dott','Dott sa','Dr','Dr Ing','Dra','Drs','Embajador','Embajadora','En','Encik','Eng','Eur Ing','Exma Sra','Exmo Sr','F O','Father','First Lieutient','First Officer','Flt Lieut','Flying Officer','Fr','Frau','Fraulein','Fru','Gen','Generaal','General','Governor','Graaf','Gravin','Group Captain','Grp Capt','H E Dr','H H','H M','H R H','Hajah','Haji','Hajim','Her Highness','Her Majesty','Herr','High Chief','His Highness','His Holiness','His Majesty','Hon','Hr','Hra','Ing','Ir','Jonkheer','Judge','Justice','Khun Ying','Kolonel','Lady','Lcda','Lic','Lieut','Lieut Cdr','Lieut Col','Lieut Gen','Lord','M','M L');
+
+
+
                     if($salutation == "Mr.") {
                         echo "<option value='Mr.'>Mr</option>";
                         echo "<option value='Ms.'>Ms</option>";
@@ -200,15 +219,10 @@
                  </select>
             </div>
             <div class="col-md-5">
-                <input type="text" name="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>">
+                <input type="text" name="acc-fname" id="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>">
             </div>
             <div class="col-md-5">
-                <input type="text" name="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <input type="text" name="acc-title" class="form-control" placeholder="Title">
+                <input type="text" name="acc-lname" id="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>">
             </div>
         </div>
     </form>
@@ -333,3 +347,5 @@
 <?php
     require "footer.php";
 ?>
+
+<script type="text/javascript" src="js/field_trappings/customer_form_tab1.js"></script>
