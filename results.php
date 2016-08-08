@@ -67,7 +67,7 @@
 			<div class="row">
 				<div class="col-md-offset-1 col-md-6">
 					<form name="myForm">
-						<input type="text" class="form-control" onkeyup="return check();" id="search" size="30" name="search" ng-model="search" placeholder="Search">
+						<input type="text" class="form-control" ng-keypress="currentPage=0" onkeyup="return check();" id="search" size="30" name="search" ng-model="search" placeholder="Search">
 					</form>
 					<span ng-hide="!search">
 					<h4><strong>Results:</strong></h4><br>
