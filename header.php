@@ -28,7 +28,7 @@
 <body>
 <div class="container-full">
      <div class="col-xs-9" >
-         <p class="hello">Hello there <?php echo $fname; ?>!</p>
+         <p class="hello">Hello <?php echo $fname; ?>!</p>
          <div class="user_opt dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 <span class="caret" style="margin-left:70px"></span>
