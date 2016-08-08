@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="style-login.css">
 	<link rel="stylesheet" type="text/css" href="js/field_trappings/error_msg.css">
+	<link rel="stylesheet" type="text/css" href="style-login-xs.css" media="screen and (max-width:500px)">
 </head>
 <body>
 	<div id="login_box" class="login_container">
