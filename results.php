@@ -33,7 +33,7 @@
     		$scope.search = '<?php echo $search; ?>';
 
     		$scope.getData = function () {
-		      return $filter('filter')($scope.users, $scope.q)
+		      return $filter('filter')($scope.users, $scope.search)
 		    }
 		    $scope.numberOfPages=function(){
         		return Math.ceil($scope.getData().length/$scope.pageSize);                
@@ -77,12 +77,12 @@
 							<div class="panel-body">
 								<h3 class="text-info text-center">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-									: Business Name ,Customer Name, Email, Contacts, Chargify ID.
+									: Business Name, Customer Name, Email, Contacts, Chargify ID.
 								</h3><br>
 							</div>
 						</div>
 					</span>
-					<span name="output" id="output">
+					<span name="output" id="output" ng-cloak>
 							<ul style="list-style: none;">
 								<li ng-if="search" ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
 									<a href="customer?id={{ user.chargify_id }}" name="value"><h3>
@@ -93,7 +93,7 @@
 								<span ng-hide="result.length || !search">
 									<h6 class="text-info">
 										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-										: Business Name , Customer Name, Email, Contacts, Chargify ID.
+										: Business Name, Customer Name, Email, Contacts, Chargify ID.
 									</h6>
 									<h3><p>Opps, No Results Found ...</p></h3>
 									<br>
@@ -101,7 +101,7 @@
 							</ul>
 					</span> 
 					<br>
-						<span ng-hide="!search">
+						<span ng-hide="!search" ng-cloak>
 						<button class="btn btn-info" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
 					        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					    </button>
