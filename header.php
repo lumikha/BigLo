@@ -24,10 +24,13 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:800px)"/>
+<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:1024px) and (min-width:300px)"/>
+
+
 <body>
 <div class="container-full">
-     <div class="col-xs-9" >
+ <div class="row">
+    <div class="col-xs-3 col-md-6"  >
         
          <div class="user_opt dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -44,7 +47,8 @@
         </div>
     </div>
     <?php if(!isset($_SESSION['user_now_db_customer_id'])) { ?>
-    <div class="col-xs-3">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3 col-md-3">
         <div ng-app="myapp" id="search_result_view" style="position: absolute;" >
             <div ng-controller="newController">
                 <div id="toggleContainer">
@@ -66,7 +70,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
+</div>
     <?php } ?>
 </div>
 <div class="container">
