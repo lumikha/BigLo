@@ -105,6 +105,7 @@
         $business_name = stripslashes($_POST['acc-b-name']);
         $prod = $_POST['acc-prod'];
         $salutation = $_POST['acc-salut'];
+        $title = $_POST['acc-title'];
         $fname = $_POST['acc-fname'];
         $lname = $_POST['acc-lname'];
 
@@ -161,6 +162,7 @@
 
             $doc->business_name = @$business_name;
             $doc->customer_salutation = @$salutation;
+            $doc->customer_title = @$title;
             $doc->customer_first_name = @$fname;
             $doc->customer_last_name = @$lname;
             $doc->product_id = @$prodID;
