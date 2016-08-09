@@ -82,15 +82,15 @@
         }
     }
 ?>
+<link rel="stylesheet" type="text/css" href="js/field_trappings/error_msg.css"/>
 
-    <form id="acc_account_form" action="" method="POST">
+    <form id="acc_account_form" action="" method="POST" onsubmit="return checkFields_acc_tab1();">
         <div class="row">
             <div class="col-md-6">
                 <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>" onchange="BName()">
             </div>
             <div class="col-md-5">
                 <select class="form-control" name="acc-prod" id="acc-prod" placeholder="Product">
-                <?php if(isset($_GET['id'])) { ?>
                     <optgroup label="Current">
                     <?php 
                         echo "<option value='".$product_handle."'>".$product_name."</option>"; 
@@ -105,9 +105,6 @@
                         <option value="plan_004">Enterprise Plan</option>
                         <option value="plan_007">Upgrade Enterprise Plan</option>
                     </optgroup>
-                <?php } else { 
-                    echo "<option value='' disabled selected>Product</option>";
-                } ?>
                 </select>
             </div>
             <div class="col-md-1">
@@ -179,3 +176,5 @@
 <?php
     require "footer.php";
 ?>
+
+<script type="text/javascript" src="js/field_trappings/acc_form_tab1.js"></script>
