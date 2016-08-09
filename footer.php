@@ -50,32 +50,29 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 
 	?><script>
 		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-	</script><?php
-?>
+	</script>
+		<script>
+		    $(document).ready(function () {
+		        $('#acc_tab1').addClass('active');
+		        document.getElementById('acc_dashboard_form').style.display = 'none';
+		    });
 
-<?php if(basename($_SERVER['PHP_SELF']) == "account.php") { ?>
-	<script>
-    $(document).ready(function () {
-        $('#tab1').addClass('active');
-    });
-    </script>
-<?php } elseif(basename($_SERVER['PHP_SELF']) == "sales.php") { ?>
-	<script>
-    $(document).ready(function () {
-        $('#tab2').addClass('active');
-    });
-    </script>
-<?php } elseif(basename($_SERVER['PHP_SELF']) == "provisioning.php") { ?>
-	<script>
-    $(document).ready(function () {
-        $('#tab3').addClass('active');
-    });
-    </script>
-<?php } else { ?>
+		    function acc_onNavTab1() {
+		    	$('#acc_tab1').addClass('active');
+		    	$('#acc_tab2').removeClass('active');
+		    	document.getElementById('acc_account_form').style.display = 'block';
+		    	document.getElementById('acc_dashboard_form').style.display = 'none';
+		    }
 
-<?php	
-	}
-} 
+		    function acc_onNavTab2() {
+		    	$('#acc_tab1').removeClass('active');
+		    	$('#acc_tab2').addClass('active');
+		    	document.getElementById('acc_account_form').style.display = 'none';
+		    	document.getElementById('acc_dashboard_form').style.display = 'block';
+		    }
+		</script>
+	<?php
+}
 ?>
 
 <script>

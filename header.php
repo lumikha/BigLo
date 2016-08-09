@@ -77,6 +77,7 @@
 <div class="container">
     <div class="row">
         <ul class="navtabs nav nav-pills nav-justified">
+        <!--
             <?php 
             if(isset($_SESSION['user_now_db_customer_id'])) { 
                 if(basename($_SERVER['PHP_SELF']) == "account.php") { 
@@ -101,6 +102,12 @@
             <li id="tab5"><a href="#">Support</a></li>
             <li id="tab6" class="alter_tab"><a href="#">Dashboard</a></li>
             <li id="tab7"><a href="#">Admin</a></li>
+            <?php } ?>
+        -->
+            <?php 
+            if(isset($_SESSION['user_now_db_customer_id'])) { ?>
+                <li id="acc_tab1" class="active"><a href="#" onclick="acc_onNavTab1()">Account</a></li>
+                <li id="acc_tab2" class="alter_tab"><a href="#" onclick="acc_onNavTab2()">Dashboard</a></li>
             <?php } ?>
         </ul>
     </div>

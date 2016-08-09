@@ -55,10 +55,18 @@
 					$fname = $result_db_customers->rows[$i]->value->customer_first_name;
 					$lname = $result_db_customers->rows[$i]->value->customer_last_name;
 					$chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
-					//$salutation = $result_db_users->rows[$i]->value->Salutation;
+					$chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
+                	$salutation = $result_db_customers->rows[$i]->value->customer_salutation;
 					$sales_date = $result_db_customers->rows[$i]->value->sale_date;
 					$sales_agent = $result_db_customers->rows[$i]->value->sale_agent;
 					$sales_center = $result_db_customers->rows[$i]->value->sale_center;
+					$product_id = $result_db_customers->rows[$i]->value->product_id;
+	                $product_handle = $result_db_customers->rows[$i]->value->product_handle;
+	                $product_name = $result_db_customers->rows[$i]->value->product_name;
+	                $product_component_id = $result_db_customers->rows[$i]->value->product_component_id;
+	                $product_component_name = $result_db_customers->rows[$i]->value->product_component_name;
+	                $product_coupon_id = $result_db_customers->rows[$i]->value->product_coupon_id;
+	                $product_coupon_name = $result_db_customers->rows[$i]->value->product_coupon_name;
 				}
 				$i++;
 			}
