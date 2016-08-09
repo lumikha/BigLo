@@ -87,7 +87,7 @@
 								<li ng-if="search" ng-repeat="user in result = (users | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize)">
 									<a href="customer?id={{ user.chargify_id }}" name="value"><h3>
 									{{user.business_name}}</h3></a>
-									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="customer?id={{ user.chargify_id }}">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{business_email}}
+									<strong>Chargify ID:</strong> {{user.chargify_id}}, <strong>Customer:</strong> <a href="customer?id={{ user.chargify_id }}">{{user.customer_first_name}} {{user.customer_last_name}}</a>, <strong>Email:</strong> {{user.business_email}}
 									<hr class="featurette-divider">
 								</li>
 								<span ng-hide="result.length || !search">
