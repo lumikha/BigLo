@@ -151,6 +151,29 @@ $err_msg = "";
     }
     $btn_number = implode("",$fin_num);
 
+    if($_POST["product-handle"] == 'prod_001') {
+      $prodID = 3881312;
+      $prodName = "Basic Plan";
+    } else if($_POST["product-handle"] == 'plan_002') {
+      $prodID = 3881313;
+      $prodName = "Start-up Plan";
+    } else if($_POST["product-handle"] == 'plan_005') {
+      $prodID = 3881318;
+      $prodName = "Upgrade to Start-up Plan";
+    } else if($_POST["product-handle"] == 'plan_003') {
+      $prodID = 3881314;
+      $prodName = "Business Plan";
+    } else if($_POST["product-handle"] == 'plan_006') {
+      $prodID = 3881319;
+      $prodName = "Upgrade to Business Plan";
+    } else if($_POST["product-handle"] == 'plan_004') {
+      $prodID = 3881316;
+      $prodName = "Enterprise Plan";
+    } else {
+      $prodID = 3881320;
+      $prodName = "Upgrade to Enterprise Plan";
+    }  
+
     $test = true;
 
     $new_customer = new ChargifyCustomer(NULL, $test);
@@ -184,7 +207,8 @@ $err_msg = "";
       $saved_subscription = $new_subscription->create();
       $doc->chargify_id = @$saved_customer->id;
       $doc->business_name = @$_POST['bussiness-name'];
-      $doc->salutation = @$_POST['salut'];
+      $doc->customer_salutation = @$_POST['salut'];
+      $doc->customer_title = @$_POST['title'];
       $doc->customer_first_name = @$_POST['bfname'];
       $doc->customer_last_name = @$_POST['blname'];
       $doc->customer_email = @$_POST['c-eadd'];
@@ -198,6 +222,11 @@ $err_msg = "";
       $doc->customer_card_cvc = @$_POST['card-cvc'];
       $doc->customer_card_expire_month = @$_POST['card-expiry-month'];
       $doc->customer_card_expire_year = @$_POST['card-expiry-year'];
+      $doc->product_id = $prodID;
+      $doc->product_handle = $_POST["product-handle"];
+      $doc->product_name = $prodName;
+      $doc->product_component = "";
+      $doc->product_coupon = "";
       $doc->sale_date = date("m/d/Y");
       $doc->sale_center = @$_POST['sales-center'];
       $doc->sale_agent = @$_POST['sales-agent'];
@@ -514,6 +543,26 @@ $err_msg = "";
                       while(!empty($arr_sltn[$count_sltn])) {
                         echo "<option value='".$arr_sltn[$count_sltn]."'>".$arr_sltn[$count_sltn]."</option>";
                         $count_sltn++;
+                      } 
+                    ?>
+                </select>
+              </div>
+              <div class="col-lg-6">
+                <label>Title</label>
+                <select name="salut" id="title" class="form-control">
+                <?php 
+                  $arr_ttl = array('Accountant','Accountant Systems','Acquisition Management Intern','Actuarial Analyst','Actuary','Administrative Generalist/Specialist','Affordable Housing Specialist','Analyst','Appraiser','Archaeologist','Area Systems Coordinator','Asylum or Immigration Officer','Attorney/Law Clerk','Audience Analyst','Audit Resolution Follow Up','Auditor','Behavioral Scientist','Biologist, Fishery','Biologist, Marine','Biologist, Wildlife','Budget Analyst','Budget Specialist','Business Administration Officer','Chemical Engineer','Chemist','Citizen Services Specialist','Civil Engineer','Civil Penalties Specialist','Civil/Mechanical/Structural','Engineer','Communications Specialist','Community and Intergovernmental','Program Specialist','Community Planner','Community Planning\Development','Specialist','Community Services Program','Specialist','Compliance Specialist','Computer Engineer','Computer Programmer/Analyst','Computer Scientist','Computer Specialist','Consumer Safety Officer','Contract Specialist','Contract Specialist/Grants','Management Specialist','Corporate Management Analyst','Cost Account','Criminal Enforcement Analyst','Criminal Investigator','Customer Account Manager','Customer Acct Mgr\Specialist','Democracy Specialist','Desk Officer','Disaster Operations Specialist','Disbursing Specialist','Ecologist','Economist','Economist, Financial','Education Specialist','Electrical Engineer','Electronics Engineer','Emergency Management Specialist','Employee and Management','Development Specialist','Employee Development Specialist','Employee Relations Specialist','Energy and Environmental Policy','Analyst','Energy Program Specialist','Engineer (General)','Environmental Engineer','Environmental Planning and Policy','Specialist','Environmental Protection Specialist','Environmental Specialist','Epidemiologist','Equal Employment Opportunity','Specialist','Equal Opportunity Specialist','Ethics Program Specialist');
+
+                    if(!empty($err_msg)) {
+                      echo "<option value='".$_POST['title']."'>".$_POST['title']."</option>";
+                    } else {
+                      echo "<option value='' disabled selected>Select</option>";
+                    } ?>
+                    <?php
+                      $count_ttl = 0;
+                      while(!empty($arr_ttl[$count_ttl])) {
+                        echo "<option value='".$arr_ttl[$count_ttl]."'>".$arr_ttl[$count_ttl]."</option>";
+                          $count_ttl++;
                       } 
                     ?>
                 </select>

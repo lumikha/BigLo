@@ -94,7 +94,11 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		<script>
 		    $(document).ready(function () {
 		        $('#cust_tab1').addClass('active');
-		        document.getElementById('cust_sales_form').style.display = 'none';
+		        document.getElementById('cust_provisioning_form').style.display = 'none';
+		        document.getElementById('cust_billing_form').style.display = 'none';
+		        document.getElementById('cust_support_form').style.display = 'none';
+		        document.getElementById('cust_dashboard_form').style.display = 'none';
+		        document.getElementById('cust_admin_form').style.display = 'none';
 		    });
 
 		    function cust_onNavTab1() {
@@ -103,8 +107,13 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		    	$('#cust_tab3').removeClass('active');
 		    	$('#cust_tab4').removeClass('active');
 		    	$('#cust_tab5').removeClass('active');
-		    	document.getElementById('cust_sales_form').style.display = 'none';
+		    	$('#cust_tab6').removeClass('active');
 		    	document.getElementById('cust_account_form').style.display = 'block';
+		    	document.getElementById('cust_provisioning_form').style.display = 'none';
+		    	document.getElementById('cust_billing_form').style.display = 'none';
+		    	document.getElementById('cust_support_form').style.display = 'none';
+		        document.getElementById('cust_dashboard_form').style.display = 'none';
+		        document.getElementById('cust_admin_form').style.display = 'none';
 		    }
 
 		    function cust_onNavTab2() {
@@ -113,8 +122,13 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		    	$('#cust_tab3').removeClass('active');
 		    	$('#cust_tab4').removeClass('active');
 		    	$('#cust_tab5').removeClass('active');
-		    	document.getElementById('cust_sales_form').style.display = 'block';
+		    	$('#cust_tab6').removeClass('active');
 		    	document.getElementById('cust_account_form').style.display = 'none';
+		    	document.getElementById('cust_provisioning_form').style.display = 'block';
+		    	document.getElementById('cust_billing_form').style.display = 'none';
+		    	document.getElementById('cust_support_form').style.display = 'none';
+		        document.getElementById('cust_dashboard_form').style.display = 'none';
+		        document.getElementById('cust_admin_form').style.display = 'none';
 		    }
 
 		    function cust_onNavTab3() {
@@ -123,6 +137,13 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		    	$('#cust_tab3').addClass('active');
 		    	$('#cust_tab4').removeClass('active');
 		    	$('#cust_tab5').removeClass('active');
+		    	$('#cust_tab6').removeClass('active');
+		    	document.getElementById('cust_account_form').style.display = 'none';
+		    	document.getElementById('cust_provisioning_form').style.display = 'none';
+		    	document.getElementById('cust_billing_form').style.display = 'block';
+		    	document.getElementById('cust_support_form').style.display = 'none';
+		        document.getElementById('cust_dashboard_form').style.display = 'none';
+		        document.getElementById('cust_admin_form').style.display = 'none';
 		    }
 
 		    function cust_onNavTab4() {
@@ -131,6 +152,13 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		    	$('#cust_tab3').removeClass('active');
 		    	$('#cust_tab4').addClass('active');
 		    	$('#cust_tab5').removeClass('active');
+		    	$('#cust_tab6').removeClass('active');
+		    	document.getElementById('cust_account_form').style.display = 'none';
+		    	document.getElementById('cust_provisioning_form').style.display = 'none';
+		    	document.getElementById('cust_billing_form').style.display = 'none';
+		    	document.getElementById('cust_support_form').style.display = 'block';
+		        document.getElementById('cust_dashboard_form').style.display = 'none';
+		        document.getElementById('cust_admin_form').style.display = 'none';
 		    }
 
 		    function cust_onNavTab5() {
@@ -139,6 +167,28 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		    	$('#cust_tab3').removeClass('active');
 		    	$('#cust_tab4').removeClass('active');
 		    	$('#cust_tab5').addClass('active');
+		    	$('#cust_tab6').removeClass('active');
+		    	document.getElementById('cust_account_form').style.display = 'none';
+		    	document.getElementById('cust_provisioning_form').style.display = 'none';
+		    	document.getElementById('cust_billing_form').style.display = 'none';
+		    	document.getElementById('cust_support_form').style.display = 'none';
+		        document.getElementById('cust_dashboard_form').style.display = 'block';
+		        document.getElementById('cust_admin_form').style.display = 'none';
+		    }
+
+		    function cust_onNavTab6() {
+		    	$('#cust_tab1').removeClass('active');
+		    	$('#cust_tab2').removeClass('active');
+		    	$('#cust_tab3').removeClass('active');
+		    	$('#cust_tab4').removeClass('active');
+		    	$('#cust_tab5').removeClass('active');
+		    	$('#cust_tab6').addClass('active');
+		    	document.getElementById('cust_account_form').style.display = 'none';
+		    	document.getElementById('cust_provisioning_form').style.display = 'none';
+		    	document.getElementById('cust_billing_form').style.display = 'none';
+		    	document.getElementById('cust_support_form').style.display = 'none';
+		        document.getElementById('cust_dashboard_form').style.display = 'none';
+		        document.getElementById('cust_admin_form').style.display = 'block';
 		    }
 		</script>
 	<?php
