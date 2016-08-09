@@ -25,10 +25,18 @@
                 $fname = $result_db_customers->rows[$i]->value->customer_first_name;
                 $lname = $result_db_customers->rows[$i]->value->customer_last_name;
                 $chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
-                $salutation = $result_db_customers->rows[$i]->value->salutation;
+                $salutation = $result_db_customers->rows[$i]->value->customer_salutation;
+                $title = $result_db_customers->rows[$i]->value->customer_title;
                 $sales_date = $result_db_customers->rows[$i]->value->sale_date;
                 $sales_agent = $result_db_customers->rows[$i]->value->sale_agent;
                 $sales_center = $result_db_customers->rows[$i]->value->sale_center;
+                $product_id = $result_db_customers->rows[$i]->value->product_id;
+                $product_handle = $result_db_customers->rows[$i]->value->product_handle;
+                $product_name = $result_db_customers->rows[$i]->value->product_name;
+                $product_component_id = $result_db_customers->rows[$i]->value->product_component_id;
+                $product_component_name = $result_db_customers->rows[$i]->value->product_component_name;
+                $product_coupon_id = $result_db_customers->rows[$i]->value->product_coupon_id;
+                $product_coupon_name = $result_db_customers->rows[$i]->value->product_coupon_name;
             }
             $i++;
         }
@@ -84,7 +92,6 @@
             $fin2 = explode('-',$fin[0]);
             $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
 
-            //for agent search customerID
             if($result_customer_id_search[0]->state == "trialing") {
                 $cust_search_state = "Trial Ended: ".$result_customer_id_search[0]->trial_ended_at;
             } elseif($result_customer_id_search[0]->state == "active") {
@@ -98,6 +105,7 @@
         $business_name = stripslashes($_POST['acc-b-name']);
         $prod = $_POST['acc-prod'];
         $salutation = $_POST['acc-salut'];
+        $title = $_POST['acc-title'];
         $fname = $_POST['acc-fname'];
         $lname = $_POST['acc-lname'];
 
@@ -112,22 +120,29 @@
 
         if($prod == 'prod_001') {
             $prodID = 3881312;
+            $prodName = "Basic Plan";
         } else if($prod == 'plan_002') {
             $prodID = 3881313;
+            $prodName = "Start-up Plan";
         } else if($prod == 'plan_005') {
             $prodID = 3881318;
+            $prodName = "Upgrade to Start-up Plan";
         } else if($prod == 'plan_003') {
             $prodID = 3881314;
+            $prodName = "Business Plan";
         } else if($prod == 'plan_006') {
             $prodID = 3881319;
+            $prodName = "Upgrade to Business Plan";
         } else if($prod == 'plan_004') {
             $prodID = 3881316;
+            $prodName = "Enterprise Plan";
         } else {
             $prodID = 3881320;
+            $prodName = "Upgrade to Enterprise Plan";
         }  
 
 
-        $upd_subscription->id = @$result_customer_id_search[0]->id;
+        $upd_subscription->id = @$result_customer_id_search[0]->id; //chargify subscriptionID
         $sub_prod = new stdClass();
         $sub_prod->handle = @$prod;
         $sub_prod->id = @$prodID;
@@ -146,12 +161,18 @@
             }
 
             $doc->business_name = @$business_name;
-            $doc->salutation = @$salutation;
+            $doc->customer_salutation = @$salutation;
+            $doc->customer_title = @$title;
             $doc->customer_first_name = @$fname;
             $doc->customer_last_name = @$lname;
+            $doc->product_id = @$prodID;
+            $doc->product_handle = @$prod;
+            $doc->product_name = @$prodName;
 
             try {
                 $client_customer->storeDoc($doc);
+                $product_handle = $prod;
+                $product_name = $prodName;
             } catch (Exception $e) {
                 echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
             }
@@ -176,13 +197,12 @@
 
     <div class="row">
         <ul class="navtabs nav nav-pills nav-justified">
-            <li id="cust_tab1" class="active" onclick="cust_onNavTab1()"><a href=#>Account</a></li>
-            <li id="cust_tab2" class="alter_tab" onclick="cust_onNavTab2()"><a href="#">Sales</a></li>
-            <li id="cust_tab3"><a href="#" onclick="cust_onNavTab3()">Provisioning</a></li>
-            <li id="cust_tab4" class="alter_tab" onclick="cust_onNavTab4()"><a href="#">Billing</a></li>
-            <li id="cust_tab5"><a href="#" onclick="cust_onNavTab5()">Support</a></li>
-            <li id="cust_tab6" class="alter_tab" onclick="cust_onNavTab6()"><a href="#">Dashboard</a></li>
-            <li id="cust_tab7"><a href="#" onclick="cust_onNavTab7()">Admin</a></li>
+            <li id="cust_tab1" class="alter_tab active" onclick="cust_onNavTab1()"><a href=#>Summary</a></li>
+            <li id="cust_tab2"><a href="#" onclick="cust_onNavTab2()">Provisioning</a></li>
+            <li id="cust_tab3" class="alter_tab" onclick="cust_onNavTab3()"><a href="#">Billing</a></li>
+            <li id="cust_tab4"><a href="#" onclick="cust_onNavTab4()">Support</a></li>
+            <li id="cust_tab5" class="alter_tab" onclick="cust_onNavTab5()"><a href="#">Dashboard</a></li>
+            <li id="cust_tab6"><a href="#" onclick="cust_onNavTab6()">Admin</a></li>
         </ul>
     </div>
     <div class="row">
@@ -210,7 +230,7 @@
                 <?php if(isset($_GET['id'])) { ?>
                     <optgroup label="Current">
                     <?php 
-                        echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>"; 
+                        echo "<option value='".$product_handle."'>".$product_name."</option>"; 
                     ?>
                     </optgroup>
                     <optgroup label="Available Plans">
@@ -266,9 +286,39 @@
                 <input type="text" name="acc-lname" id="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>" onchange="LName()">
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-5">
+                <select name="acc-title" class="form-control">
+                <?php
+                    $arr_ttl = array('Accountant','Accountant Systems','Acquisition Management Intern','Actuarial Analyst','Actuary','Administrative Generalist/Specialist','Affordable Housing Specialist','Analyst','Appraiser','Archaeologist','Area Systems Coordinator','Asylum or Immigration Officer','Attorney/Law Clerk','Audience Analyst','Audit Resolution Follow Up','Auditor','Behavioral Scientist','Biologist, Fishery','Biologist, Marine','Biologist, Wildlife','Budget Analyst','Budget Specialist','Business Administration Officer','Chemical Engineer','Chemist','Citizen Services Specialist','Civil Engineer','Civil Penalties Specialist','Civil/Mechanical/Structural','Engineer','Communications Specialist','Community and Intergovernmental','Program Specialist','Community Planner','Community Planning\Development','Specialist','Community Services Program','Specialist','Compliance Specialist','Computer Engineer','Computer Programmer/Analyst','Computer Scientist','Computer Specialist','Consumer Safety Officer','Contract Specialist','Contract Specialist/Grants','Management Specialist','Corporate Management Analyst','Cost Account','Criminal Enforcement Analyst','Criminal Investigator','Customer Account Manager','Customer Acct Mgr\Specialist','Democracy Specialist','Desk Officer','Disaster Operations Specialist','Disbursing Specialist','Ecologist','Economist','Economist, Financial','Education Specialist','Electrical Engineer','Electronics Engineer','Emergency Management Specialist','Employee and Management','Development Specialist','Employee Development Specialist','Employee Relations Specialist','Energy and Environmental Policy','Analyst','Energy Program Specialist','Engineer (General)','Environmental Engineer','Environmental Planning and Policy','Specialist','Environmental Protection Specialist','Environmental Specialist','Epidemiologist','Equal Employment Opportunity','Specialist','Equal Opportunity Specialist','Ethics Program Specialist');
+
+                    if(isset($_GET['id'])) { ?> 
+                        <optgroup label="Current"> 
+                        <?php 
+                            echo "<option value='".$title."'>".$title."</option>"
+                        ?> 
+                        </optgroup> 
+                        <optgroup label="Titles">
+                        <?php
+
+                        $count_ttl = 0;
+                        while(!empty($arr_ttl[$count_ttl])) {
+                            echo "<option value='".$arr_ttl[$count_ttl]."'>".$arr_ttl[$count_ttl]."</option>";
+                            $count_ttl++;
+                        } ?>
+                        </optgroup>
+                        <?php
+                    } else {
+                        echo "<option value='' disabled selected>Title</option>";
+                    }
+                ?>
+                </select>
+            </div>
+        </div>
     </form>
 
     <!-- Customer's Sales Info -->
+<!--
     <form id="cust_sales_form" action="" method="POST" style="margin-top: -60px;">
         <div class="row">
             <div class="col-md-1" style="float: right;">
@@ -300,10 +350,10 @@
                     <optgroup label="Current">
                     <?php
                     if(isset($_GET['id'])) {
-                        if(empty($result_customer_id_search[0]->product->handle)) { 
+                        if(empty($product_handle)) { 
                             echo "<option value=''>None</option>";
                         } else {
-                            echo "<option value='".$result_customer_id_search[0]->product->handle."'>".$result_customer_id_search[0]->product->name."</option>";
+                            echo "<option value='".$product_handle."'>".$product_name."</option>";
                         }
                     } else {
                         echo "<option value=''>Product</option>";
@@ -326,10 +376,10 @@
                     <optgroup label="Current">
                     <?php
                     if(isset($_GET['id'])) {
-                        if(empty($result_customer_id_search[0]->components)) { 
+                        if(empty($product_component_id)) { 
                             echo "<option value=''>None</option>";
                         } else {
-                            echo "<option value='".$result_customer_id_search[0]->components->name."'>".$result_customer_id_search[0]->components->id."</option>";
+                            echo "<option value='".$product_component_id."'>".$product_component_name."</option>";
                         }
                     } else {
                         echo "<option value=''>Component</option>";
@@ -346,10 +396,10 @@
                     <optgroup label="Current">
                     <?php
                     if(isset($_GET['id'])) {
-                        if(empty($result_customer_id_search[0]->coupon_code)) { 
+                        if(empty($product_coupon_id)) { 
                             echo "<option value=''>None</option>";
                         } else {
-                            echo "<option value='".$result_customer_id_search[0]->coupon_code."'>".$result_customer_id_search[0]->coupon_code->name."</option>"; 
+                            echo "<option value='".$product_coupon_id."'>".$product_coupon_name."</option>"; 
                         }
                     } else {
                         echo "<option value=''>Coupon</option>";
@@ -383,8 +433,106 @@
             </div>
         </div>
     </form>
+-->
+    <form id="cust_provisioning_form" action="" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
+            </div>
+        </div>
+    </form>
 
+    <form id="cust_billing_form" action="" method="POST">
+        <div class="row">
+            <div class="col-md-7">
+                <input type="text" name="ppID" id="ppID" class="form-control" placeholder="Payment Processor ID ">
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" name="bill_stat">
+                    <option id="bill_stat"></option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="number" class="form-control" placeholder="Successful Billing Cycles">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <select class="form-control">
+                <?php if(isset($_GET['id'])) { ?>
+                    <optgroup label="Current">
+                    <?php 
+                        echo "<option value='".$product_handle."'>".$product_name."</option>"; 
+                    ?>
+                    </optgroup>
+                    <optgroup label="Available Plans">
+                        <option value="prod_001">Basic Plan</option>
+                        <option value="plan_002">Start-up Plan</option>
+                        <option value="plan_005">Upgrade to Start-up Plan</option>
+                        <option value="plan_003">Business Plan</option>
+                        <option value="plan_006">Upgrade to Business Plan</option>
+                        <option value="plan_004">Enterprise Plan</option>
+                        <option value="plan_007">Upgrade Enterprise Plan</option>
+                    </optgroup>
+                <?php } else { 
+                    echo "<option value='' disabled selected>Product</option>";
+                } ?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Credit Card Masked Number">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Credit Card Expiration Month">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Credit Card Expiration Year">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Billing Address Street">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Billing City">
+            </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" placeholder="State">
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" placeholder="Billing Postcode">
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" placeholder="Billing Country">
+            </div>
+        </div>
+    </form>
 
+    <form id="cust_support_form" action="" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
+            </div>
+        </div>
+    </form>
+
+    <form id="cust_dashboard_form" action="" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
+            </div>
+        </div>
+    </form>
+
+    <form id="cust_admin_form" action="" method="POST">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
+            </div>
+        </div>
+    </form>
 <?php
     require "footer.php";
 ?>
@@ -403,6 +551,7 @@
 
         ?><script>
             document.getElementById("cust_id").title = document.getElementById("char_state").value;
+            document.getElementById("bill_stat").value = document.getElementById("char_state").value;
         </script><?php
     }
 ?>
