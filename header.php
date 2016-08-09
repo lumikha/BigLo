@@ -76,6 +76,14 @@
 </div>
 <div class="container">
     <div class="row">
+        <?php 
+        if(isset($_SESSION['user_now_db_customer_id'])) { ?>
+        <ul class="navtabs nav nav-pills nav-justified">
+            <li id="acc_tab1" class="active"><a href="#" onclick="acc_onNavTab1()">Summary</a></li>
+            <li id="acc_tab2" class="alter_tab"><a href="#" onclick="acc_onNavTab2()">Dashboard</a></li>
+        </ul>
+        <?php } ?>
+    <!--
         <ul class="navtabs nav nav-pills nav-justified">
             <?php 
             if(isset($_SESSION['user_now_db_customer_id'])) { 
@@ -103,6 +111,7 @@
             <li id="tab7"><a href="#">Admin</a></li>
             <?php } ?>
         </ul>
+    -->
     </div>
     <?php if(isset($_SESSION['user_now_db_customer_id'])) { ?>
     <div class="row">
