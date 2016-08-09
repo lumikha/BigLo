@@ -67,6 +67,7 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		    function acc_onNavTab2() {
 		    	$('#acc_tab1').removeClass('active');
 		    	$('#acc_tab2').addClass('active');
+		    	$('#acc_dashboard_form').removeClass('hidden');
 		    	document.getElementById('acc_account_form').style.display = 'none';
 		    	document.getElementById('acc_dashboard_form').style.display = 'block';
 		    }

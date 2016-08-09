@@ -166,7 +166,7 @@
         </div>
     </form>
 
-    <form id="acc_dashboard_form" action="" method="POST">
+    <form id="acc_dashboard_form" class="hidden" action="" method="POST">
         <div class="row">
             <div class="col-md-12">
                 <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
