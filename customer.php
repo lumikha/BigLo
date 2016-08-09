@@ -14,6 +14,14 @@
         $sales_agent = "";
         $sales_center = "";
         $cust_search_state ="";
+        $cc_last_four = "";
+        $cc_exp_mm = "";
+        $cc_exp_yy = "";
+        $bill_address = "";
+        $bill_city = "";
+        $bill_state = "";
+        $bill_zip = "";
+        $bill_country = "";
     } else {
         //echo $_GET['id'];
         $i=0;
@@ -37,6 +45,14 @@
                 $product_component_name = $result_db_customers->rows[$i]->value->product_component_name;
                 $product_coupon_id = $result_db_customers->rows[$i]->value->product_coupon_id;
                 $product_coupon_name = $result_db_customers->rows[$i]->value->product_coupon_name;
+                $cc_last_four = "XXXX-XXXX-XXX-".$result_db_customers->rows[$i]->value->customer_card_last_four;
+                $cc_exp_mm = $result_db_customers->rows[$i]->value->customer_card_expire_month;
+                $cc_exp_yy = $result_db_customers->rows[$i]->value->customer_card_expire_year;
+                $bill_address = $result_db_customers->rows[$i]->value->customer_billing_address;
+                $bill_city = $result_db_customers->rows[$i]->value->customer_billing_city;
+                $bill_state = $result_db_customers->rows[$i]->value->customer_billing_state;
+                $bill_zip = $result_db_customers->rows[$i]->value->customer_billing_zip;
+                $bill_country = "US";
             }
             $i++;
         }
@@ -295,7 +311,11 @@
                     if(isset($_GET['id'])) { ?> 
                         <optgroup label="Current"> 
                         <?php 
-                            echo "<option value='".$title."'>".$title."</option>"
+                            if(!empty($title)) {
+                                echo "<option value='".$title."'>".$title."</option>";
+                            } else {
+                                echo "<option value=''>None</option>";
+                            }
                         ?> 
                         </optgroup> 
                         <optgroup label="Titles">
@@ -449,7 +469,21 @@
             </div>
             <div class="col-md-3">
                 <select class="form-control" name="bill_stat">
-                    <option id="bill_stat"></option>
+                <?php if(isset($_GET['id'])) { ?>
+                    <optgroup label="Current"> 
+                        <option id="bill_stat"></option>
+                    </optgroup>
+                    <optgroup label="Status"> 
+                        <option value="trialing">Trialing</option>
+                        <option value="active">Active</option>
+                        <option value="past_due">Past Due</option>
+                        <option value="unpaid">Unpaid</option>
+                        <option value="canceled">Canceled</option>
+                        <option value="delinquent">Delinquent</option>
+                    </optgroup>
+                <?php } else {
+                    echo "<option value='' disabled selected>Status</option>";
+                } ?>
                 </select>
             </div>
             <div class="col-md-2">
@@ -482,30 +516,30 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Credit Card Masked Number">
+                <input type="text" class="form-control" placeholder="Credit Card Masked Number" value="<?php echo $cc_last_four; ?>">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Credit Card Expiration Month">
+                <input type="text" class="form-control" placeholder="CC Expiration Month" value="<?php echo $cc_exp_mm; ?>">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Credit Card Expiration Year">
+                <input type="text" class="form-control" placeholder="CC Expiration Year" value="<?php echo $cc_exp_yy; ?>">
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Billing Address Street">
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Billing Address Street" value="<?php echo $bill_address; ?>">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Billing City">
-            </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" placeholder="State">
+                <input type="text" class="form-control" placeholder="Billing City" value="<?php echo $bill_city; ?>">
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" placeholder="Billing Postcode">
+                <input type="text" class="form-control" placeholder="State" value="<?php echo $bill_state; ?>">
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" placeholder="Billing Country">
+                <input type="text" class="form-control" placeholder="Billing Postcode" value="<?php echo $bill_zip; ?>">
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" placeholder="Billing Country" value="<?php echo $bill_country; ?>">
             </div>
         </div>
     </form>
@@ -551,7 +585,7 @@
 
         ?><script>
             document.getElementById("cust_id").title = document.getElementById("char_state").value;
-            document.getElementById("bill_stat").value = document.getElementById("char_state").value;
+            document.getElementById("bill_stat").innerHTML = document.getElementById("char_state").value;
         </script><?php
     }
 ?>
