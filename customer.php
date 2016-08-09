@@ -95,31 +95,58 @@
     }
 
     if(isset($_POST['upd_acc'])) {
-        $bname = stripslashes($_POST['acc-b-name']);
+        $business_name = stripslashes($_POST['acc-b-name']);
         $prod = $_POST['acc-prod'];
+        $salutation = $_POST['acc-salut'];
         $fname = $_POST['acc-fname'];
         $lname = $_POST['acc-lname'];
 
         $test = true;
         $customer = new ChargifyCustomer(NULL, $test);
+        $upd_subscription = new ChargifySubscription(NULL, $test);
 
         $customer->id = $_GET['id'];
-        $customer->organization = $bname;
+        $customer->organization = $business_name;
         $customer->first_name = $fname;
         $customer->last_name = $lname;
 
+        if($prod == 'prod_001') {
+            $prodID = 3881312;
+        } else if($prod == 'plan_002') {
+            $prodID = 3881313;
+        } else if($prod == 'plan_005') {
+            $prodID = 3881318;
+        } else if($prod == 'plan_003') {
+            $prodID = 3881314;
+        } else if($prod == 'plan_006') {
+            $prodID = 3881319;
+        } else if($prod == 'plan_004') {
+            $prodID = 3881316;
+        } else {
+            $prodID = 3881320;
+        }  
+
+
+        $upd_subscription->id = @$result_customer_id_search[0]->id;
+        $sub_prod = new stdClass();
+        $sub_prod->handle = @$prod;
+        $sub_prod->id = @$prodID;
+        $upd_subscription->product = $sub_prod;
+
         try {
             $result_upd_cus = $customer->update();
+            $result_upd_sub = $upd_subscription->updateProduct();
 
             $client_customer = new couchClient ('http://127.0.0.1:5984','bigloco-customers');
 
             try {
                 $doc = $client_customer->getDoc($customer_db_id);
-              } catch (Exception $e) {
+            } catch (Exception $e) {
                 echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
-              }
+            }
 
-            $doc->business_name = @$bname;
+            $doc->business_name = @$business_name;
+            $doc->salutation = @$salutation;
             $doc->customer_first_name = @$fname;
             $doc->customer_last_name = @$lname;
 
@@ -140,6 +167,10 @@
             color: #e60000;
             font-size: 30px;
             margin-bottom: -5px;
+        }
+        .error_field {
+            border:1px solid #ff4d4d;
+            box-shadow: 0 0 5px #ff4d4d;
         }
     </style>
 
@@ -172,7 +203,7 @@
         <div class="row">
             <input type="text" value="<?php echo $chargifyID; ?>" id="cID" hidden>
             <div class="col-md-6">
-                <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
+                <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>" onchange="BName()">
             </div>
             <div class="col-md-5">
                 <select class="form-control" name="acc-prod" id="acc-prod" placeholder="Product">
@@ -229,10 +260,10 @@
                 </select>
             </div>
             <div class="col-md-5">
-                <input type="text" name="acc-fname" id="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>">
+                <input type="text" name="acc-fname" id="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>" onchange="FName()">
             </div>
             <div class="col-md-5">
-                <input type="text" name="acc-lname" id="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>">
+                <input type="text" name="acc-lname" id="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>" onchange="LName()">
             </div>
         </div>
     </form>
@@ -356,6 +387,24 @@
 
 <?php
     require "footer.php";
+?>
+
+<?php 
+    if(isset($_GET['id'])) {
+        $char_state = $result_customer_id_search[0]->state;
+        $char_state_exp = explode('_', $char_state);
+        $count=0;
+        $fin_char_state = "";
+        while(!empty($char_state_exp[$count])) {
+            $fin_char_state .= ucfirst($char_state_exp[$count])."&nbsp;";
+            $count++;
+        }
+        echo "<input type='text' id='char_state' value='".$fin_char_state."' hidden>";
+
+        ?><script>
+            document.getElementById("cust_id").title = document.getElementById("char_state").value;
+        </script><?php
+    }
 ?>
 
 <script type="text/javascript" src="js/field_trappings/customer_form_tab1.js"></script>

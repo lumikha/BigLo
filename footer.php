@@ -48,31 +48,9 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 	}
 	echo "<input type='text' id='char_state' value='".$fin_char_state."' hidden>";
 
-	if($result_customer_id[0]->state == "trialing") {
-		?><script>
+	?><script>
 		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-		</script><?php
-	} elseif($result_customer_id[0]->state == "active") {
-		?><script>
-		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-		</script><?php
-	} elseif($result_customer_id[0]->state == "past_due") {
-		?><script>
-		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-		</script><?php
-	} elseif($result_customer_id[0]->state == "unpaid") {
-		?><script>
-		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-		</script><?php
-	} elseif($result_customer_id[0]->state == "canceled") {
-		?><script>
-		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-		</script><?php
-	} else {
-		?><script>
-		document.getElementById("cust_id").title = document.getElementById("char_state").value;
-		</script><?php
-	}
+	</script><?php
 ?>
 
 <?php if(basename($_SERVER['PHP_SELF']) == "account.php") { ?>
