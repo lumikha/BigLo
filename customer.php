@@ -3,6 +3,7 @@
 
     if(!isset($_GET['id'])) {
         $business_name = "";
+        $business_category = "";
         $business_email = "";
         $business_website = "";
         $business_address = "";
@@ -33,7 +34,9 @@
         $bill_state = "";
         $bill_zip = "";
         $bill_country = "";
+        $state_date = null;
         $gmail_acc = "";
+        $keywords = "";
         $sp_request = "";
         $social1 = "";
         $social2 = "";
@@ -51,6 +54,7 @@
             if($result_db_customers->rows[$i]->value->chargify_id == $_GET['id']) {
                 $customer_db_id = $result_db_customers->rows[$i]->value->_id;
                 $business_name = $result_db_customers->rows[$i]->value->business_name;
+                $business_category = $result_db_customers->rows[$i]->value->business_category;
                 $business_email = $result_db_customers->rows[$i]->value->business_email;
                 $business_website = $result_db_customers->rows[$i]->value->business_website;
                 $business_address = $result_db_customers->rows[$i]->value->business_address;
@@ -58,7 +62,7 @@
                 $business_city = $result_db_customers->rows[$i]->value->business_city;
                 $business_state = $result_db_customers->rows[$i]->value->business_state;
                 $business_zip = $result_db_customers->rows[$i]->value->business_zip;
-                $business_country = "US";
+                $business_country = $result_db_customers->rows[$i]->value->business_country;
                 $business_hours = $result_db_customers->rows[$i]->value->business_hours;
                 $business_post_address = $result_db_customers->rows[$i]->value->business_post_address;
                 $payment_method = $result_db_customers->rows[$i]->value->payment_method;
@@ -90,6 +94,7 @@
                 $bill_country = "US";
                 //prov
                 $gmail_acc = $result_db_customers->rows[$i]->value->prov_gmail;
+                $keywords = $result_db_customers->rows[$i]->value->prov_keywords;
                 $sp_request = $result_db_customers->rows[$i]->value->prov_special_request;
                 $social1 = $result_db_customers->rows[$i]->value->prov_existing_social1;
                 $social2 = $result_db_customers->rows[$i]->value->prov_existing_social2;
@@ -101,6 +106,14 @@
                 $foursquare = $result_db_customers->rows[$i]->value->prov_foursquare;
                 $twitter = $result_db_customers->rows[$i]->value->prov_twitter;
                 $linkedin = $result_db_customers->rows[$i]->value->prov_linkedin;
+                //cancel
+                if(isset($result_db_customers->rows[$i]->value->cancelled)) {
+                    $cancelled = $result_db_customers->rows[$i]->value->cancelled;
+                    $cancel_reason = $result_db_customers->rows[$i]->value->cancel_reason;
+                } else {
+                    $cancelled = "no";
+                    $cancel_reason = "";
+                }
             }
             $i++;
         }
@@ -157,7 +170,10 @@
             $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
 
             if($result_customer_id_search[0]->state == "trialing") {
-                $cust_search_state = "Trial Ended: ".$result_customer_id_search[0]->trial_ended_at;
+                $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
+                $state_date = explode('-',$trial_date[0]);
+                $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+                $cust_search_state = "Trial End: ";
             } elseif($result_customer_id_search[0]->state == "active") {
                 $cust_search_state = "Next Billing: ".$result_customer_id_search[0]->next_billing_at;
             } else {
@@ -243,6 +259,122 @@
 
         } catch (ChargifyValidationException $cve) {
             echo $cve->getMessage();
+        }
+    }
+
+    if(isset($_POST['upd_prov'])) {
+        $business_name = stripslashes($_POST['bname']);
+        $cancelled = $_POST['cancel'];
+        if($cancelled == "yes") {
+            $cancel_reason = $_POST['cancel_reason'];
+        } else {
+            $cancel_reason = "";
+        }
+        $bill_d1 = $_POST['bill-d1'];
+        $bill_d2 = $_POST['bill-d2'];
+        $bill_d3 = $_POST['bill-d3'];
+        $business_category = $_POST['b-category'];
+        $business_website = $_POST['b-site'];
+        $business_email = $_POST['b-email'];
+        $gmail_acc = $_POST['b-gmail'];
+        $keywords = $_POST['k-words'];
+        $business_address = $_POST['b-address1'];
+        $business_address_2 = $_POST['b-address2'];
+        $business_post_address = $_POST['b-post-address'];
+        $business_city = $_POST['b-city'];
+        $business_state = $_POST['b-state'];
+        $business_zip = $_POST['b-zip'];
+        $business_country = $_POST['b-country'];
+        $business_hours = $_POST['b-hours'];
+        $payment_method = $_POST['payment'];
+        $sp_request = $_POST['request'];
+        $business_phone = $_POST['b-phone'];
+        $business_alt_phone = $_POST['b-alt-phone'];
+        $social1 = $_POST['b-social1'];
+        $social2 = $_POST['b-social2'];
+        $biglo_site = $_POST['biglo-site'];
+        $analytical_address = $_POST['analyt-add'];
+        $google_plus = $_POST['gplus'];
+        $google_maps = $_POST['gmap'];
+        $facebook = $_POST['fb'];
+        $foursquare = $_POST['foursq'];
+        $twitter = $_POST['twit'];
+        $linkedin = $_POST['linkedin'];
+
+        $test = true;
+        $customer = new ChargifyCustomer(NULL, $test);
+        $subscription = new ChargifySubscription(NULL, $test);
+
+        try {
+            $res_get_sub_id = $subscription->getByCustomerID($chargifyID);
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
+
+        $customer->id = $chargifyID;
+        $customer->organization = $business_name;
+        $subscription->id = $res_get_sub_id[0]->id;
+        $subscription->new_bill_date = $bill_d3."-".$bill_d1."-".$bill_d2;
+
+        try {
+            $result_upd_cus = $customer->update();
+            $result_upd_billing = $subscription->updateNextBilling();
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
+
+        /*
+        if($cancelled == "yes") {
+            $subscription_cancel = new ChargifySubscription(NULL, $test);
+            $subscription_cancel->id = $res_get_sub_id[0]->id;
+            $subscription_cancel->cancellation_message = $cancel_reason;
+            $subscription_cancel->cancel();
+        }
+        */
+
+        $client_customer = new couchClient ('http://127.0.0.1:5984','bigloco-customers');
+
+        try {
+            $doc = $client_customer->getDoc($customer_db_id);
+        } catch (Exception $e) {
+            echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
+        }
+
+        $doc->business_name = @$business_name;
+        $doc->cancelled = @$cancelled;
+        $doc->cancel_reason = @$cancel_reason;
+        $doc->business_category = @$business_category;
+        $doc->business_website = @$business_website;
+        $doc->business_email = @$business_email;
+        $doc->prov_gmail = @$gmail_acc;
+        $doc->prov_keywords = @$keywords;
+        $doc->business_address = @$business_address;
+        $doc->business_suite_no = @$business_address_2;
+        $doc->business_post_address = @$business_post_address;
+        $doc->business_city = @$business_city;
+        $doc->business_state = @$business_state;
+        $doc->business_zip = @$business_zip;
+        $doc->business_country = @$business_country;
+        $doc->business_hours = @$business_hours;
+        $doc->payment_method = @$payment_method;
+        $doc->prov_special_request = @$sp_request;
+        $doc->business_phone = @$business_phone;
+        $doc->business_alternate_phone_no = @$business_alt_phone;
+        $doc->prov_existing_social1 = @$social1;
+        $doc->prov_existing_social2 = @$social2;
+        $doc->prov_biglo_website = @$biglo_site;
+        $doc->prov_analytical_address = @$analytical_address;
+        $doc->prov_google_plus = @$google_plus;
+        $doc->prov_google_maps = @$google_maps;
+        $doc->prov_facebook = @$facebook;
+        $doc->prov_foursquare = @$foursquare;
+        $doc->prov_twitter = @$twitter;
+        $doc->prov_linkedin = @$linkedin;
+
+        try {
+            $client_customer->storeDoc($doc);
+        } catch (Exception $e) {
+            echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
         }
     }
 ?>
@@ -389,12 +521,11 @@
         </div>
     </form>
 
-    <!-- Customer's Sales Info -->
-<!--
-    <form id="cust_sales_form" action="" method="POST" style="margin-top: -60px;">
+    <form id="cust_provisioning_form" action="" method="POST" style="margin-top: -60px;">
+     
         <div class="row">
-            <div class="col-md-1" style="float: right;">
-                <button class="btn btn-danger" type="submit" name="submit_ticket">Ticket</button>
+            <div class="hidden-xs hidden-sm col-md-1 " style="float: right;"> <!--provisioning to be edited-->
+                <button class="btn btn-danger" type="submit" name="upd_prov">Ticket</button>
             </div>
         </div>
         <div class="row">
@@ -404,9 +535,19 @@
             <div class="col-md-2">
                 <p><?php echo $sales_date; ?></p>
             </div>
-            <div class="col-md-4">
-                <input type="text" class="form-control" name="tbc_date" placeholder="Trial/Bill/Cancel Date" value="<?php echo $cust_search_state; ?>">
+            <div class="col-md-1">
+                <span><?php echo $cust_search_state; ?></span>
             </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="bill-d1" value="<?php echo $state_date[1]; ?>" >
+            </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left: -20px;">
+            </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="bill-d3" value="<?php echo $state_date[0]; ?>" style="margin-left: -40px; width: 60px;">
+            </div>
+                <!--<input type="text" class="form-control" name="tbc_date" placeholder="Trial/Bill/Cancel Date" value="<?php echo $cust_search_state; ?>">-->
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -419,19 +560,12 @@
         <div class="row">
             <div class="col-md-4">
                 <select class="form-control">
-                    <optgroup label="Current">
                     <?php
                     if(isset($_GET['id'])) {
-                        if(empty($product_handle)) { 
-                            echo "<option value=''>None</option>";
-                        } else {
-                            echo "<option value='".$product_handle."'>".$product_name."</option>";
-                        }
-                    } else {
-                        echo "<option value=''>Product</option>";
-                    }
+                        echo "<optgroup label='Current'>
+                            <option value='".$product_handle."'>".$product_name."</option>
+                        </optgroup>";
                     ?>
-                    </optgroup>
                     <optgroup label="Available Plans">
                         <option value="prod_001">Basic Plan</option>
                         <option value="plan_002">Start-up Plan</option>
@@ -441,41 +575,46 @@
                         <option value="plan_004">Enterprise Plan</option>
                         <option value="plan_007">Upgrade Enterprise Plan</option>
                     </optgroup>
+                    <?php
+                    } else {
+                        echo "<option value='' disabled selected>Product</option>";
+                    }
+                    ?>
                 </select>
             </div>
             <div class="col-md-4">
                 <select class="form-control">
-                    <optgroup label="Current">
                     <?php
                     if(isset($_GET['id'])) {
+                        echo "<optgroup label='Current'>";
                         if(empty($product_component_id)) { 
                             echo "<option value=''>None</option>";
                         } else {
                             echo "<option value='".$product_component_id."'>".$product_component_name."</option>";
                         }
-                    } else {
-                        echo "<option value=''>Component</option>";
-                    }
-                    ?>    
-                    </optgroup>
+                        echo "</optgroup>";
+                    ?>
                     <optgroup label="Available Components">
                         <option value="196368">Custom Company Domain</option>
                     </optgroup>
+                    <?php
+                    } else {
+                        echo "<option value='' disabled selected>Component</option>";
+                    }
+                    ?>  
                 </select>
             </div>
             <div class="col-md-4">
                 <select class="form-control">
-                    <optgroup label="Current">
                     <?php
                     if(isset($_GET['id'])) {
+                        echo "<optgroup label='Current'>";
                         if(empty($product_coupon_id)) { 
                             echo "<option value=''>None</option>";
                         } else {
                             echo "<option value='".$product_coupon_id."'>".$product_coupon_name."</option>"; 
                         }
-                    } else {
-                        echo "<option value=''>Coupon</option>";
-                    }
+                         echo "</optgroup>";
                     ?>    
                     </optgroup>
                     <optgroup label="Available Coupons">
@@ -483,41 +622,51 @@
                         <option value="FREDOM">Domain Coupon</option>
                         <option value="REFER">Referral Coupon</option>
                     </optgroup>
+                     <?php
+                    } else {
+                        echo "<option value='' disabled selected>Coupon</option>";
+                    }
+                    ?>  
                 </select>
             </div>
         </div>
         <div class="row">
-            <div class="dropdown col-md-4">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Cancellation Reason
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
+            <div class="dropdown col-md-2">
+                <label>Cancelled?</label><br/>
+                <?php if($cancelled == "yes") { ?>
+                    <label class="radio-inline"><input type="radio" name="cancel" id="cancel_yes" value="yes" checked="checked" onclick="cancelYes()">Yes</label>
+                    <label class="radio-inline"><input type="radio" name="cancel" id="cancel_no" value="no" onclick="cancelNo()">No</label>
+                <?php } else { ?>
+                    <label class="radio-inline"><input type="radio" name="cancel" id="cancel_yes" value="yes" onclick="cancelYes()">Yes</label>
+                    <label class="radio-inline"><input type="radio" name="cancel" id="cancel_no" value="no" checked="checked" onclick="cancelNo()">No</label>
+                <?php } ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-7">
+                <textarea class="form-control" rows="5" name="cancel_reason" id="cancel_reason" placeholder="Cancel Reason" style="resize: vertical;" value="<?php echo $cancel_reason; ?>"><?php echo $cancel_reason; ?></textarea>
+            </div>
+            <div class="col-md-3">
                 <input type="text" class="form-control" placeholder="Refund Amount">
             </div>
         </div>
-    </form>
--->
-    <form id="cust_provisioning_form" action="" method="POST">
-     
+
+        <div class="row">
+
+        </div>
+
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
-            </div>
-            <div class="col-md-4">
-                <select class="form-control">
+                <select class="form-control" name="b-category">
                 <?php 
                 if(isset($_GET['id'])) {
+                    echo "<optgroup label='Current'>";
+                    if(empty($business_category)) { 
+                        echo "<option value=''>None</option>";
+                    } else {
+                        echo "<option value='".$business_category."'>".$business_category."</option>"; 
+                    }
+                    echo "</optgroup>";
                 ?>
-                    <option value="" disabled selected>Business Category</option>
+                <optgroup label="Categories">
                     <option value="Automotive Services">Automotive Services</option>
                     <option value="Business Services">Business Services</option>
                     <option value="Food &amp; Beverage">Food &amp; Beverage</option>
@@ -527,6 +676,7 @@
                     <option value="Mobile Services">Mobile Services</option>
                     <option value="Personal Services">Personal Services</option>
                     <option value="Retail Establishment">Retail Establishment</option>
+                </optgroup>
                 <?php 
                 } else {
                     echo "<option value='' disabled selected>Business Category</option>";
@@ -534,41 +684,39 @@
                 ?>
                 </select>
             </div>
-            <div class="hidden-xs hidden-sm col-md-2 "> <!--provisioning to be edited-->
-                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="b-site" placeholder="Existing Website" value="<?php echo $business_website; ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Primary Email" value="<?php echo $business_email; ?>">
+                <input type="text" class="form-control" name="b-email" placeholder="Primary Email" value="<?php echo $business_email; ?>">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Gmail Account" value="">
+                <input type="text" class="form-control" name="b-gmail" placeholder="Gmail Account" value="<?php echo $gmail_acc; ?>">
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <input type="text" class="form-control" placeholder="Existing Website" value="<?php echo $business_website; ?>">
-            </div>
+
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                  <label for="comment">Keywords:</label>
-                  <textarea class="form-control" rows="5" id="comment"></textarea>
+                  <label for="comment">Keywords:</label>&nbsp;&nbsp;<span>seperated by comma ","</span>
+                  <textarea class="form-control" rows="5" name="k-words" id="k-words" value="<?php echo $keywords; ?>" style="resize: vertical;"><?php echo $keywords; ?></textarea>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="Office Address 1" value="<?php echo $business_address; ?>">
+                <input type="text" class="form-control" name="b-address1" placeholder="Office Address 1" value="<?php echo $business_address; ?>">
             </div>
             <div class="col-md-5">
-                <input type="text" class="form-control" placeholder="Office Address 2" value="<?php echo $business_address_2; ?>">
+                <input type="text" class="form-control" name="b-address2" placeholder="Office Address 2" value="<?php echo $business_address_2; ?>">
             </div>
             <label></label>
             <div class="col-md-2">
-                <select class="form-control">
+                <select class="form-control" name="b-post-address">
                     <?php if(isset($_GET['id'])) { 
                         echo "<optgroup label='Show Address?'>";
                         if($business_post_address == 'yes') { 
@@ -587,10 +735,10 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Office City" value="<?php echo $business_city; ?>">
+                <input type="text" class="form-control" name="b-city" placeholder="Office City" value="<?php echo $business_city; ?>">
             </div>
             <div class="col-md-3">
-                <select class="form-control">
+                <select class="form-control" name="b-state">
                 <?php if(isset($_GET['id'])) {
                     echo "<optgroup label='Current'>
                         <option value='".$business_state."'>".$business_state."</option>
@@ -655,79 +803,83 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
+                <input type="text" class="form-control" name="b-zip" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Office Country" value="<?php echo $business_country; ?>">
+                <input type="text" class="form-control" name="b-country" placeholder="Office Country" value="<?php echo $business_country; ?>">
             </div>
         </div>
             
         <div class="row">
             <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Hours Of Operation" value="<?php echo $business_hours; ?>">
+                <input type="text" class="form-control" name="b-hours" placeholder="Hours Of Operation" value="<?php echo $business_hours; ?>">
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
+                <input type="text" class="form-control" name="payment" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Special Request" value="<?php echo $sp_request; ?>">
+                <input type="text" class="form-control" name="request" placeholder="Special Request" value="<?php echo $sp_request; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Office/Business Phone" value="<?php echo $business_phone; ?>">
+                <input type="text" class="form-control" name="b-phone" placeholder="Office/Business Phone" value="<?php echo $business_phone; ?>">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Alternate Phone" value="<?php echo $business_alt_phone; ?>">
+                <input type="text" class="form-control" name="b-alt-phone" placeholder="Alternate Phone" value="<?php echo $business_alt_phone; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Existing Social 1" value="<?php echo $social1; ?>">
+                <input type="text" class="form-control" name="b-social1" placeholder="Existing Social 1" value="<?php echo $social1; ?>">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Existing Social 2" value="<?php echo $social2; ?>">
+                <input type="text" class="form-control" name="b-social2" placeholder="Existing Social 2" value="<?php echo $social2; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="BigLo Website" value="<?php echo $biglo_site; ?>">
+                <input type="text" class="form-control" name="biglo-site" placeholder="BigLo Website" value="<?php echo $biglo_site; ?>">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Analytical Address" value="<?php echo $analytical_address; ?>">
+                <input type="text" class="form-control" name="analyt-add" placeholder="Analytical Address" value="<?php echo $analytical_address; ?>">
             </div>
+        </div>
+
+        <div class="row">
+
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <label>Google Plus</label>
-                <input type="text" class="form-control" placeholder="Google +" value="<?php echo $google_plus; ?>">
+                <input type="text" class="form-control" name="gplus" placeholder="Google +" value="<?php echo $google_plus; ?>">
             </div>
             <div class="col-md-4">
                 <label>Google Maps</label>
-                <input type="text" class="form-control" placeholder="Google Maps" value="<?php echo $google_maps; ?>">
+                <input type="text" class="form-control" name="gmap" placeholder="Google Maps" value="<?php echo $google_maps; ?>">
             </div>
             <div class="col-md-4">
                 <label>Facebook</label>
-                <input type="text" class="form-control" placeholder="Facebook" value="<?php echo $facebook; ?>">
+                <input type="text" class="form-control" name="fb" placeholder="Facebook" value="<?php echo $facebook; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <label>Four Square</label>
-                <input type="text" class="form-control" placeholder="Four Square" value="<?php echo $foursquare; ?>">
+                <input type="text" class="form-control" name="foursq" placeholder="Four Square" value="<?php echo $foursquare; ?>">
             </div>
             <div class="col-md-4">
                 <label>Twitter</label>
-                <input type="text" class="form-control" placeholder="Twitter" value="<?php echo $twitter; ?>">
+                <input type="text" class="form-control" name="twit" placeholder="Twitter" value="<?php echo $twitter; ?>">
             </div>
             <div class="col-md-4">
                 <label>LinkedIn</label>
-                <input type="text" class="form-control" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
+                <input type="text" class="form-control" name="linkedin" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
             </div>
             <!--hidden ticket button for medium to large screens-->
              <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
@@ -881,5 +1033,25 @@
         </script><?php
     }
 ?>
+
+<script>
+    function checkIfCancel() {
+        if(document.getElementById("cancel_no").checked == true) {
+            cancelNo();
+        }
+    }
+
+    function cancelYes() {
+        $('#cancel_reason').prop('disabled', false);
+    }
+
+    function cancelNo() {
+        $('#cancel_reason').prop('disabled', true);
+    }
+
+    $(document).ready(function () {
+        checkIfCancel();
+    });
+</script>
 
 <script type="text/javascript" src="js/field_trappings/customer_form_tab1.js"></script>

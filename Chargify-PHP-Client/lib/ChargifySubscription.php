@@ -149,6 +149,13 @@ class ChargifySubscription
 		return $this->connector->getSubscriptionsByID($subscription_id);
 	}
 	
+	public function updateNextBilling($chargify_date = null) {
+		if ($chargify_date== null) {
+			$chargify_date = $this->new_bill_date;
+		}
+		return $this->connector->updateSubscriptionNextBilling($this->id, $chargify_date);
+	}
+	
 	public function updateProduct($chargify_product = null) {
 		if ($chargify_product == null) {
 			$chargify_product = $this->product;

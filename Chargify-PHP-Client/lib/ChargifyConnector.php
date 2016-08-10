@@ -417,6 +417,15 @@ class ChargifyConnector
 			throw new ChargifyValidationException($xml->code, $errors);
 		}		
 	}
+
+	public function updateSubscriptionNextBilling($subscription_id, $chargify_date) {
+		$chargify_subscription = new ChargifySubscription(null , $this->test_mode);
+		$chargify_subscription->next_billing_at = $chargify_date;
+
+		$xml = $this->requestUpdateSubscription($subscription_id, $chargify_subscription->getXML());
+		$subscription = new SimpleXMLElement($xml);
+		return new ChargifySubscription($subscription, $this->test_mode);	
+	}
 	
 	public function requestUpdateSubscriptionProrated($subscription_id, $migrationRequest, $format = 'XML') {
 		$extension = strtoupper($format) == 'XML' ? '.xml' : '.json';
