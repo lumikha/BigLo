@@ -2,8 +2,19 @@
     require 'header.php';
 
     if(!isset($_GET['id'])) {
-        //echo "null";
         $business_name = "";
+        $business_email = "";
+        $business_website = "";
+        $business_address = "";
+        $business_address_2 = "";
+        $business_city = "";
+        $business_state = "";
+        $business_zip = "";
+        $business_country = "";
+        $business_hours = "";
+        $payment_method = "";
+        $business_phone = "";
+        $business_alt_phone = "";
         $email = "";
         $fname = "";
         $lname = "";
@@ -22,8 +33,19 @@
         $bill_state = "";
         $bill_zip = "";
         $bill_country = "";
+        $gmail_acc = "";
+        $sp_request = "";
+        $social1 = "";
+        $social2 = "";
+        $biglo_site = "";
+        $analytical_address = "";
+        $google_plus = "";
+        $google_maps = "";
+        $facebook = "";
+        $foursquare = "";
+        $twitter = "";
+        $linkedin = "";
     } else {
-        //echo $_GET['id'];
         $i=0;
         while(isset($result_db_customers->rows[$i])) {
             if($result_db_customers->rows[$i]->value->chargify_id == $_GET['id']) {
@@ -36,8 +58,8 @@
                 $business_city = $result_db_customers->rows[$i]->value->business_city;
                 $business_state = $result_db_customers->rows[$i]->value->business_state;
                 $business_zip = $result_db_customers->rows[$i]->value->business_zip;
-                $business_hours = $result_db_customers->rows[$i]->value->business_hours;
                 $business_country = "US";
+                $business_hours = $result_db_customers->rows[$i]->value->business_hours;
                 $business_post_address = $result_db_customers->rows[$i]->value->business_post_address;
                 $payment_method = $result_db_customers->rows[$i]->value->payment_method;
                 $business_phone = $result_db_customers->rows[$i]->value->business_phone_no;
@@ -66,6 +88,19 @@
                 $bill_state = $result_db_customers->rows[$i]->value->customer_billing_state;
                 $bill_zip = $result_db_customers->rows[$i]->value->customer_billing_zip;
                 $bill_country = "US";
+                //prov
+                $gmail_acc = $result_db_customers->rows[$i]->value->prov_gmail;
+                $sp_request = $result_db_customers->rows[$i]->value->prov_special_request;
+                $social1 = $result_db_customers->rows[$i]->value->prov_existing_social1;
+                $social2 = $result_db_customers->rows[$i]->value->prov_existing_social2;
+                $biglo_site = $result_db_customers->rows[$i]->value->prov_biglo_website;
+                $analytical_address = $result_db_customers->rows[$i]->value->prov_analytical_address;
+                $google_plus = $result_db_customers->rows[$i]->value->prov_google_plus;
+                $google_maps = $result_db_customers->rows[$i]->value->prov_google_maps;
+                $facebook = $result_db_customers->rows[$i]->value->prov_facebook;
+                $foursquare = $result_db_customers->rows[$i]->value->prov_foursquare;
+                $twitter = $result_db_customers->rows[$i]->value->prov_twitter;
+                $linkedin = $result_db_customers->rows[$i]->value->prov_linkedin;
             }
             $i++;
         }
@@ -480,7 +515,7 @@
             <div class="col-md-6">
                 <select class="form-control">
                 <?php 
-                
+                if(isset($_GET['id'])) {
                 ?>
                     <option value="" disabled selected>Business Category</option>
                     <option value="Automotive Services">Automotive Services</option>
@@ -492,6 +527,11 @@
                     <option value="Mobile Services">Mobile Services</option>
                     <option value="Personal Services">Personal Services</option>
                     <option value="Retail Establishment">Retail Establishment</option>
+                <?php 
+                } else {
+                    echo "<option value='' disabled selected>Business Category</option>";
+                }
+                ?>
                 </select>
             </div>
         </div>
@@ -526,14 +566,19 @@
             <label></label>
             <div class="col-md-2">
                 <select class="form-control">
-                    <optgroup label="Show Address?">
-                    <?php if($business_post_address == 'yes') { 
-                        echo "<option value='".$business_post_address."'>Yes</option>
-                            <option value='no'>No</option>";
-                    } else { 
-                        echo "<option value='".$business_post_address."'>No</option>
-                            <option value='yes'>Yes</option>";
-                    } ?>
+                    <?php if(isset($_GET['id'])) { 
+                        echo "<optgroup label='Show Address?'>";
+                        if($business_post_address == 'yes') { 
+                            echo "<option value='".$business_post_address."'>Yes</option>
+                                <option value='no'>No</option>";
+                        } else { 
+                            echo "<option value='".$business_post_address."'>No</option>
+                                <option value='yes'>Yes</option>";
+                        }
+                        echo "</optgroup>"; 
+                    } else {
+                        echo "<option value='' disabled selected>Show Address?</option>";
+                    }?>
                  </select>
             </div>
         </div>
@@ -542,7 +587,69 @@
                 <input type="text" class="form-control" placeholder="Office City" value="<?php echo $business_city; ?>">
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Office State" value="<?php echo $business_state; ?>">
+                <select class="form-control">
+                <?php if(isset($_GET['id'])) {
+                    echo "<optgroup label='Current'>
+                        <option value='".$business_state."'>".$business_state."</option>
+                        </optgroup>";
+                ?>
+                    <optgroup label='States'>
+                        <option value="AL">AL</option> 
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option> 
+                        <option value="AR">AR</option> 
+                        <option value="CA">CA</option> 
+                        <option value="CO">CO</option> 
+                        <option value="CT">CT</option> 
+                        <option value="DE">DE</option> 
+                        <option value="DC">DC</option> 
+                        <option value="FL">FL</option> 
+                        <option value="GA">GA</option> 
+                        <option value="HI">HI</option> 
+                        <option value="ID">ID</option> 
+                        <option value="IL">IL</option> 
+                        <option value="IN">IN</option> 
+                        <option value="IA">IA</option> 
+                        <option value="KS">KS</option> 
+                        <option value="KY">KY</option> 
+                        <option value="LA">LA</option> 
+                        <option value="ME">ME</option> 
+                        <option value="MD">MD</option> 
+                        <option value="MA">MA</option> 
+                        <option value="MI">MI</option> 
+                        <option value="MN">MN</option> 
+                        <option value="MS">MS</option> 
+                        <option value="MO">MO</option> 
+                        <option value="MT">MT</option> 
+                        <option value="NE">NE</option> 
+                        <option value="NV">NV</option> 
+                        <option value="NH">NH</option> 
+                        <option value="NJ">NJ</option> 
+                        <option value="NM">NM</option> 
+                        <option value="NY">NY</option> 
+                        <option value="NC">NC</option> 
+                        <option value="ND">ND</option> 
+                        <option value="OH">OH</option> 
+                        <option value="OK">OK</option> 
+                        <option value="OR">OR</option> 
+                        <option value="PA">PA</option> 
+                        <option value="RI">RI</option> 
+                        <option value="SC">SC</option> 
+                        <option value="SD">SD</option> 
+                        <option value="TN">TN</option> 
+                        <option value="TX">TX</option> 
+                        <option value="UT">UT</option> 
+                        <option value="VT">VT</option> 
+                        <option value="VA">VA</option> 
+                        <option value="WA">WA</option> 
+                        <option value="WV">WV</option> 
+                        <option value="WI">WI</option> 
+                        <option value="WY">WY</option>
+                    </optgroup>
+                <?php } else {
+                    echo "<option value='' disabled selected>Office State</option>";
+                } ?>
+                </select>
             </div>
             <div class="col-md-3">
                 <input type="text" class="form-control" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
@@ -560,7 +667,7 @@
                 <input type="text" class="form-control" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
             </div>
             <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Special Request">
+                <input type="text" class="form-control" placeholder="Special Request" value="<?php echo $sp_request; ?>">
             </div>
         </div>
 
@@ -575,53 +682,53 @@
 
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Existing Social 1">
+                <input type="text" class="form-control" placeholder="Existing Social 1" value="<?php echo $social1; ?>">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Existing Social 2">
+                <input type="text" class="form-control" placeholder="Existing Social 2" value="<?php echo $social2; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="BigLo Website">
+                <input type="text" class="form-control" placeholder="BigLo Website" value="<?php echo $biglo_site; ?>">
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Analytical Address">
+                <input type="text" class="form-control" placeholder="Analytical Address" value="<?php echo $analytical_address; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <label>Google Plus</label>
-                <input type="text" class="form-control" placeholder="Google +">
+                <input type="text" class="form-control" placeholder="Google +" value="<?php echo $google_plus; ?>">
             </div>
             <div class="col-md-4">
                 <label>Google Maps</label>
-                <input type="text" class="form-control" placeholder="Google Maps">
+                <input type="text" class="form-control" placeholder="Google Maps" value="<?php echo $google_maps; ?>">
             </div>
             <div class="col-md-4">
                 <label>Facebook</label>
-                <input type="text" class="form-control" placeholder="Facebook">
+                <input type="text" class="form-control" placeholder="Facebook" value="<?php echo $facebook; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <label>Four Square</label>
-                <input type="text" class="form-control" placeholder="Four Square">
+                <input type="text" class="form-control" placeholder="Four Square" value="<?php echo $foursquare; ?>">
             </div>
             <div class="col-md-4">
                 <label>Twitter</label>
-                <input type="text" class="form-control" placeholder="Twitter">
+                <input type="text" class="form-control" placeholder="Twitter" value="<?php echo $twitter; ?>">
             </div>
             <div class="col-md-4">
                 <label>LinkedIn</label>
-                <input type="text" class="form-control" placeholder="LinkedIn">
+                <input type="text" class="form-control" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
             </div>
         </div>
         
-        
+        <!--
         <div class="row">
             <div class="col-md-12">
                 <div class="progress">
@@ -637,6 +744,7 @@
                 </div>
             </div>
         </div>
+        -->
     </form>
 
     <form id="cust_billing_form" action="" method="POST">
