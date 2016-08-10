@@ -48,6 +48,8 @@
         $foursquare = "";
         $twitter = "";
         $linkedin = "";
+        $cancelled = "";
+        $cancel_reason = "";
     } else {
         $i=0;
         while(isset($result_db_customers->rows[$i])) {
