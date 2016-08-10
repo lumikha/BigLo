@@ -311,9 +311,10 @@
                 } ?>
                 </select>
             </div>
-            <div class="col-md-1">
+            <div class="hidden-xs hidden-sm col-md-1">
                 <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
             </div>
+
         </div>
         <div class="row">
             <div class="col-md-2">
@@ -381,6 +382,9 @@
                     }
                 ?>
                 </select>
+            </div>
+            <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
+                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
             </div>
         </div>
     </form>
@@ -503,16 +507,12 @@
     </form>
 -->
     <form id="cust_provisioning_form" action="" method="POST">
-        <div class="row">
-            <div class="col-md-1" style="float: right;">
-                <button class="btn btn-danger" type="submit">Ticket</button>
-            </div>
-        </div>
+     
         <div class="row">
             <div class="col-md-6">
                 <input type="text" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <select class="form-control">
                 <?php 
                 if(isset($_GET['id'])) {
@@ -533,6 +533,9 @@
                 }
                 ?>
                 </select>
+            </div>
+            <div class="hidden-xs hidden-sm col-md-2 "> <!--provisioning to be edited-->
+                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
             </div>
         </div>
         <div class="row">
@@ -726,6 +729,10 @@
                 <label>LinkedIn</label>
                 <input type="text" class="form-control" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
             </div>
+            <!--hidden ticket button for medium to large screens-->
+             <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
+                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
+            </div> 
         </div>
         
         <!--
