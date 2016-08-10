@@ -29,6 +29,19 @@
             if($result_db_customers->rows[$i]->value->chargify_id == $_GET['id']) {
                 $customer_db_id = $result_db_customers->rows[$i]->value->_id;
                 $business_name = $result_db_customers->rows[$i]->value->business_name;
+                $business_email = $result_db_customers->rows[$i]->value->business_email;
+                $business_website = $result_db_customers->rows[$i]->value->business_website;
+                $business_address = $result_db_customers->rows[$i]->value->business_address;
+                $business_address_2 = $result_db_customers->rows[$i]->value->business_suite_no;
+                $business_city = $result_db_customers->rows[$i]->value->business_city;
+                $business_state = $result_db_customers->rows[$i]->value->business_state;
+                $business_zip = $result_db_customers->rows[$i]->value->business_zip;
+                $business_hours = $result_db_customers->rows[$i]->value->business_hours;
+                $business_country = "US";
+                $business_post_address = $result_db_customers->rows[$i]->value->business_post_address;
+                $payment_method = $result_db_customers->rows[$i]->value->payment_method;
+                $business_phone = $result_db_customers->rows[$i]->value->business_phone_no;
+                $business_alt_phone = $result_db_customers->rows[$i]->value->business_alternate_phone_no;
                 $email = $result_db_customers->rows[$i]->value->customer_email;
                 $fname = $result_db_customers->rows[$i]->value->customer_first_name;
                 $lname = $result_db_customers->rows[$i]->value->customer_last_name;
@@ -456,8 +469,172 @@
 -->
     <form id="cust_provisioning_form" action="" method="POST">
         <div class="row">
+            <div class="col-md-1" style="float: right;">
+                <button class="btn btn-danger" type="submit">Ticket</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>">
+            </div>
+            <div class="col-md-6">
+                <select class="form-control">
+                <?php 
+                
+                ?>
+                    <option value="" disabled selected>Business Category</option>
+                    <option value="Automotive Services">Automotive Services</option>
+                    <option value="Business Services">Business Services</option>
+                    <option value="Food &amp; Beverage">Food &amp; Beverage</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Household Services">Household Services</option>
+                    <option value="Lawn &amp; Garden Services">Lawn &amp; Garden Services</option>
+                    <option value="Mobile Services">Mobile Services</option>
+                    <option value="Personal Services">Personal Services</option>
+                    <option value="Retail Establishment">Retail Establishment</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Primary Email" value="<?php echo $business_email; ?>">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Gmail Account" value="">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
-                <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
+                <input type="text" class="form-control" placeholder="Existing Website" value="<?php echo $business_website; ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label for="comment">Keywords:</label>
+                  <textarea class="form-control" rows="5" id="comment"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <input type="text" class="form-control" placeholder="Office Address 1" value="<?php echo $business_address; ?>">
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" placeholder="Office Address 2" value="<?php echo $business_address_2; ?>">
+            </div>
+            <label></label>
+            <div class="col-md-2">
+                <select class="form-control">
+                    <optgroup label="Show Address?">
+                    <?php if($business_post_address == 'yes') { 
+                        echo "<option value='".$business_post_address."'>Yes</option>
+                            <option value='no'>No</option>";
+                    } else { 
+                        echo "<option value='".$business_post_address."'>No</option>
+                            <option value='yes'>Yes</option>";
+                    } ?>
+                 </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Office City" value="<?php echo $business_city; ?>">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Office State" value="<?php echo $business_state; ?>">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Office Country" value="<?php echo $business_country; ?>">
+            </div>
+        </div>
+            
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Hours Of Operation" value="<?php echo $business_hours; ?>">
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Special Request">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Office/Business Phone" value="<?php echo $business_phone; ?>">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Alternate Phone" value="<?php echo $business_alt_phone; ?>">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Existing Social 1">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Existing Social 2">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="BigLo Website">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Analytical Address">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Google Plus</label>
+                <input type="text" class="form-control" placeholder="Google +">
+            </div>
+            <div class="col-md-4">
+                <label>Google Maps</label>
+                <input type="text" class="form-control" placeholder="Google Maps">
+            </div>
+            <div class="col-md-4">
+                <label>Facebook</label>
+                <input type="text" class="form-control" placeholder="Facebook">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>Four Square</label>
+                <input type="text" class="form-control" placeholder="Four Square">
+            </div>
+            <div class="col-md-4">
+                <label>Twitter</label>
+                <input type="text" class="form-control" placeholder="Twitter">
+            </div>
+            <div class="col-md-4">
+                <label>LinkedIn</label>
+                <input type="text" class="form-control" placeholder="LinkedIn">
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" style="width: 35%">
+                        <span class="sr-only">35% Complete (success)</span>
+                    </div>
+                    <div class="progress-bar progress-bar-warning" style="width: 20%">
+                        <span class="sr-only">20% Complete (warning)</span>
+                    </div>
+                    <div class="progress-bar progress-bar-danger" style="width: 10%">
+                        <span class="sr-only">10% Complete (danger)</span>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

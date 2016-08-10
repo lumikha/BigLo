@@ -55,8 +55,8 @@
 					$fname = $result_db_customers->rows[$i]->value->customer_first_name;
 					$lname = $result_db_customers->rows[$i]->value->customer_last_name;
 					$chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
-					$chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
                 	$salutation = $result_db_customers->rows[$i]->value->customer_salutation;
+                	$title = $result_db_customers->rows[$i]->value->customer_title;
 					$sales_date = $result_db_customers->rows[$i]->value->sale_date;
 					$sales_agent = $result_db_customers->rows[$i]->value->sale_agent;
 					$sales_center = $result_db_customers->rows[$i]->value->sale_center;
