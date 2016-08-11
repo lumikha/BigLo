@@ -218,6 +218,7 @@ $err_msg = "";
       $doc->customer_billing_city = @$_POST['c-city'];
       $doc->customer_billing_state = @$_POST['c-state'];
       $doc->customer_billing_zip = @$_POST['c-zip'];
+      $doc->customer_billing_country = "US";
       $doc->customer_card_last_four = substr($_POST['card-number'], -4);
       $doc->customer_card_cvc = @$_POST['card-cvc'];
       $doc->customer_card_expire_month = @$_POST['card-expiry-month'];
