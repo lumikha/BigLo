@@ -493,11 +493,17 @@
             <p class="last_activity"><?php echo $char_upd_at; ?></p>
         </div>
     </div>
+    <div class="row">
+   		 <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
+                <button class="btn btn-danger" type="submit">Ticket</button>
+         </div>
+    </div>
 
     <!-- Customer's Account Info -->
     <form  action="" method="POST" id="cust_account_form" onsubmit="return checkFields_cust_tab1();">
         <div class="row">
             <input type="text" value="<?php echo $chargifyID; ?>" id="cID" hidden>
+
             <div class="col-md-6">
                 <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>" onchange="BName()">
             </div>
@@ -597,12 +603,10 @@
                 ?>
                 </select>
             </div>
-            <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
-                <button class="btn btn-danger" type="submit">Ticket</button>
-            </div>
+           
         </div>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1 col-md-offset-5 col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
                 <button class="btn btn-danger" type="submit" name="upd_acc">Update</button>
             </div>
         </div>
@@ -610,6 +614,9 @@
 
     <form id="cust_provisioning_form" action="" method="POST" style="margin-top: -60px;">
      
+        <div class="row">
+           
+        </div>
         <div class="row">
             <div class="hidden-xs hidden-sm col-md-1 " style="float: right;"> <!--provisioning to be edited-->
                 <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
@@ -883,9 +890,7 @@
                 <input type="text" class="form-control" name="linkedin" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
             </div>
             <!--hidden ticket button for medium to large screens-->
-             <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
-                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
-            </div> 
+             
         </div>
         
         <!--
@@ -906,13 +911,14 @@
         </div>
         -->
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1 col-md-offset-5 col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
                 <button class="btn btn-danger" type="submit" name="upd_prov">Update</button>
             </div>
         </div>
     </form>
 
-    <form id="cust_billing_form" action="" method="POST">
+    <form id="cust_billing_form" action="" method="POST" style="margin-top: -60px;">
+
         <div class="row">
             <div class="hidden-xs hidden-sm col-md-1 " style="float: right;"> <!--provisioning to be edited-->
                 <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
@@ -947,14 +953,14 @@
             <div class="col-md-1">
                 <span><?php echo $cust_search_state; ?></span>
             </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" name="bill-d1" value="<?php echo $state_date[1]; ?>" >
+            <div class="col lg-1 col-md-1 col-sm-3 col-xs-3">
+                <input type="text" class="form-control" name="bill-d1" style="width:50px; margin-left: -15px; margin-right: 30px;" value="<?php echo $state_date[1]; ?>" >
             </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left: -20px;">
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left:-15px; width:50px;"">
             </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" name="bill-d3" value="<?php echo $state_date[0]; ?>" style="margin-left: -40px; width: 60px;">
+            <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+                <input type="text" class="form-control" name="bill-d3" value="<?php echo $state_date[0]; ?>" style="margin-left: -15px; width: 70px;">
             </div>
         </div>
         <div class="row">
@@ -1059,7 +1065,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1 col-md-offset-5 col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
                 <button class="btn btn-danger" type="submit" name="upd_prov">Update</button>
             </div>
         </div>

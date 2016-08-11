@@ -1,15 +1,5 @@
-.container {
-    padding-top:2em;
-    width: 70%;
-}
-@media (min-width: 380px) {
-    .container-full {
-        padding: 2em;
-
-    }
-}
-
-
+@media screen and (min-device-width: 481px) and (max-device-width: 768px)
+{
 .col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10,.col-md-11,.col-md-12
 {
     margin-bottom: 10px;
@@ -22,9 +12,4 @@
      margin-bottom: -5px;
 }
 
-#search_result_view
-{
-    width: 90%;
-
 }
-
