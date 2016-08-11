@@ -119,6 +119,74 @@
             }
             $i++;
         }
+        $test = true;
+        $subscription = new ChargifySubscription(NULL, $test);
+
+        try {
+            $result_customer_id_search = $subscription->getByCustomerID($chargifyID);
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
+
+        $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
+        $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
+        $fin2 = explode('-',$fin[0]);
+        $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
+
+        if($result_customer_id_search[0]->state == "trialing") {
+            $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
+            $state_date = explode('-',$trial_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Trial End: ";
+        } elseif($result_customer_id_search[0]->state == "active") {
+            $billing_date = explode('T',$result_customer_id_search[0]->next_assessment_at,-1);
+            $state_date = explode('-',$billing_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Next Billing: ";
+        } else {
+            $cancel_date = explode('T',$result_customer_id_search[0]->canceled_at,-1);
+            $state_date = explode('-',$cancel_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Cancelled At: ";
+        }
+
+        if($result_customer_id_search[0]->state == "trialing") {
+        ?><style>
+            .cust_id {
+                color: #b300b3;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "active") {
+        ?><style>
+            .cust_id {
+                color: #28B22C;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "past_due") {
+        ?><style>
+            .cust_id {
+                color: #e6e600;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "unpaid") {
+        ?><style>
+            .cust_id {
+                color: #ff0000;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "canceled") {
+        ?><style>
+            .cust_id {
+                color: #000000;
+            }
+        </style><?php
+        } else {
+        ?><style>
+            .cust_id {
+                color: #cccccc;
+            }
+        </style><?php
+        }
     }
 
     if(isset($_POST['upd_acc'])) {
@@ -319,73 +387,75 @@
     }
 
 
-    $test = true;
-    $subscription = new ChargifySubscription(NULL, $test);
+    if(isset($_GET['id'])) {
+        $test = true;
+        $subscription = new ChargifySubscription(NULL, $test);
 
-    try {
-        $result_customer_id_search = $subscription->getByCustomerID($chargifyID);
-    } catch (ChargifyValidationException $cve) {
-        echo $cve->getMessage();
-    }
+        try {
+            $result_customer_id_search = $subscription->getByCustomerID($chargifyID);
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
 
-    $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
-    $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
-    $fin2 = explode('-',$fin[0]);
-    $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
+        $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
+        $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
+        $fin2 = explode('-',$fin[0]);
+        $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
 
-    if($result_customer_id_search[0]->state == "trialing") {
-        $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
-        $state_date = explode('-',$trial_date[0]);
-        $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
-        $cust_search_state = "Trial End: ";
-    } elseif($result_customer_id_search[0]->state == "active") {
-        $billing_date = explode('T',$result_customer_id_search[0]->next_assessment_at,-1);
-        $state_date = explode('-',$billing_date[0]);
-        $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
-        $cust_search_state = "Next Billing: ";
-    } else {
-        $cancel_date = explode('T',$result_customer_id_search[0]->canceled_at,-1);
-        $state_date = explode('-',$cancel_date[0]);
-        $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
-        $cust_search_state = "Cancelled At: ";
-    }
+        if($result_customer_id_search[0]->state == "trialing") {
+            $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
+            $state_date = explode('-',$trial_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Trial End: ";
+        } elseif($result_customer_id_search[0]->state == "active") {
+            $billing_date = explode('T',$result_customer_id_search[0]->next_assessment_at,-1);
+            $state_date = explode('-',$billing_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Next Billing: ";
+        } else {
+            $cancel_date = explode('T',$result_customer_id_search[0]->canceled_at,-1);
+            $state_date = explode('-',$cancel_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Cancelled At: ";
+        }
 
-    if($result_customer_id_search[0]->state == "trialing") {
-    ?><style>
-        .cust_id {
-            color: #b300b3;
+        if($result_customer_id_search[0]->state == "trialing") {
+        ?><style>
+            .cust_id {
+                color: #b300b3;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "active") {
+        ?><style>
+            .cust_id {
+                color: #28B22C;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "past_due") {
+        ?><style>
+            .cust_id {
+                color: #e6e600;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "unpaid") {
+        ?><style>
+            .cust_id {
+                color: #ff0000;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "canceled") {
+        ?><style>
+            .cust_id {
+                color: #000000;
+            }
+        </style><?php
+        } else {
+        ?><style>
+            .cust_id {
+                color: #cccccc;
+            }
+        </style><?php
         }
-    </style><?php
-    } elseif($result_customer_id_search[0]->state == "active") {
-    ?><style>
-        .cust_id {
-            color: #28B22C;
-        }
-    </style><?php
-    } elseif($result_customer_id_search[0]->state == "past_due") {
-    ?><style>
-        .cust_id {
-            color: #e6e600;
-        }
-    </style><?php
-    } elseif($result_customer_id_search[0]->state == "unpaid") {
-    ?><style>
-        .cust_id {
-            color: #ff0000;
-        }
-    </style><?php
-    } elseif($result_customer_id_search[0]->state == "canceled") {
-    ?><style>
-        .cust_id {
-            color: #000000;
-        }
-    </style><?php
-    } else {
-    ?><style>
-        .cust_id {
-            color: #cccccc;
-        }
-    </style><?php
     }
 ?>
 <link rel="stylesheet" type="text/css" href="js/field_trappings/error_msg.css"/>
