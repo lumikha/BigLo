@@ -13,7 +13,7 @@
         $customer = new ChargifyCustomer(NULL, $test);
         $upd_subscription = new ChargifySubscription(NULL, $test);
 
-        $customer->id = $_GET['id'];
+        $customer->id = $chargifyID;
         $customer->organization = $business_name;
         $customer->first_name = $fname;
         $customer->last_name = $lname;
@@ -55,7 +55,7 @@
             $client_customer = new couchClient ('http://127.0.0.1:5984','bigloco-customers');
 
             try {
-                $doc = $client_customer->getDoc($customer_db_id);
+                $doc = $client_customer->getDoc($_SESSION['user_now_db_customer_id']);
             } catch (Exception $e) {
                 echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
             }
