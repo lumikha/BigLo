@@ -196,6 +196,7 @@ $err_msg = "";
     $new_payment_profile->billing_city = $_POST["c-city"];
     $new_payment_profile->billing_state = $_POST["c-state"];
     $new_payment_profile->billing_zip = $_POST["c-zip"];
+    $new_payment_profile->billing_country = "US";
     
     $new_subscription = new ChargifySubscription(NULL, $test);
     $new_subscription->product_handle = $_POST["product-handle"];
