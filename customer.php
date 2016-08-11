@@ -1,188 +1,6 @@
 <?php
     require 'header.php';
 
-    if(!isset($_GET['id'])) {
-        $business_name = "";
-        $business_category = "";
-        $business_email = "";
-        $business_website = "";
-        $business_address = "";
-        $business_address_2 = "";
-        $business_city = "";
-        $business_state = "";
-        $business_zip = "";
-        $business_country = "";
-        $business_hours = "";
-        $payment_method = "";
-        $business_phone = "";
-        $business_alt_phone = "";
-        $email = "";
-        $fname = "";
-        $lname = "";
-        $chargifyID = "";
-        $char_upd_at = "";
-        $billing_sum = "";
-        $sales_date = "";
-        $sales_agent = "";
-        $sales_center = "";
-        $cust_search_state ="";
-        $cc_last_four = "";
-        $cc_exp_mm = "";
-        $cc_exp_yy = "";
-        $bill_address = "";
-        $bill_city = "";
-        $bill_state = "";
-        $bill_zip = "";
-        $bill_country = "";
-        $state_date = null;
-        $gmail_acc = "";
-        $keywords = "";
-        $sp_request = "";
-        $social1 = "";
-        $social2 = "";
-        $biglo_site = "";
-        $analytical_address = "";
-        $google_plus = "";
-        $google_maps = "";
-        $facebook = "";
-        $foursquare = "";
-        $twitter = "";
-        $linkedin = "";
-        $cancelled = "";
-        $cancel_reason = "";
-    } else {
-        $i=0;
-        while(isset($result_db_customers->rows[$i])) {
-            if($result_db_customers->rows[$i]->value->chargify_id == $_GET['id']) {
-                $customer_db_id = $result_db_customers->rows[$i]->value->_id;
-                $business_name = $result_db_customers->rows[$i]->value->business_name;
-                $business_category = $result_db_customers->rows[$i]->value->business_category;
-                $business_email = $result_db_customers->rows[$i]->value->business_email;
-                $business_website = $result_db_customers->rows[$i]->value->business_website;
-                $business_address = $result_db_customers->rows[$i]->value->business_address;
-                $business_address_2 = $result_db_customers->rows[$i]->value->business_suite_no;
-                $business_city = $result_db_customers->rows[$i]->value->business_city;
-                $business_state = $result_db_customers->rows[$i]->value->business_state;
-                $business_zip = $result_db_customers->rows[$i]->value->business_zip;
-                $business_country = $result_db_customers->rows[$i]->value->business_country;
-                $business_hours = $result_db_customers->rows[$i]->value->business_hours;
-                $business_post_address = $result_db_customers->rows[$i]->value->business_post_address;
-                $payment_method = $result_db_customers->rows[$i]->value->payment_method;
-                $business_phone = $result_db_customers->rows[$i]->value->business_phone_no;
-                $business_alt_phone = $result_db_customers->rows[$i]->value->business_alternate_phone_no;
-                $email = $result_db_customers->rows[$i]->value->customer_email;
-                $fname = $result_db_customers->rows[$i]->value->customer_first_name;
-                $lname = $result_db_customers->rows[$i]->value->customer_last_name;
-                $chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
-                $salutation = $result_db_customers->rows[$i]->value->customer_salutation;
-                $title = $result_db_customers->rows[$i]->value->customer_title;
-                $sales_date = $result_db_customers->rows[$i]->value->sale_date;
-                $sales_agent = $result_db_customers->rows[$i]->value->sale_agent;
-                $sales_center = $result_db_customers->rows[$i]->value->sale_center;
-                $product_id = $result_db_customers->rows[$i]->value->product_id;
-                $product_handle = $result_db_customers->rows[$i]->value->product_handle;
-                $product_name = $result_db_customers->rows[$i]->value->product_name;
-                $product_component_id = $result_db_customers->rows[$i]->value->product_component_id;
-                $product_component_name = $result_db_customers->rows[$i]->value->product_component_name;
-                $product_coupon_id = $result_db_customers->rows[$i]->value->product_coupon_id;
-                $product_coupon_name = $result_db_customers->rows[$i]->value->product_coupon_name;
-                $cc_last_four = "XXXX-XXXX-XXX-".$result_db_customers->rows[$i]->value->customer_card_last_four;
-                $cc_exp_mm = $result_db_customers->rows[$i]->value->customer_card_expire_month;
-                $cc_exp_yy = $result_db_customers->rows[$i]->value->customer_card_expire_year;
-                $bill_address = $result_db_customers->rows[$i]->value->customer_billing_address;
-                $bill_city = $result_db_customers->rows[$i]->value->customer_billing_city;
-                $bill_state = $result_db_customers->rows[$i]->value->customer_billing_state;
-                $bill_zip = $result_db_customers->rows[$i]->value->customer_billing_zip;
-                $bill_country = "US";
-                //prov
-                $gmail_acc = $result_db_customers->rows[$i]->value->prov_gmail;
-                $keywords = $result_db_customers->rows[$i]->value->prov_keywords;
-                $sp_request = $result_db_customers->rows[$i]->value->prov_special_request;
-                $social1 = $result_db_customers->rows[$i]->value->prov_existing_social1;
-                $social2 = $result_db_customers->rows[$i]->value->prov_existing_social2;
-                $biglo_site = $result_db_customers->rows[$i]->value->prov_biglo_website;
-                $analytical_address = $result_db_customers->rows[$i]->value->prov_analytical_address;
-                $google_plus = $result_db_customers->rows[$i]->value->prov_google_plus;
-                $google_maps = $result_db_customers->rows[$i]->value->prov_google_maps;
-                $facebook = $result_db_customers->rows[$i]->value->prov_facebook;
-                $foursquare = $result_db_customers->rows[$i]->value->prov_foursquare;
-                $twitter = $result_db_customers->rows[$i]->value->prov_twitter;
-                $linkedin = $result_db_customers->rows[$i]->value->prov_linkedin;
-                //cancel
-                if(isset($result_db_customers->rows[$i]->value->cancelled)) {
-                    $cancelled = $result_db_customers->rows[$i]->value->cancelled;
-                    $cancel_reason = $result_db_customers->rows[$i]->value->cancel_reason;
-                } else {
-                    $cancelled = "no";
-                    $cancel_reason = "";
-                }
-            }
-            $i++;
-        }
-        $test = true;
-        $subscription = new ChargifySubscription(NULL, $test);
-
-        try {
-            $result_customer_id_search = $subscription->getByCustomerID($chargifyID);
-        } catch (ChargifyValidationException $cve) {
-            echo $cve->getMessage();
-        }
-
-        if($result_customer_id_search[0]->state == "trialing") {
-            ?><style>
-                .cust_id {
-                    color: #b300b3;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "active") {
-                ?><style>
-                .cust_id {
-                    color: #28B22C;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "past_due") {
-                ?><style>
-                .cust_id {
-                    color: #e6e600;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "unpaid") {
-                ?><style>
-                .cust_id {
-                    color: #ff0000;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "canceled") {
-                ?><style>
-                .cust_id {
-                    color: #000000;
-                }
-                </style><?php
-            } else {
-                ?><style>
-                .cust_id {
-                    color: #cccccc;
-                }
-                </style><?php
-            }
-
-            $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
-            $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
-            $fin2 = explode('-',$fin[0]);
-            $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
-
-            if($result_customer_id_search[0]->state == "trialing") {
-                $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
-                $state_date = explode('-',$trial_date[0]);
-                $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
-                $cust_search_state = "Trial End: ";
-            } elseif($result_customer_id_search[0]->state == "active") {
-                $cust_search_state = "Next Billing: ".$result_customer_id_search[0]->next_billing_at;
-            } else {
-                $cust_search_state = "Cancelled At: ".$result_customer_id_search[0]->canceled_at;
-            }
-    }
-
     if(isset($_POST['upd_acc'])) {
         $business_name = stripslashes($_POST['acc-b-name']);
         $prod = $_POST['acc-prod'];
@@ -378,6 +196,188 @@
         } catch (Exception $e) {
             echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
         }
+    }
+
+    if(!isset($_GET['id'])) {
+        $business_name = "";
+        $business_category = "";
+        $business_email = "";
+        $business_website = "";
+        $business_address = "";
+        $business_address_2 = "";
+        $business_city = "";
+        $business_state = "";
+        $business_zip = "";
+        $business_country = "";
+        $business_hours = "";
+        $payment_method = "";
+        $business_phone = "";
+        $business_alt_phone = "";
+        $email = "";
+        $fname = "";
+        $lname = "";
+        $chargifyID = "";
+        $char_upd_at = "";
+        $billing_sum = "";
+        $sales_date = "";
+        $sales_agent = "";
+        $sales_center = "";
+        $cust_search_state ="";
+        $cc_last_four = "";
+        $cc_exp_mm = "";
+        $cc_exp_yy = "";
+        $bill_address = "";
+        $bill_city = "";
+        $bill_state = "";
+        $bill_zip = "";
+        $bill_country = "";
+        $state_date = null;
+        $gmail_acc = "";
+        $keywords = "";
+        $sp_request = "";
+        $social1 = "";
+        $social2 = "";
+        $biglo_site = "";
+        $analytical_address = "";
+        $google_plus = "";
+        $google_maps = "";
+        $facebook = "";
+        $foursquare = "";
+        $twitter = "";
+        $linkedin = "";
+        $cancelled = "";
+        $cancel_reason = "";
+    } else {
+        $i=0;
+        while(isset($result_db_customers->rows[$i])) {
+            if($result_db_customers->rows[$i]->value->chargify_id == $_GET['id']) {
+                $customer_db_id = $result_db_customers->rows[$i]->value->_id;
+                $business_name = $result_db_customers->rows[$i]->value->business_name;
+                $business_category = $result_db_customers->rows[$i]->value->business_category;
+                $business_email = $result_db_customers->rows[$i]->value->business_email;
+                $business_website = $result_db_customers->rows[$i]->value->business_website;
+                $business_address = $result_db_customers->rows[$i]->value->business_address;
+                $business_address_2 = $result_db_customers->rows[$i]->value->business_suite_no;
+                $business_city = $result_db_customers->rows[$i]->value->business_city;
+                $business_state = $result_db_customers->rows[$i]->value->business_state;
+                $business_zip = $result_db_customers->rows[$i]->value->business_zip;
+                $business_country = $result_db_customers->rows[$i]->value->business_country;
+                $business_hours = $result_db_customers->rows[$i]->value->business_hours;
+                $business_post_address = $result_db_customers->rows[$i]->value->business_post_address;
+                $payment_method = $result_db_customers->rows[$i]->value->payment_method;
+                $business_phone = $result_db_customers->rows[$i]->value->business_phone_no;
+                $business_alt_phone = $result_db_customers->rows[$i]->value->business_alternate_phone_no;
+                $email = $result_db_customers->rows[$i]->value->customer_email;
+                $fname = $result_db_customers->rows[$i]->value->customer_first_name;
+                $lname = $result_db_customers->rows[$i]->value->customer_last_name;
+                $chargifyID = $result_db_customers->rows[$i]->value->chargify_id;
+                $salutation = $result_db_customers->rows[$i]->value->customer_salutation;
+                $title = $result_db_customers->rows[$i]->value->customer_title;
+                $sales_date = $result_db_customers->rows[$i]->value->sale_date;
+                $sales_agent = $result_db_customers->rows[$i]->value->sale_agent;
+                $sales_center = $result_db_customers->rows[$i]->value->sale_center;
+                $product_id = $result_db_customers->rows[$i]->value->product_id;
+                $product_handle = $result_db_customers->rows[$i]->value->product_handle;
+                $product_name = $result_db_customers->rows[$i]->value->product_name;
+                $product_component_id = $result_db_customers->rows[$i]->value->product_component_id;
+                $product_component_name = $result_db_customers->rows[$i]->value->product_component_name;
+                $product_coupon_id = $result_db_customers->rows[$i]->value->product_coupon_id;
+                $product_coupon_name = $result_db_customers->rows[$i]->value->product_coupon_name;
+                $cc_last_four = "XXXX-XXXX-XXX-".$result_db_customers->rows[$i]->value->customer_card_last_four;
+                $cc_exp_mm = $result_db_customers->rows[$i]->value->customer_card_expire_month;
+                $cc_exp_yy = $result_db_customers->rows[$i]->value->customer_card_expire_year;
+                $bill_address = $result_db_customers->rows[$i]->value->customer_billing_address;
+                $bill_city = $result_db_customers->rows[$i]->value->customer_billing_city;
+                $bill_state = $result_db_customers->rows[$i]->value->customer_billing_state;
+                $bill_zip = $result_db_customers->rows[$i]->value->customer_billing_zip;
+                $bill_country = "US";
+                //prov
+                $gmail_acc = $result_db_customers->rows[$i]->value->prov_gmail;
+                $keywords = $result_db_customers->rows[$i]->value->prov_keywords;
+                $sp_request = $result_db_customers->rows[$i]->value->prov_special_request;
+                $social1 = $result_db_customers->rows[$i]->value->prov_existing_social1;
+                $social2 = $result_db_customers->rows[$i]->value->prov_existing_social2;
+                $biglo_site = $result_db_customers->rows[$i]->value->prov_biglo_website;
+                $analytical_address = $result_db_customers->rows[$i]->value->prov_analytical_address;
+                $google_plus = $result_db_customers->rows[$i]->value->prov_google_plus;
+                $google_maps = $result_db_customers->rows[$i]->value->prov_google_maps;
+                $facebook = $result_db_customers->rows[$i]->value->prov_facebook;
+                $foursquare = $result_db_customers->rows[$i]->value->prov_foursquare;
+                $twitter = $result_db_customers->rows[$i]->value->prov_twitter;
+                $linkedin = $result_db_customers->rows[$i]->value->prov_linkedin;
+                //cancel
+                if(isset($result_db_customers->rows[$i]->value->cancelled)) {
+                    $cancelled = $result_db_customers->rows[$i]->value->cancelled;
+                    $cancel_reason = $result_db_customers->rows[$i]->value->cancel_reason;
+                } else {
+                    $cancelled = "no";
+                    $cancel_reason = "";
+                }
+            }
+            $i++;
+        }
+        $test = true;
+        $subscription = new ChargifySubscription(NULL, $test);
+
+        try {
+            $result_customer_id_search = $subscription->getByCustomerID($chargifyID);
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
+
+        if($result_customer_id_search[0]->state == "trialing") {
+            ?><style>
+                .cust_id {
+                    color: #b300b3;
+                }
+                </style><?php
+            } elseif($result_customer_id_search[0]->state == "active") {
+                ?><style>
+                .cust_id {
+                    color: #28B22C;
+                }
+                </style><?php
+            } elseif($result_customer_id_search[0]->state == "past_due") {
+                ?><style>
+                .cust_id {
+                    color: #e6e600;
+                }
+                </style><?php
+            } elseif($result_customer_id_search[0]->state == "unpaid") {
+                ?><style>
+                .cust_id {
+                    color: #ff0000;
+                }
+                </style><?php
+            } elseif($result_customer_id_search[0]->state == "canceled") {
+                ?><style>
+                .cust_id {
+                    color: #000000;
+                }
+                </style><?php
+            } else {
+                ?><style>
+                .cust_id {
+                    color: #cccccc;
+                }
+                </style><?php
+            }
+
+            $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
+            $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
+            $fin2 = explode('-',$fin[0]);
+            $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
+
+            if($result_customer_id_search[0]->state == "trialing") {
+                $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
+                $state_date = explode('-',$trial_date[0]);
+                $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+                $cust_search_state = "Trial End: ";
+            } elseif($result_customer_id_search[0]->state == "active") {
+                $cust_search_state = "Next Billing: ".$result_customer_id_search[0]->next_billing_at;
+            } else {
+                $cust_search_state = "Cancelled At: ".$result_customer_id_search[0]->canceled_at;
+            }
     }
 ?>
 <link rel="stylesheet" type="text/css" href="js/field_trappings/error_msg.css"/>
