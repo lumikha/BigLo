@@ -93,6 +93,7 @@
     $new_payment_profile->billing_city = ${'biz_city' . $i}; //
     $new_payment_profile->billing_state = ${'biz_state' . $i}; //
     $new_payment_profile->billing_zip = ${'biz_zip' . $i}; //
+    $new_payment_profile->billing_country = "US"; //
     
     $new_subscription = new ChargifySubscription(NULL, $test);
     $new_subscription->product_handle = "prod_001"; //-----------?????????
@@ -114,6 +115,7 @@
       $doc4->customer_suite_no = ${'biz_suite' . $i};
       $doc4->customer_billing_city = ${'biz_city' . $i};
       $doc4->customer_billing_state = ${'biz_state' . $i};
+      $doc4->customer_billing_country = "US";
       $doc4->customer_billing_zip = ${'biz_zip' . $i};
       $doc4->customer_card_last_four = substr("4111111111111111", -4);
       $doc4->customer_card_cvc = "8888";
