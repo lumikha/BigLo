@@ -458,9 +458,12 @@
 
                     if(isset($_GET['id'])) { ?> 
                         <optgroup label="Current"> 
-                        <?php 
-                            echo "<option value='".$salutation."'>".$salutation."</option>"
-                        ?> 
+                        <?php if(!empty($salutation)) {
+                            echo "<option value='".$salutation."'>".$salutation."</option>";
+                        } else {
+                            echo "<option value='' disabled selected>None</option>";
+                        }
+                        ?>
                         </optgroup> 
                         <optgroup label="Salutations">
                         <?php
