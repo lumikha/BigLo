@@ -66,6 +66,7 @@
     $doc->business_city = @$_POST['biz-city'];
     $doc->business_state = @$_POST['biz-state'];
     $doc->business_zip = @$_POST['biz-zip'];
+    $doc->business_country = "US";
     $doc->business_phone_no = @$btn_number;
     $doc->business_email = @$_POST['biz-eadd'];
     $doc->business_website = @$_POST['biz-web'];
