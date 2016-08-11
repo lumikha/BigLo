@@ -128,59 +128,65 @@
             echo $cve->getMessage();
         }
 
+        $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
+        $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
+        $fin2 = explode('-',$fin[0]);
+        $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
+
         if($result_customer_id_search[0]->state == "trialing") {
-            ?><style>
-                .cust_id {
-                    color: #b300b3;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "active") {
-                ?><style>
-                .cust_id {
-                    color: #28B22C;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "past_due") {
-                ?><style>
-                .cust_id {
-                    color: #e6e600;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "unpaid") {
-                ?><style>
-                .cust_id {
-                    color: #ff0000;
-                }
-                </style><?php
-            } elseif($result_customer_id_search[0]->state == "canceled") {
-                ?><style>
-                .cust_id {
-                    color: #000000;
-                }
-                </style><?php
-            } else {
-                ?><style>
-                .cust_id {
-                    color: #cccccc;
-                }
-                </style><?php
-            }
+            $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
+            $state_date = explode('-',$trial_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Trial End: ";
+        } elseif($result_customer_id_search[0]->state == "active") {
+            $billing_date = explode('T',$result_customer_id_search[0]->next_assessment_at,-1);
+            $state_date = explode('-',$billing_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Next Billing: ";
+        } else {
+            $cancel_date = explode('T',$result_customer_id_search[0]->canceled_at,-1);
+            $state_date = explode('-',$cancel_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Cancelled At: ";
+        }
 
-            $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
-            $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
-            $fin2 = explode('-',$fin[0]);
-            $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
-
-            if($result_customer_id_search[0]->state == "trialing") {
-                $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
-                $state_date = explode('-',$trial_date[0]);
-                $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
-                $cust_search_state = "Trial End: ";
-            } elseif($result_customer_id_search[0]->state == "active") {
-                $cust_search_state = "Next Billing: ".$result_customer_id_search[0]->next_billing_at;
-            } else {
-                $cust_search_state = "Cancelled At: ".$result_customer_id_search[0]->canceled_at;
+        if($result_customer_id_search[0]->state == "trialing") {
+        ?><style>
+            .cust_id {
+                color: #b300b3;
             }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "active") {
+        ?><style>
+            .cust_id {
+                color: #28B22C;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "past_due") {
+        ?><style>
+            .cust_id {
+                color: #e6e600;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "unpaid") {
+        ?><style>
+            .cust_id {
+                color: #ff0000;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "canceled") {
+        ?><style>
+            .cust_id {
+                color: #000000;
+            }
+        </style><?php
+        } else {
+        ?><style>
+            .cust_id {
+                color: #cccccc;
+            }
+        </style><?php
+        }
     }
 
     if(isset($_POST['upd_acc'])) {
@@ -272,9 +278,9 @@
         } else {
             $cancel_reason = "";
         }
-        $bill_d1 = $_POST['bill-d1'];
-        $bill_d2 = $_POST['bill-d2'];
-        $bill_d3 = $_POST['bill-d3'];
+        //$bill_d1 = $_POST['bill-d1'];
+        //$bill_d2 = $_POST['bill-d2'];
+        //$bill_d3 = $_POST['bill-d3'];
         $business_category = $_POST['b-category'];
         $business_website = $_POST['b-site'];
         $business_email = $_POST['b-email'];
@@ -314,7 +320,7 @@
         }
 
         $customer->id = $chargifyID;
-        $customer->organization = $business_name;
+        $customer->organization = $business_name;/*
         $subscription->id = $res_get_sub_id[0]->id;
         $subscription->new_bill_date = $bill_d3."-".$bill_d1."-".$bill_d2;
 
@@ -323,7 +329,7 @@
             $result_upd_billing = $subscription->updateNextBilling();
         } catch (ChargifyValidationException $cve) {
             echo $cve->getMessage();
-        }
+        }*/
 
         /*
         if($cancelled == "yes") {
@@ -377,6 +383,78 @@
             $client_customer->storeDoc($doc);
         } catch (Exception $e) {
             echo "ERROR: ".$e->getMessage()." (".$e->getCode().")<br>\n";
+        }
+    }
+
+
+    if(isset($_GET['id'])) {
+        $test = true;
+        $subscription = new ChargifySubscription(NULL, $test);
+
+        try {
+            $result_customer_id_search = $subscription->getByCustomerID($chargifyID);
+        } catch (ChargifyValidationException $cve) {
+            echo $cve->getMessage();
+        }
+
+        $billing_sum = "$".number_format(($result_customer_id_search[0]->total_revenue_in_cents /100), 2, '.', ' ');
+        $fin = explode('T',$result_customer_id_search[0]->updated_at,-1);
+        $fin2 = explode('-',$fin[0]);
+        $char_upd_at = $fin2[1].".".$fin2[2].".".$fin2[0];
+
+        if($result_customer_id_search[0]->state == "trialing") {
+            $trial_date = explode('T',$result_customer_id_search[0]->trial_ended_at,-1);
+            $state_date = explode('-',$trial_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Trial End: ";
+        } elseif($result_customer_id_search[0]->state == "active") {
+            $billing_date = explode('T',$result_customer_id_search[0]->next_assessment_at,-1);
+            $state_date = explode('-',$billing_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Next Billing: ";
+        } else {
+            $cancel_date = explode('T',$result_customer_id_search[0]->canceled_at,-1);
+            $state_date = explode('-',$cancel_date[0]);
+            $state_date_fin = $state_date[1]."/".$state_date[2]."/".$state_date[0];
+            $cust_search_state = "Cancelled At: ";
+        }
+
+        if($result_customer_id_search[0]->state == "trialing") {
+        ?><style>
+            .cust_id {
+                color: #b300b3;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "active") {
+        ?><style>
+            .cust_id {
+                color: #28B22C;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "past_due") {
+        ?><style>
+            .cust_id {
+                color: #e6e600;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "unpaid") {
+        ?><style>
+            .cust_id {
+                color: #ff0000;
+            }
+        </style><?php
+        } elseif($result_customer_id_search[0]->state == "canceled") {
+        ?><style>
+            .cust_id {
+                color: #000000;
+            }
+        </style><?php
+        } else {
+        ?><style>
+            .cust_id {
+                color: #cccccc;
+            }
+        </style><?php
         }
     }
 ?>
@@ -446,9 +524,8 @@
                 </select>
             </div>
             <div class="hidden-xs hidden-sm col-md-1">
-                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
+                <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-2">
@@ -458,9 +535,12 @@
 
                     if(isset($_GET['id'])) { ?> 
                         <optgroup label="Current"> 
-                        <?php 
-                            echo "<option value='".$salutation."'>".$salutation."</option>"
-                        ?> 
+                        <?php if(!empty($salutation)) {
+                            echo "<option value='".$salutation."'>".$salutation."</option>";
+                        } else {
+                            echo "<option value='' disabled selected>None</option>";
+                        }
+                        ?>
                         </optgroup> 
                         <optgroup label="Salutations">
                         <?php
@@ -518,7 +598,12 @@
                 </select>
             </div>
             <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
-                <button class="btn btn-danger" type="submit" name="upd_acc">Ticket</button>
+                <button class="btn btn-danger" type="submit">Ticket</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <button class="btn btn-danger" type="submit" name="upd_acc">Update</button>
             </div>
         </div>
     </form>
@@ -527,109 +612,23 @@
      
         <div class="row">
             <div class="hidden-xs hidden-sm col-md-1 " style="float: right;"> <!--provisioning to be edited-->
-                <button class="btn btn-danger" type="submit" name="upd_prov">Ticket</button>
+                <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <input type="text" class="form-control" name="bname" placeholder="Business Name" value="<?php echo $business_name; ?>">
             </div>
-            <div class="col-md-2">
-                <p><?php echo $sales_date; ?></p>
-            </div>
-            <div class="col-md-1">
-                <span><?php echo $cust_search_state; ?></span>
-            </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" name="bill-d1" value="<?php echo $state_date[1]; ?>" >
-            </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left: -20px;">
-            </div>
-            <div class="col-md-1">
-                <input type="text" class="form-control" name="bill-d3" value="<?php echo $state_date[0]; ?>" style="margin-left: -40px; width: 60px;">
-            </div>
-                <!--<input type="text" class="form-control" name="tbc_date" placeholder="Trial/Bill/Cancel Date" value="<?php echo $cust_search_state; ?>">-->
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <input type="text" class="form-control" name="sctr" placeholder="Sales Center" value="<?php echo $sales_center; ?>" readonly>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-2">
+                <p style="text-align: center;"><b><?php echo $sales_date; ?></b></p>
+            </div>
+            <div class="col-md-5">
                 <input type="text" class="form-control" name="sagnt" placeholder="Sales Agent" value="<?php echo $sales_agent; ?>" readonly>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <select class="form-control">
-                    <?php
-                    if(isset($_GET['id'])) {
-                        echo "<optgroup label='Current'>
-                            <option value='".$product_handle."'>".$product_name."</option>
-                        </optgroup>";
-                    ?>
-                    <optgroup label="Available Plans">
-                        <option value="prod_001">Basic Plan</option>
-                        <option value="plan_002">Start-up Plan</option>
-                        <option value="plan_005">Upgrade to Start-up Plan</option>
-                        <option value="plan_003">Business Plan</option>
-                        <option value="plan_006">Upgrade to Business Plan</option>
-                        <option value="plan_004">Enterprise Plan</option>
-                        <option value="plan_007">Upgrade Enterprise Plan</option>
-                    </optgroup>
-                    <?php
-                    } else {
-                        echo "<option value='' disabled selected>Product</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <select class="form-control">
-                    <?php
-                    if(isset($_GET['id'])) {
-                        echo "<optgroup label='Current'>";
-                        if(empty($product_component_id)) { 
-                            echo "<option value=''>None</option>";
-                        } else {
-                            echo "<option value='".$product_component_id."'>".$product_component_name."</option>";
-                        }
-                        echo "</optgroup>";
-                    ?>
-                    <optgroup label="Available Components">
-                        <option value="196368">Custom Company Domain</option>
-                    </optgroup>
-                    <?php
-                    } else {
-                        echo "<option value='' disabled selected>Component</option>";
-                    }
-                    ?>  
-                </select>
-            </div>
-            <div class="col-md-4">
-                <select class="form-control">
-                    <?php
-                    if(isset($_GET['id'])) {
-                        echo "<optgroup label='Current'>";
-                        if(empty($product_coupon_id)) { 
-                            echo "<option value=''>None</option>";
-                        } else {
-                            echo "<option value='".$product_coupon_id."'>".$product_coupon_name."</option>"; 
-                        }
-                         echo "</optgroup>";
-                    ?>    
-                    </optgroup>
-                    <optgroup label="Available Coupons">
-                        <option value="SAVE50">Discount Coupon</option>
-                        <option value="FREDOM">Domain Coupon</option>
-                        <option value="REFER">Referral Coupon</option>
-                    </optgroup>
-                     <?php
-                    } else {
-                        echo "<option value='' disabled selected>Coupon</option>";
-                    }
-                    ?>  
-                </select>
             </div>
         </div>
         <div class="row">
@@ -906,11 +905,21 @@
             </div>
         </div>
         -->
+        <div class="row">
+            <div class="col-md-1">
+                <button class="btn btn-danger" type="submit" name="upd_prov">Update</button>
+            </div>
+        </div>
     </form>
 
     <form id="cust_billing_form" action="" method="POST">
         <div class="row">
-            <div class="col-md-7">
+            <div class="hidden-xs hidden-sm col-md-1 " style="float: right;"> <!--provisioning to be edited-->
+                <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
                 <input type="text" name="ppID" id="ppID" class="form-control" placeholder="Payment Processor ID ">
             </div>
             <div class="col-md-3">
@@ -935,16 +944,28 @@
             <div class="col-md-2">
                 <input type="number" class="form-control" placeholder="Successful Billing Cycles">
             </div>
+            <div class="col-md-1">
+                <span><?php echo $cust_search_state; ?></span>
+            </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="bill-d1" value="<?php echo $state_date[1]; ?>" >
+            </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left: -20px;">
+            </div>
+            <div class="col-md-1">
+                <input type="text" class="form-control" name="bill-d3" value="<?php echo $state_date[0]; ?>" style="margin-left: -40px; width: 60px;">
+            </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4">
                 <select class="form-control">
-                <?php if(isset($_GET['id'])) { ?>
-                    <optgroup label="Current">
-                    <?php 
-                        echo "<option value='".$product_handle."'>".$product_name."</option>"; 
+                    <?php
+                    if(isset($_GET['id'])) {
+                        echo "<optgroup label='Current'>
+                            <option value='".$product_handle."'>".$product_name."</option>
+                        </optgroup>";
                     ?>
-                    </optgroup>
                     <optgroup label="Available Plans">
                         <option value="prod_001">Basic Plan</option>
                         <option value="plan_002">Start-up Plan</option>
@@ -954,9 +975,58 @@
                         <option value="plan_004">Enterprise Plan</option>
                         <option value="plan_007">Upgrade Enterprise Plan</option>
                     </optgroup>
-                <?php } else { 
-                    echo "<option value='' disabled selected>Product</option>";
-                } ?>
+                    <?php
+                    } else {
+                        echo "<option value='' disabled selected>Product</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control">
+                    <?php
+                    if(isset($_GET['id'])) {
+                        echo "<optgroup label='Current'>";
+                        if(empty($product_component_id)) { 
+                            echo "<option value=''>None</option>";
+                        } else {
+                            echo "<option value='".$product_component_id."'>".$product_component_name."</option>";
+                        }
+                        echo "</optgroup>";
+                    ?>
+                    <optgroup label="Available Components">
+                        <option value="196368">Custom Company Domain</option>
+                    </optgroup>
+                    <?php
+                    } else {
+                        echo "<option value='' disabled selected>Component</option>";
+                    }
+                    ?>  
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control">
+                    <?php
+                    if(isset($_GET['id'])) {
+                        echo "<optgroup label='Current'>";
+                        if(empty($product_coupon_id)) { 
+                            echo "<option value=''>None</option>";
+                        } else {
+                            echo "<option value='".$product_coupon_id."'>".$product_coupon_name."</option>"; 
+                        }
+                         echo "</optgroup>";
+                    ?>    
+                    </optgroup>
+                    <optgroup label="Available Coupons">
+                        <option value="SAVE50">Discount Coupon</option>
+                        <option value="FREDOM">Domain Coupon</option>
+                        <option value="REFER">Referral Coupon</option>
+                    </optgroup>
+                     <?php
+                    } else {
+                        echo "<option value='' disabled selected>Coupon</option>";
+                    }
+                    ?>  
                 </select>
             </div>
         </div>
@@ -986,6 +1056,11 @@
             </div>
             <div class="col-md-2">
                 <input type="text" class="form-control" placeholder="Billing Country" value="<?php echo $bill_country; ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <button class="btn btn-danger" type="submit" name="upd_prov">Update</button>
             </div>
         </div>
     </form>
