@@ -31,6 +31,7 @@
     $doc->business_city = ${'biz_city' . $i}; //
     $doc->business_state = ${'biz_state' . $i}; //
     $doc->business_zip = ${'biz_zip' . $i}; //
+    $doc->business_country = "US"; //
     $doc->business_phone_no = ${'biz_phone' . $i}; //
     $doc->business_email = ${'biz_email' . $i};//
     $doc->business_website = "";// none
