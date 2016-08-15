@@ -84,6 +84,8 @@
 ?>
 <link rel="stylesheet" type="text/css" href="js/field_trappings/error_msg.css"/>
 
+<div class="tab-content">
+  <div class="tab-pane fade" id="account">
     <form id="acc_account_form" action="" method="POST" onsubmit="return checkFields_acc_tab1();">
         <div class="row">
             <div class="col-md-6">
@@ -168,16 +170,20 @@
             </div>
         </div>
     </form>
-
-    <form id="acc_dashboard_form" class="hidden" action="" method="POST">
+  </div>
+  <div class="tab-pane fade" id="dashboard">
+    <form id="acc_dashboard_form" action="" method="POST">
         <div class="row">
             <div class="col-md-12">
                 <img src="img/web_under_construction.jpg" style="margin-left: 20%;">
             </div>
         </div>
     </form>
+  </div>
+</div>
+
+
 <?php
     require "footer.php";
 ?>
-
 <script type="text/javascript" src="js/field_trappings/acc_form_tab1.js"></script>
