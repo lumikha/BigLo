@@ -33,6 +33,7 @@
     <div class="col-xs-3 col-md-6"  >
         
          <div class="user_opt dropdown">
+            <a href=""><img src="img/lil_dip_logo.png" style="height:100px"></a>
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
              <p class="hello">Hello <?php echo $fname; ?>!
                 <span class="caret" style="margin-left:0"></span></p>
