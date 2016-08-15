@@ -81,13 +81,13 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 		var keyCom = window.event? event : e
 		if (keyCom.ctrlKey && keyCom.keyCode == 88){ //combination is ctrl + q
 			window.location = "logout.php";
-		}s
+		}
 	}
 	document.onkeydown = CapCom;
 </script>
 
 <?php
-	if(basename($_SERVER['PHP_SELF']) == "customer.php") {
+	if(basename($_SERVER['PHP_SELF']) == "customer.php" || "customer2.php") {
 	?>
 		<script>
 		    $(document).ready(function () {
