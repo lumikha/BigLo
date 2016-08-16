@@ -39,7 +39,7 @@
         <a href=""><img src="img/lil_dip_logo.png"></a>
      </div>
         <br><br>
-        <div class="col-sm-7">                                   <!--col 2-->
+        <div class="col-sm-7" >                                   <!--col 2-->
          <div class="user_opt dropdown"> 
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
              <p class="hello">Hello <?php echo $fname; ?>!
@@ -63,7 +63,7 @@
                     <form name="myForm">
                         <input type="text" class="form-control" onkeyup="return check();" id="search" name="search" ng-model="search" placeholder="Search" autocomplete="off" >
                     </form>
-                    <div name="output" id="output" ng-cloak>
+                    <div name="output" id="output" style="position:absolute; z-index:1;" ng-cloak >
                         <div class="list-group">
                             <a class="list-group-item" ng-if="search" ng-repeat="user in result = ( users | filter:search | limitTo:num)" href="?id={{ user.chargify_id }}">
                                 <span style="font-size:130%" class="text-info"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> {{user.business_name}}</span><br>
