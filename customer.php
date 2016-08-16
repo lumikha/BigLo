@@ -472,7 +472,7 @@
     </style>
 
     <div class="row">
-        <ul class="navtabs nav nav-tabs nav-pills nav-justified" id="myTab">
+        <ul class="navtabs nav nav-pills nav-justified" id="myTab">
             <li id="cust_tab1" class="alter_tab"><a href="#summary" data-toggle="tab">Summary</a></li>
             <li id="cust_tab2"><a href="#provisioning" data-toggle="tab">Provisioning</a></li>
             <li id="cust_tab3" class="alter_tab"><a href="#billing" data-toggle="tab">Billing</a></li>

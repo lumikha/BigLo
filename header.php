@@ -77,7 +77,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <ul class="navtabs nav nav-tabs nav-pills nav-justified" id="myTab">
+        <ul class="navtabs nav nav-pills nav-justified" id="myTab">
         <!--
             <?php 
             if(isset($_SESSION['user_now_db_ustomer_id'])) { 
@@ -107,7 +107,7 @@
         -->
             <?php 
             if(isset($_SESSION['user_now_db_customer_id'])) { ?>
-                <li id="acc_tab1" class="alter_tab"><a href="#account" data-toggle="tab">Account</a></li>
+                <li id="acc_tab1"><a href="#account" data-toggle="tab">Account</a></li>
                 <li id="acc_tab2" class="alter_tab"><a href="#dashboard" data-toggle="tab">Dashboard</a></li>
             <?php } ?>
         </ul>
