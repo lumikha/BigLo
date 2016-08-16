@@ -7,6 +7,12 @@
 
 	session_start();
 
+    if(isset($_SESSION['user_now_id'])) { 
+    	if(basename($_SERVER['PHP_SELF'])=="login.php"){
+        header("Location: javascript:his‌​tory.go(-1)");
+		}
+    }
+
 	$found=true;
 	if(isset($_POST['login_btn']) || (isset($_GET['e']) && isset($_GET['p']))) {
 		if(isset($_GET['e']) && isset($_GET['p'])) {
