@@ -1,5 +1,5 @@
 <?php
-    require 'header_test.php';
+    require 'header.php';
 
     if(!isset($_GET['id'])) {
         $business_name = "";
@@ -1156,7 +1156,7 @@
     </div>
 </div>
 <?php
-    require "footer_test.php";
+    require "footer.php";
 ?>
 
 <?php 
