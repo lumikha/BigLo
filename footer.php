@@ -6,6 +6,28 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jquery.tagsinput.js"></script>
+
+<script type="text/javascript">
+
+		function onAddTag(tag) {
+			alert("Added a tag: " + tag);
+		}
+		function onRemoveTag(tag) {
+			alert("Removed a tag: " + tag);
+		}
+
+		function onChangeTag(input,tag) {
+			alert("Changed a tag: " + tag);
+		}
+
+		$(function() {
+
+			$('#k-words').tagsInput({width:'auto'});
+
+		});
+
+</script>
 
 <script type="text/javascript">
     $(function() { 

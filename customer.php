@@ -1,6 +1,6 @@
 <?php
     require 'header.php';
-
+$check = null;
     if(!isset($_GET['id'])) {
         $business_name = "";
         $business_category = "";
@@ -50,6 +50,8 @@
         $linkedin = "";
         $cancelled = "";
         $cancel_reason = "";
+
+        $check = "hidden";
     } else {
         $i=0;
         while(isset($result_db_customers->rows[$i])) {
@@ -507,9 +509,11 @@
             <input type="text" value="<?php echo $chargifyID; ?>" id="cID" hidden>
 
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Business Name</label>
                 <input type="text" name="acc-b-name" id="acc-b-name" class="form-control" placeholder="Business Name" value="<?php echo $business_name; ?>" onchange="BName()">
             </div>
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Product</label>
                 <select class="form-control" name="acc-prod" id="acc-prod" placeholder="Product">
                 <?php if(isset($_GET['id'])) { ?>
                     <optgroup label="Current">
@@ -537,6 +541,7 @@
         </div>
         <div class="row">
             <div class="col-md-2">
+                <label class="<?php echo $check; ?>">Salutation</label>
                 <select name="acc-salut" class="form-control">
                 <?php
                     $arr_sltn = array('Mr','Mrs','Ms','Miss','Dr','Herr','Monsieur','Hr','Frau','A V M','Admiraal','Admiral','Air Cdre','Air Commodore','Air Marshal','Air Vice Marshal','Alderman','Alhaji','Ambassador','Baron','Barones','Brig','Brig Gen','Brig General','Brigadier','Brigadier General','Brother','Canon','Capt','Captain','Cardinal','Cdr','Chief','Cik','Cmdr','Col','Col Dr','Colonel','Commandant','Commander','Commissioner','Commodore','Comte','Comtessa','Congressman','Conseiller','Consul','Conte','Contessa','Corporal','Councillor','Count','Countess','Crown Prince','Crown Princess','Dame','Datin','Dato','Datuk','Datuk Seri','Deacon','Deaconess','Dean','Dhr','Dipl Ing','Doctor','Dott','Dott sa','Dr','Dr Ing','Dra','Drs','Embajador','Embajadora','En','Encik','Eng','Eur Ing','Exma Sra','Exmo Sr','F O','Father','First Lieutient','First Officer','Flt Lieut','Flying Officer','Fr','Frau','Fraulein','Fru','Gen','Generaal','General','Governor','Graaf','Gravin','Group Captain','Grp Capt','H E Dr','H H','H M','H R H','Hajah','Haji','Hajim','Her Highness','Her Majesty','Herr','High Chief','His Highness','His Holiness','His Majesty','Hon','Hr','Hra','Ing','Ir','Jonkheer','Judge','Justice','Khun Ying','Kolonel','Lady','Lcda','Lic','Lieut','Lieut Cdr','Lieut Col','Lieut Gen','Lord','M','M L','M R','Madame','Mademoiselle','Maj Gen','Major','Master','Mevrouw','Miss','Mlle','Mme','Monsieur','Monsignor','Mr','Mrs','Ms','Mstr','Nti','Pastor','President','Prince','Princess','Princesse','Prinses','Prof','Prof Dr','Prof Sir','Professor','Puan','Puan Sri','Rabbi','Rear Admiral','Rev','Rev Canon','Rev Dr','Rev Mother','Reverend','Rva','Senator','Sergeant','Sheikh','Sheikha','Sig','Sig na','Sig ra','Sir','Sister','Sqn Ldr','Sr','Sr D','Sra','Srta','Sultan','Tan Sri','Tan Sri Dato','Tengku','Teuku','Than Puying','The Hon Dr','The Hon Justice','The Hon Miss','The Hon Mr','The Hon Mrs','The Hon Ms','The Hon Sir','The Very Rev','Toh Puan','Tun','Vice Admiral','Viscount','Viscountess','Wg Cdr');
@@ -567,14 +572,17 @@
                 </select>
             </div>
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">First Name</label>
                 <input type="text" name="acc-fname" id="acc-fname" class="form-control" placeholder="First Name" value="<?php echo $fname; ?>" onchange="FName()">
             </div>
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Last Name</label>
                 <input type="text" name="acc-lname" id="acc-lname" class="form-control" placeholder="Last Name" value="<?php echo $lname; ?>" onchange="LName()">
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Title</label>
                 <select name="acc-title" class="form-control">
                 <?php
                     $arr_ttl = array('Accountant','Accountant Systems','Acquisition Management Intern','Actuarial Analyst','Actuary','Administrative Generalist/Specialist','Affordable Housing Specialist','Analyst','Appraiser','Archaeologist','Area Systems Coordinator','Asylum or Immigration Officer','Attorney/Law Clerk','Audience Analyst','Audit Resolution Follow Up','Auditor','Behavioral Scientist','Biologist, Fishery','Biologist, Marine','Biologist, Wildlife','Budget Analyst','Budget Specialist','Business Administration Officer','Chemical Engineer','Chemist','Citizen Services Specialist','Civil Engineer','Civil Penalties Specialist','Civil/Mechanical/Structural','Engineer','Communications Specialist','Community and Intergovernmental','Program Specialist','Community Planner','Community Planning\Development','Specialist','Community Services Program','Specialist','Compliance Specialist','Computer Engineer','Computer Programmer/Analyst','Computer Scientist','Computer Specialist','Consumer Safety Officer','Contract Specialist','Contract Specialist/Grants','Management Specialist','Corporate Management Analyst','Cost Account','Criminal Enforcement Analyst','Criminal Investigator','Customer Account Manager','Customer Acct Mgr\Specialist','Democracy Specialist','Desk Officer','Disaster Operations Specialist','Disbursing Specialist','Ecologist','Economist','Economist, Financial','Education Specialist','Electrical Engineer','Electronics Engineer','Emergency Management Specialist','Employee and Management','Development Specialist','Employee Development Specialist','Employee Relations Specialist','Energy and Environmental Policy','Analyst','Energy Program Specialist','Engineer (General)','Environmental Engineer','Environmental Planning and Policy','Specialist','Environmental Protection Specialist','Environmental Specialist','Epidemiologist','Equal Employment Opportunity','Specialist','Equal Opportunity Specialist','Ethics Program Specialist','Evaluation and Technical Services Generalist','Evaluator','Executive Analyst','Facilities Analyst','Federal Retirement Benefits Specialist','Field Management Assistant','Field Office Supervisor','Financial Management Specialist','Financial Legislative Specialist','Financial Specialist','Financial Systems Analyst','Financial Transactions Examination Officer','Food Safety Coordinator','Food Technologist','Foreign Affairs Officer','Foreign Affairs Specialist','Foreign Assets Control Intelligence Analyst','Foreign Assets Control Terrorist Program Analyst','Functional Area Analyst','General Engineer','Geographer','Geographical Information Systems/Computer Aided','Geophysicist','Grants Program Specialist','Grants Specialist','Hazard Mitigation Specialist','Hazardous Waste Generator Initiative Specialist','Health Communications Specialist','Health Educator','Health Insurance Specialist','Health Scientist','Health Systems Specialist','Hospital Finance Associate','Housing Program Specialist','Housing Project Manager','Human Resources Advisor\Consultant','Human Resources Consultant','Human Resources Development','Human Resources Evaluator','Human Resources Representative','Human Resources Specialist','Hydraulic Engineer','Immigration Officer','Import Policy Analyst','Industrial Hygienist','Information Management Specialist','Information Research Specialist','Information Resource Management Specialist','Information Technology Policy Analyst','Information Technology Security Assistant','Information Technology Specialist','Inspector','Instructional Systems Design Specialist','Instructions Methods Specialist','Insurance Marketing Specialist','Insurance Specialist','Intelligence Analyst','Intelligence Operations Specialist','Intelligence Research Specialist','Intelligence Specialist','Internal Program Specialist','Internal Revenue Agent','International Affairs Specialist','International Aviation Operations Specialist','International Cooperation Specialist','International Economist','International Project Manager','International Relations Specialist','International Trade Litigation Electronic Database C','International Trade Specialist','International Transportation Specialist','Investigator','Junior Foreign Affairs Officer','Labor Relations Specialist','Labor Relations Specialist','Learning Specialist','Legislative Assistant','Legislative Analyst','Legislative Specialist','Lender Approval Analyst','Lender Monitoring Analyst','Licensing Examining Specialist/Offices','Logistics Management Specialist','Managed Care Specialist','Management Analyst','Management and Budget Analyst','Management and Program Analyst','Management Intern','Management Support Analyst ','Management Support Specialist','Manpower Analyst','Manpower Development Specialist','Marketing Analyst','Marketing Specialist','Mass Communications Producer','Mathematical Statistician','Media Relations Assistant','Meteorologist','Microbiologist','Mitigation Program Specialist','National Security Training Technology','Natural Resources Specialist','Naval Architect','Operations Officer','Operations Planner','Operations Research Analyst','Operations Supervisor','Outdoor Recreation Planner','Paralegal Specialis','Passport/Visa Specialist','Personnel Management Specialist','Personnel Staffing and Classification Specialist','Petroleum Engineer','Physical Science Officer','Physical Scientist, General','Physical Security Specialist','Policy Advisor to the Director','Policy Analyst','Policy and Procedure Analyzt','Policy and Regulatory Analyst','Policy Coordinator','Policy/Program Analyst','Population/Family Planning Specialist','Position Classification Specialist','Presidential Management Fellow','Procurement Analyst','Procurement Specialist','Professional Relations Outreach','Program Administrator','Program Analyst','Program and Policy Analyst','Program Evaluation and Risk Analyst','Program Evolution Team Leader','Program Examiner','Program Manager','Program Operations Specialist','Program Specialist','Program Support Specialist','Program/Public Health Analyst','Project Analyst','Project Manager','Prototype Activities Coordinator','Psychologist (General)','Public Affairs Assistant','Public Affairs Intern','Public Affairs Specialist','Public Health Advisor','Public Health Analyst','Public Health Specialist','Public Liaison/Outreach Specialist','Public Policy Analyst','Quantitative Analyst','Real Estate Appraiser','Realty Specialist','Regional Management Analyst','Regional Technician','Regulatory Analyst','Regulatory Specialist','Research Analyst','Restructuring Analyst','Risk Analyst','Safety and Occupational Health Manager','Safety and Occupational Health Specialist','Safety Engineer/Industrial Hygienist','Science Program Analyst','Securities Compliance Examiner','Security Specialist','SeniorManagement Information Specialist','Social Insurance Analyst','Social Insurance Policy Specialist','Social Insurance Specialist','Social Science Analyst','Social Science Research Analyst','Social Scientist','South Asia Desk Officer','Special Assistant','Special Assistant for Foreign Policy Strategy','Special Assistant to the Associate Director','Special Assistant to the Chief Information Office','Special Assistant to the Chief, FBI National Security', 'Special Assistant to the Director','Special Emphasis Program Manager','Special Projects Analyst','Specialist','Staff Associate','Statistician','Supply Systems Analyst','Survey or Mathematical Statistician','Survey Statistician','Systems Accountant','Systems Analyst','Tax Law Specialist','Team Leader','Technical Writer/Editor','Telecommunications Policy Analyst','Telecommunications Specialist','Traffic Management Specialist','Training and Technical Assistant','Training Specialist','Transportation Analyst','Transportation Industry Analyst','Transportation Program Specialist','Urban Development Specialist','Usability Researcher','Veterans Employment Specialist','Video Production Specialist','Visa Specialist','Work Incentives Coordinator','Workers Compensation Specialist','Workforce Development Specialist','Worklife Wellness Specialist','Writer','Writer/Editor');
@@ -628,17 +636,21 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <label class="<?php echo $check; ?>">Business Name</label>
                 <input type="text" class="form-control" name="bname" placeholder="Business Name" value="<?php echo $business_name; ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Sales Center</label>
                 <input type="text" class="form-control" name="sctr" placeholder="Sales Center" value="<?php echo $sales_center; ?>" readonly>
             </div>
             <div class="col-md-2">
+                <center><label> Sale Date </label></center>
                 <p style="text-align: center;"><b><?php echo $sales_date; ?></b></p>
             </div>
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Sales Agent</label>
                 <input type="text" class="form-control" name="sagnt" placeholder="Sales Agent" value="<?php echo $sales_agent; ?>" readonly>
             </div>
         </div>
@@ -654,9 +666,11 @@
                 <?php } ?>
             </div>
             <div class="col-md-7">
+                <label class="<?php echo $check; ?>">Cancellation Reason</label>
                 <textarea class="form-control" rows="5" name="cancel_reason" id="cancel_reason" placeholder="Cancel Reason" style="resize: vertical;" value="<?php echo $cancel_reason; ?>"><?php echo $cancel_reason; ?></textarea>
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Refund Amount</label>
                 <input type="text" class="form-control" placeholder="Refund Amount">
             </div>
         </div>
@@ -667,6 +681,7 @@
 
         <div class="row">
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Business Category</label>
                 <select class="form-control" name="b-category">
                 <?php 
                 if(isset($_GET['id'])) {
@@ -697,14 +712,17 @@
                 </select>
             </div>
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Existing Website</label>
                 <input type="text" class="form-control" name="b-site" placeholder="Existing Website" value="<?php echo $business_website; ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Primary Email</label>
                 <input type="text" class="form-control" name="b-email" placeholder="Primary Email" value="<?php echo $business_email; ?>">
             </div>
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Gmail Account</label>
                 <input type="text" class="form-control" name="b-gmail" placeholder="Gmail Account" value="<?php echo $gmail_acc; ?>">
             </div>
         </div>
@@ -714,19 +732,22 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                  <label for="comment">Keywords:</label>&nbsp;&nbsp;<span>seperated by comma ","</span>
-                  <textarea class="form-control" rows="5" name="k-words" id="k-words" value="<?php echo $keywords; ?>" style="resize: vertical;"><?php echo $keywords; ?></textarea>
+                  <label for="comment">Keywords:</label></span>
+                  <input class="form-control" type="text" class="tags" name="k-words" id="k-words" value="<?php echo $keywords; ?>"/>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Office Address 1</label>
                 <input type="text" class="form-control" name="b-address1" placeholder="Office Address 1" value="<?php echo $business_address; ?>">
             </div>
             <div class="col-md-5">
+                <label class="<?php echo $check; ?>">Office Address 2</label>
                 <input type="text" class="form-control" name="b-address2" placeholder="Office Address 2" value="<?php echo $business_address_2; ?>">
             </div>
             <div class="col-md-2">
+            <label class="<?php echo $check; ?>">Post Address?</label>
                 <select class="form-control" name="b-post-address">
                     <?php if(isset($_GET['id'])) { 
                         echo "<optgroup label='Show Address?'>";
@@ -746,9 +767,11 @@
         </div>
         <div class="row">
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Office City</label>
                 <input type="text" class="form-control" name="b-city" placeholder="Office City" value="<?php echo $business_city; ?>">
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Office State</label>
                 <select class="form-control" name="b-state">
                 <?php if(isset($_GET['id'])) {
                     echo "<optgroup label='Current'>
@@ -814,48 +837,59 @@
                 </select>
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Office Zip Code</label>
                 <input type="text" class="form-control" name="b-zip" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Office Country</label>
                 <input type="text" class="form-control" name="b-country" placeholder="Office Country" value="<?php echo $business_country; ?>">
             </div>
         </div>
             
         <div class="row">
             <div class="col-md-4">
+                <label class="<?php echo $check; ?>">Hours of Operation</label>
                 <input type="text" class="form-control" name="b-hours" placeholder="Hours Of Operation" value="<?php echo $business_hours; ?>">
             </div>
             <div class="col-md-4">
+                <label class="<?php echo $check; ?>">Payment Accepted</label>
                 <input type="text" class="form-control" name="payment" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
             </div>
             <div class="col-md-4">
+                <label class="<?php echo $check; ?>">Special Request</label>
                 <input type="text" class="form-control" name="request" placeholder="Special Request" value="<?php echo $sp_request; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Office/Business Phone</label>
                 <input type="text" class="form-control" name="b-phone" placeholder="Office/Business Phone" value="<?php echo $business_phone; ?>">
             </div>
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Alternate Phone</label>
                 <input type="text" class="form-control" name="b-alt-phone" placeholder="Alternate Phone" value="<?php echo $business_alt_phone; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Existing Social 1</label>
                 <input type="text" class="form-control" name="b-social1" placeholder="Existing Social 1" value="<?php echo $social1; ?>">
             </div>
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Existing Social 2</label>
                 <input type="text" class="form-control" name="b-social2" placeholder="Existing Social 2" value="<?php echo $social2; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Biglo Website</label>
                 <input type="text" class="form-control" name="biglo-site" placeholder="BigLo Website" value="<?php echo $biglo_site; ?>">
             </div>
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">Analytical Address</label>
                 <input type="text" class="form-control" name="analyt-add" placeholder="Analytical Address" value="<?php echo $analytical_address; ?>">
             </div>
         </div>
@@ -866,30 +900,30 @@
 
         <div class="row">
             <div class="col-md-4">
-                <label>Google Plus</label>
+                <label class="<?php echo $check; ?>">Google Plus</label>
                 <input type="text" class="form-control" name="gplus" placeholder="Google +" value="<?php echo $google_plus; ?>">
             </div>
             <div class="col-md-4">
-                <label>Google Maps</label>
+                <label class="<?php echo $check; ?>">Google Maps</label>
                 <input type="text" class="form-control" name="gmap" placeholder="Google Maps" value="<?php echo $google_maps; ?>">
             </div>
             <div class="col-md-4">
-                <label>Facebook</label>
+                <label class="<?php echo $check; ?>">Facebook</label>
                 <input type="text" class="form-control" name="fb" placeholder="Facebook" value="<?php echo $facebook; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <label>Four Square</label>
+                <label class="<?php echo $check; ?>">Four Square</label>
                 <input type="text" class="form-control" name="foursq" placeholder="Four Square" value="<?php echo $foursquare; ?>">
             </div>
             <div class="col-md-4">
-                <label>Twitter</label>
+                <label class="<?php echo $check; ?>">Twitter</label>
                 <input type="text" class="form-control" name="twit" placeholder="Twitter" value="<?php echo $twitter; ?>">
             </div>
             <div class="col-md-4">
-                <label>LinkedIn</label>
+                <label class="<?php echo $check; ?>">LinkedIn</label>
                 <input type="text" class="form-control" name="linkedin" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
             </div>
             <!--hidden ticket button for medium to large screens-->
@@ -923,6 +957,7 @@
 
     <div class="tab-pane fade" id="billing">
     <form id="cust_billing_form" action="" method="POST" style="margin-top: -60px;">
+
         <div class="row">
             <div class="hidden-xs hidden-sm col-md-1 " style="float: right;"> <!--provisioning to be edited-->
                 <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
@@ -930,9 +965,11 @@
         </div>
         <div class="row">
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Payment Processor ID</label>
                 <input type="text" name="ppID" id="ppID" class="form-control" placeholder="Payment Processor ID ">
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Billing Status</label>
                 <select class="form-control" name="bill_stat">
                 <?php if(isset($_GET['id'])) { ?>
                     <optgroup label="Current"> 
@@ -952,23 +989,28 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <label class="<?php echo $check; ?>">Billing Cycles</label>
                 <input type="number" class="form-control" placeholder="Successful Billing Cycles">
             </div>
             <div class="col-md-1">
                 <span><?php echo $cust_search_state; ?></span>
             </div>
             <div class="col lg-1 col-md-1 col-sm-3 col-xs-3">
+                <label class="<?php echo $check; ?>">MM</label>
                 <input type="text" class="form-control" name="bill-d1" style="width:50px; margin-left: -15px; margin-right: 30px;" value="<?php echo $state_date[1]; ?>" >
             </div>
             <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+                <label class="<?php echo $check; ?>">DD</label>
                 <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left:-15px; width:50px;">
             </div>
             <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
+                <label class="<?php echo $check; ?>">YYYY</label>
                 <input type="text" class="form-control" name="bill-d3" value="<?php echo $state_date[0]; ?>" style="margin-left: -15px; width: 70px;">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
+                <label class="<?php echo $check; ?>">Product</label>
                 <select class="form-control">
                     <?php
                     if(isset($_GET['id'])) {
@@ -993,6 +1035,7 @@
                 </select>
             </div>
             <div class="col-md-4">
+                <label class="<?php echo $check; ?>">Component</label>
                 <select class="form-control">
                     <?php
                     if(isset($_GET['id'])) {
@@ -1015,6 +1058,7 @@
                 </select>
             </div>
             <div class="col-md-4">
+                <label class="<?php echo $check; ?>">Coupon</label>
                 <select class="form-control">
                     <?php
                     if(isset($_GET['id'])) {
@@ -1042,29 +1086,37 @@
         </div>
         <div class="row">
             <div class="col-md-6">
+                <label class="<?php echo $check; ?>">CC Masked Number</label>
                 <input type="text" class="form-control" placeholder="Credit Card Masked Number" value="<?php echo $cc_last_four; ?>">
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">CC Exp Month</label>
                 <input type="text" class="form-control" placeholder="CC Expiration Month" value="<?php echo $cc_exp_mm; ?>">
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">CC Exp Year</label>
                 <input type="text" class="form-control" placeholder="CC Expiration Year" value="<?php echo $cc_exp_yy; ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Billing Address</label>
                 <input type="text" class="form-control" placeholder="Billing Address Street" value="<?php echo $bill_address; ?>">
             </div>
             <div class="col-md-3">
+                <label class="<?php echo $check; ?>">Billing City</label>
                 <input type="text" class="form-control" placeholder="Billing City" value="<?php echo $bill_city; ?>">
             </div>
             <div class="col-md-2">
+                <label class="<?php echo $check; ?>">Billing State</label>
                 <input type="text" class="form-control" placeholder="State" value="<?php echo $bill_state; ?>">
             </div>
             <div class="col-md-2">
+                <label class="<?php echo $check; ?>">Billing Zipcode</label>
                 <input type="text" class="form-control" placeholder="Billing Postcode" value="<?php echo $bill_zip; ?>">
             </div>
             <div class="col-md-2">
+                <label class="<?php echo $check; ?>">Billing Country</label>
                 <input type="text" class="form-control" placeholder="Billing Country" value="<?php echo $bill_country; ?>">
             </div>
         </div>

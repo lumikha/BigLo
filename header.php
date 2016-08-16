@@ -23,6 +23,7 @@
     <title>LiLDip</title>
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:1024px) and (min-width:300px)"/>
 
