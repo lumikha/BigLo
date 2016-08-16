@@ -472,13 +472,13 @@
     </style>
 
     <div class="row">
-        <ul class="navtabs nav nav-pills nav-justified">
-            <li id="cust_tab1" class="alter_tab active" onclick="cust_onNavTab1()"><a href=#>Summary</a></li>
-            <li id="cust_tab2"><a href="#" onclick="cust_onNavTab2()">Provisioning</a></li>
-            <li id="cust_tab3" class="alter_tab" onclick="cust_onNavTab3()"><a href="#">Billing</a></li>
-            <li id="cust_tab4"><a href="#" onclick="cust_onNavTab4()">Support</a></li>
-            <li id="cust_tab5" class="alter_tab" onclick="cust_onNavTab5()"><a href="#">Dashboard</a></li>
-            <li id="cust_tab6"><a href="#" onclick="cust_onNavTab6()">Admin</a></li>
+        <ul class="navtabs nav nav-tabs nav-pills nav-justified" id="myTab">
+            <li id="cust_tab1" class="alter_tab"><a href="#summary" data-toggle="tab">Summary</a></li>
+            <li id="cust_tab2"><a href="#provisioning" data-toggle="tab">Provisioning</a></li>
+            <li id="cust_tab3" class="alter_tab"><a href="#billing" data-toggle="tab">Billing</a></li>
+            <li id="cust_tab4"><a href="#support" data-toggle="tab">Support</a></li>
+            <li id="cust_tab5" class="alter_tab"><a href="#dashboard" data-toggle="tab">Dashboard</a></li>
+            <li id="cust_tab6"><a href="#admin" data-toggle="tab">Admin</a></li>
         </ul>
     </div>
     <div class="row">
@@ -494,12 +494,14 @@
         </div>
     </div>
     <div class="row">
-   		 <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
+         <div class="col-xs-1 col-xs-offset-4 col-sm-3 col-sm-offset-5 hidden-md hidden-lg">
                 <button class="btn btn-danger" type="submit">Ticket</button>
          </div>
     </div>
 
+<div class="tab-content">
     <!-- Customer's Account Info -->
+    <div class="tab-pane fade" id="summary">
     <form  action="" method="POST" id="cust_account_form" onsubmit="return checkFields_cust_tab1();">
         <div class="row">
             <input type="text" value="<?php echo $chargifyID; ?>" id="cID" hidden>
@@ -617,7 +619,9 @@
             </div>
         </div>
     </form>
+    </div>
 
+    <div class="tab-pane fade" id="provisioning">
     <form id="cust_provisioning_form" action="" method="POST" style="margin-top: -60px;">
      
         <div class="row">
@@ -946,7 +950,9 @@
             </div>
         </div>
     </form>
+    </div>
 
+    <div class="tab-pane fade" id="billing">
     <form id="cust_billing_form" action="" method="POST" style="margin-top: -60px;">
 
         <div class="row">
@@ -992,7 +998,7 @@
             </div>
             <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
                 <label>DD</label>
-                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left:-15px; width:50px;"">
+                <input type="text" class="form-control" name="bill-d2" value="<?php echo $state_date[2]; ?>" style="margin-left:-15px; width:50px;">
             </div>
             <div class="col-lg-1 col-md-1 col-sm-3 col-xs-3">
                 <label>YYYY</label>
@@ -1117,7 +1123,9 @@
             </div>
         </div>
     </form>
+    </div>
 
+    <div class="tab-pane fade" id="support">
     <form id="cust_support_form" action="" method="POST">
         <div class="row">
             <div class="col-md-12">
@@ -1125,7 +1133,9 @@
             </div>
         </div>
     </form>
+    </div>
 
+    <div class="tab-pane fade" id="dashboard">
     <form id="cust_dashboard_form" action="" method="POST">
         <div class="row">
             <div class="col-md-12">
@@ -1133,7 +1143,9 @@
             </div>
         </div>
     </form>
+    </div>
 
+    <div class="tab-pane fade" id="admin">
     <form id="cust_admin_form" action="" method="POST">
         <div class="row">
             <div class="col-md-12">
@@ -1141,6 +1153,8 @@
             </div>
         </div>
     </form>
+    </div>
+</div>
 <?php
     require "footer.php";
 ?>
