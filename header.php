@@ -23,23 +23,29 @@
     <title>LiLDip</title>
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css"/>
 <link rel="stylesheet" type="text/css" href="css/jquery.tagsinput.css" />
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:1024px) and (min-width:300px)"/>
+
+<link rel="stylesheet" href="style-lg.css"  media="screen and (max-width:1224px) and (min-width:1199px)"/>
+<link rel="stylesheet" href="style-medium.css"  media="screen and (max-width:1200px) and (min-width:992px)"/>
+<link rel="stylesheet" href="style-sm.css"  media="screen and (max-width:991px) and (min-width:768px)"/>
+<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:767px) and (min-width:300px)"/>
 
 
 <body>
-<div class="container-full">
+<div class="container-fluid" style="padding:2em;">
  <div class="row">
-    <div class="col-xs-3 col-md-6"  >
-        
-         <div class="user_opt dropdown">
-            <a href=""><img src="img/lil_dip_logo.png" style="height:100px"></a>
+    <div class="col-xs-10 col-sm-1 col-md-1" >                                       <!--col 1-->
+        <a href=""><img src="img/lil_dip_logo.png"></a>
+     </div>
+        <br><br>
+        <div class="col-sm-7">                                   <!--col 2-->
+         <div class="user_opt dropdown"> 
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
              <p class="hello">Hello <?php echo $fname; ?>!
-                <span class="caret" style="margin-left:0"></span></p>
+                <span class="caret"></span></p>
             </button>
-            <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenu1">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li><a href="#">My Profile</a></li>
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
@@ -49,9 +55,9 @@
         </div>
     </div>
     <?php if(!isset($_SESSION['user_now_db_customer_id'])) { ?>
-  <div class="row">
-    <div class="col-xs-6 col-xs-offset-3 col-md-3">
-        <div ng-app="myapp" id="search_result_view" style="position: absolute;" >
+  
+    <div class="col-sm-4">                                 <!--col 3-->
+        <div ng-app="myapp" id="search_result_view" >
             <div ng-controller="newController">
                 <div id="toggleContainer">
                     <form name="myForm">
@@ -70,18 +76,19 @@
                         </div>
                     </div> 
                 </div>
-            </div>
-        </div>
-    </div>    
+            </div>   
+        </div>    
+    
+    </div>
 </div>
     <?php } ?>
 </div>
 <div class="container">
     <div class="row">
-        <ul class="navtabs nav nav-pills nav-justified" id="myTab">
+        <ul class="navtabs nav nav-pills nav-justified">
         <!--
             <?php 
-            if(isset($_SESSION['user_now_db_ustomer_id'])) { 
+            if(isset($_SESSION['user_now_db_customer_id'])) { 
                 if(basename($_SERVER['PHP_SELF']) == "account.php") { 
                     ?><li id="tab1" class="active"><a href=account>Account</a></li><?php
                 } else {
@@ -108,8 +115,8 @@
         -->
             <?php 
             if(isset($_SESSION['user_now_db_customer_id'])) { ?>
-                <li id="acc_tab1"><a href="#account" data-toggle="tab">Account</a></li>
-                <li id="acc_tab2" class="alter_tab"><a href="#dashboard" data-toggle="tab">Dashboard</a></li>
+                <li id="acc_tab1" class="active"><a href="#" onclick="acc_onNavTab1()">Account</a></li>
+                <li id="acc_tab2" class="alter_tab"><a href="#" onclick="acc_onNavTab2()">Dashboard</a></li>
             <?php } ?>
         </ul>
     </div>

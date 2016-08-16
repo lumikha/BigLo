@@ -68,13 +68,12 @@
 .hello
 {
     font-size: 20px;
-    margin-bottom: 0;
 
+   
+    
 
 
 }
-
-
 
 button
 {
@@ -86,6 +85,7 @@ button
 #search_result_view
 {
     width: 250px;
+   
 
 }
     
@@ -95,4 +95,23 @@ button
 [ng-cloak]
 {
     display: none !important;
+}
+
+img
+{
+    height: 100px;
+    margin-top: -10px;
+}
+
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  background-color: transparent;
+  border-color: transparent;
 }

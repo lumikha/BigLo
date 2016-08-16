@@ -1,9 +1,10 @@
 .container {
     padding-top:2em;
-    width: 70%;
+    width: 350px;
+    
 }
-@media (min-width: 380px) {
-    .container-full {
+@media (max-width: 767px) {
+    .container-fluid {
         padding: 2em;
 
     }
@@ -18,13 +19,28 @@
 
 .hello
 {
-    font-size: 17px;
-     margin-bottom: -5px;
+    font-size:18px;
+    margin-bottom: 20px;
 }
 
 #search_result_view
 {
     width: 90%;
+    margin-bottom: -50px;
+    margin-left: 5%;
+    margin-right: 5%;
+
 
 }
 
+img
+{
+    height: 25%;
+    width: 25%;
+   margin-left: 50%;
+   margin-right: 50%;
+    
+   
+    
+
+}
