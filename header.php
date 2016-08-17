@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="style-lg.css"  media="screen and (max-width:1224px) and (min-width:1199px)"/>
 <link rel="stylesheet" href="style-medium.css"  media="screen and (max-width:1200px) and (min-width:992px)"/>
 <link rel="stylesheet" href="style-sm.css"  media="screen and (max-width:991px) and (min-width:768px)"/>
-<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:767px) and (min-width:300px)"/>
+<link rel="stylesheet" href="style-xs.css"  media="screen and (max-width:767px)"/>
 
 
 <body>
