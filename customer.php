@@ -535,7 +535,7 @@ $check = null;
                 } ?>
                 </select>
             </div>
-            <div class="hidden-xs hidden-sm col-md-1">
+            <div class="hidden-xs hidden-sm col-md-1" >
                 <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
             </div>
         </div>
