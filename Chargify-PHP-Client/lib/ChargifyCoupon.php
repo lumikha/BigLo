@@ -53,4 +53,12 @@ class ChargifyCoupon extends ChargifyBase
 		}
 	    return $this->connector->getCouponByCode($product_family_id, $coupon_code);
 	}
+
+	public function add() {
+        return $this->connector->addCouponToSubscription($this->subscription_id, $this->coupon_code);
+    }
+
+    public function remove() {
+        return $this->connector->removeCouponFromSubscription($this->subscription_id);
+    }
 }?>

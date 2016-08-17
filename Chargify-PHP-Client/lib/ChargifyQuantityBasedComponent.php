@@ -58,12 +58,12 @@ class ChargifyQuantityBasedComponent extends ChargifyBase
 		return $this->connector->createQuantityBasedComponent($subscription_id, $component_id, $this);
 	}
 	
-	public function update($subscription_id, $component_id) {
-		return $this->connector->updateQuantityBasedComponent($subscription_id, $component_id, $this);	
+	public function update() {
+		return $this->connector->updateQuantityBasedComponent($this->id, $this->component_id, $this->quantity);	
 	}
 	
-	public function getAll($subscription_id, $component_id) {
-		return $this->connector->getAllQuantityBasedComponents($subscription_id, $component_id);
+	public function getAll() {
+		return $this->connector->getAllQuantityBasedComponents($this->subscription_id, $this->component_id);
 	}
 
 	public function getAllByProductID($product_family_id) {

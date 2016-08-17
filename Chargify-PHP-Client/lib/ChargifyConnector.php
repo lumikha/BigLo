@@ -329,6 +329,47 @@ class ChargifyConnector
 	    return new ChargifyCoupon($coupon, $this->test_mode);
 	}
 
+	public function requestAddCouponToSubscription($subscription_id, $coupon_code, $format = 'XML') {
+		$extension = strtoupper($format) == 'XML' ? '.xml' : '.json';
+		$base_url = "/subscriptions/{$subscription_id}/add_coupon" . $extension;
+
+		$parameters = "?code=".urlencode($coupon_code);
+
+		$coupon = $this->sendRequest($base_url.$parameters, $format, 'POST');
+		
+		if ($coupon->code == 200) {		
+			return $coupon->response;
+		} elseif ($coupon->code == 422) { 
+			$errors = new SimpleXMLElement($coupon->response);
+			throw new ChargifyValidationException($coupon->code, $errors);  		
+		}		
+	}
+
+	public function addCouponToSubscription($subscription_id, $coupon_code) {
+		$xml = $this->requestAddCouponToSubscription($subscription_id, $coupon_code);
+		$coupon = new SimpleXMLElement($xml);
+		return new ChargifyCoupon($coupon, $this->test_mode);
+	}
+
+	public function requestRemoveCouponFromSubscription($subscription_id, $couponRequest, $format = 'XML') {
+		$extension = strtoupper($format) == 'XML' ? '.xml' : '.json';
+		$base_url = "/subscriptions/{$subscription_id}/remove_coupon" . $extension;
+
+		$coupon = $this->sendRequest($base_url, $format, 'DELETE', $couponRequest);
+	
+		if ($coupon->code == 200) {		
+			return $coupon->response;
+		} elseif ($coupon->code == 422) { 
+			$errors = new SimpleXMLElement($coupon->response);
+			throw new ChargifyValidationException($coupon->code, $errors);  		
+		}
+	}
+
+	public function removeCouponFromSubscription($subscription_id) {
+		$chargify_coupon = new ChargifyCoupon(null, $this->test_mode);
+		return $xml = $this->requestRemoveCouponFromSubscription($subscription_id, $chargify_coupon->getXML());
+	}
+
 	/****************************************************
 	 ************     CREDIT FUNCTIONS     **************
 	 ****************************************************/
@@ -672,8 +713,11 @@ class ChargifyConnector
 		}		
 	}
 	
-	public function updateQuantityBasedComponent($subscription_id, $component_id, $chargify_component) {
-		$xml = $this->requestUpdateQuantityBasedComponent($subscription_id, $component_id, $chargify_component->getXML());
+	public function updateQuantityBasedComponent($subscription_id, $component_id, $quantity) {
+		$chargify_comp = new ChargifyQuantityBasedComponent(null, $this->test_mode);
+		$chargify_comp->allocated_quantity = $quantity;
+
+		$xml = $this->requestUpdateQuantityBasedComponent($subscription_id, $component_id, $chargify_comp->getXML());
 		$component = new SimpleXMLElement($xml);
 		return new ChargifyQuantityBasedComponent($component, $this->test_mode);
 	}
