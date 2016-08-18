@@ -21,6 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <title>LiLDip</title>
+    <link rel="Shortcut icon" href="img/tab_logo.png"/>
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css"/>
