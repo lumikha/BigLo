@@ -733,7 +733,7 @@ $check = null;
             <div class="col-md-12">
                 <div class="form-group">
                   <label for="comment">Keywords:</label></span>
-                  <input type="text" class="tags check-fill" name="k-words" id="k-words" value="<?php echo $keywords; ?>">
+                  <input type="text" class="tags" name="k-words" id="k-words" value="<?php echo $keywords; ?>">
                 </div>
             </div>
         </div>
