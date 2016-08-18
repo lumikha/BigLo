@@ -104,3 +104,65 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
 	}
 	document.onkeydown = CapCom;
 </script>
+
+<script type="text/javascript">
+
+!function ($) {
+
+    "use strict";
+
+    var Progressbar = function (element) {
+        this.$element = $(element);
+    }
+
+    Progressbar.prototype.update = function (value) {
+        var $div = this.$element.find('div');
+        var $span = $div.find('span');
+        $div.attr('aria-valuenow', value);
+        $div.css('width', value + '%');
+        $span.text(value + '% Complete');
+    }
+
+    Progressbar.prototype.finish = function () {
+        this.update(100);
+    }
+
+    Progressbar.prototype.reset = function () {
+        this.update(0);
+    }
+
+    $.fn.progressbar = function (option) {
+        return this.each(function () {
+            var $this = $(this),
+                data = $this.data('jbl.progressbar');
+
+            if (!data) $this.data('jbl.progressbar', (data = new Progressbar(this)));
+            if (typeof option == 'string') data[option]();
+            if (typeof option == 'number') data.update(option);
+        })
+    };
+
+
+    $(function(){ 
+    $(".check-fill").keyup(function(){ 
+        var $fields = $(".check-fill");
+        var count = 0;
+        $fields.each(function(){
+             if($(this).val().length > 0)
+                  count++;
+        });
+        
+        
+         var percentage = Math.floor(count * 100 / $fields.length);
+
+    $(".progress-bar").css("width", percentage + "%");
+    $(".count").text(percentage+"% Complete");
+
+
+    });  
+});
+
+}
+
+(window.jQuery);
+</script>
