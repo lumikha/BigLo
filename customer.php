@@ -535,7 +535,7 @@ $check = null;
                 } ?>
                 </select>
             </div>
-            <div class="hidden-xs hidden-sm col-md-1" >
+            <div class="hidden-xs hidden-sm col-md-1">
                 <a class="btn btn-danger" href="#somewhere_down_the_road_and_no_one_knows">Ticket</a>
             </div>
         </div>
@@ -671,7 +671,7 @@ $check = null;
             </div>
             <div class="col-md-3">
                 <label class="<?php echo $check; ?>">Refund Amount</label>
-                <input type="text" class="form-control" placeholder="Refund Amount">
+                <input type="text" class="form-control check-fill" placeholder="Refund Amount">
             </div>
         </div>
 
@@ -713,17 +713,17 @@ $check = null;
             </div>
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Existing Website</label>
-                <input type="text" class="form-control" name="b-site" placeholder="Existing Website" value="<?php echo $business_website; ?>">
+                <input type="text" class="form-control check-fill" name="b-site" placeholder="Existing Website" value="<?php echo $business_website; ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Primary Email</label>
-                <input type="text" class="form-control" name="b-email" placeholder="Primary Email" value="<?php echo $business_email; ?>">
+                <input type="text" class="form-control check-fill" name="b-email" placeholder="Primary Email" value="<?php echo $business_email; ?>">
             </div>
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Gmail Account</label>
-                <input type="text" class="form-control" name="b-gmail" placeholder="Gmail Account" value="<?php echo $gmail_acc; ?>">
+                <input type="text" class="form-control check-fill" name="b-gmail" placeholder="Gmail Account" value="<?php echo $gmail_acc; ?>">
             </div>
         </div>
         <div class="row">
@@ -733,18 +733,18 @@ $check = null;
             <div class="col-md-12">
                 <div class="form-group">
                   <label for="comment">Keywords:</label></span>
-                  <input class="form-control" type="text" class="tags" name="k-words" id="k-words" value="<?php echo $keywords; ?>"/>
+                  <input type="text" class="tags check-fill" name="k-words" id="k-words" value="<?php echo $keywords; ?>">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
                 <label class="<?php echo $check; ?>">Office Address 1</label>
-                <input type="text" class="form-control" name="b-address1" placeholder="Office Address 1" value="<?php echo $business_address; ?>">
+                <input type="text" class="form-control check-fill" name="b-address1" placeholder="Office Address 1" value="<?php echo $business_address; ?>">
             </div>
             <div class="col-md-5">
                 <label class="<?php echo $check; ?>">Office Address 2</label>
-                <input type="text" class="form-control" name="b-address2" placeholder="Office Address 2" value="<?php echo $business_address_2; ?>">
+                <input type="text" class="form-control check-fill" name="b-address2" placeholder="Office Address 2" value="<?php echo $business_address_2; ?>">
             </div>
             <div class="col-md-2">
             <label class="<?php echo $check; ?>">Post Address?</label>
@@ -768,7 +768,7 @@ $check = null;
         <div class="row">
             <div class="col-md-3">
                 <label class="<?php echo $check; ?>">Office City</label>
-                <input type="text" class="form-control" name="b-city" placeholder="Office City" value="<?php echo $business_city; ?>">
+                <input type="text" class="form-control check-fill" name="b-city" placeholder="Office City" value="<?php echo $business_city; ?>">
             </div>
             <div class="col-md-3">
                 <label class="<?php echo $check; ?>">Office State</label>
@@ -838,59 +838,60 @@ $check = null;
             </div>
             <div class="col-md-3">
                 <label class="<?php echo $check; ?>">Office Zip Code</label>
-                <input type="text" class="form-control" name="b-zip" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
+                <input type="text" class="form-control check-fill" name="b-zip" placeholder="Office Zip Code" value="<?php echo $business_zip; ?>">
             </div>
             <div class="col-md-3">
                 <label class="<?php echo $check; ?>">Office Country</label>
-                <input type="text" class="form-control" name="b-country" placeholder="Office Country" value="<?php echo $business_country; ?>">
+                <input type="text" class="form-control check-fill" name="b-country" placeholder="Office Country" value="<?php echo $business_country; ?>">
             </div>
         </div>
+
             
         <div class="row">
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Hours of Operation</label>
-                <input type="text" class="form-control" name="b-hours" placeholder="Hours Of Operation" value="<?php echo $business_hours; ?>">
+                <input type="text" class="form-control check-fill" name="b-hours" placeholder="Hours Of Operation" value="<?php echo $business_hours; ?>">
             </div>
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Payment Accepted</label>
-                <input type="text" class="form-control" name="payment" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
+                <input type="text" class="form-control check-fill" name="payment" placeholder="Payment Accepted" value="<?php echo $payment_method; ?>">
             </div>
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Special Request</label>
-                <input type="text" class="form-control" name="request" placeholder="Special Request" value="<?php echo $sp_request; ?>">
+                <input type="text" class="form-control check-fill" name="request" placeholder="Special Request" value="<?php echo $sp_request; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Office/Business Phone</label>
-                <input type="text" class="form-control" name="b-phone" placeholder="Office/Business Phone" value="<?php echo $business_phone; ?>">
+                <input type="text" class="form-control check-fill" name="b-phone" placeholder="Office/Business Phone" value="<?php echo $business_phone; ?>">
             </div>
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Alternate Phone</label>
-                <input type="text" class="form-control" name="b-alt-phone" placeholder="Alternate Phone" value="<?php echo $business_alt_phone; ?>">
+                <input type="text" class="form-control check-fill" name="b-alt-phone" placeholder="Alternate Phone" value="<?php echo $business_alt_phone; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Existing Social 1</label>
-                <input type="text" class="form-control" name="b-social1" placeholder="Existing Social 1" value="<?php echo $social1; ?>">
+                <input type="text" class="form-control check-fill" name="b-social1" placeholder="Existing Social 1" value="<?php echo $social1; ?>">
             </div>
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Existing Social 2</label>
-                <input type="text" class="form-control" name="b-social2" placeholder="Existing Social 2" value="<?php echo $social2; ?>">
+                <input type="text" class="form-control check-fill" name="b-social2" placeholder="Existing Social 2" value="<?php echo $social2; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Biglo Website</label>
-                <input type="text" class="form-control" name="biglo-site" placeholder="BigLo Website" value="<?php echo $biglo_site; ?>">
+                <input type="text" class="form-control check-fill" name="biglo-site" placeholder="BigLo Website" value="<?php echo $biglo_site; ?>">
             </div>
             <div class="col-md-6">
                 <label class="<?php echo $check; ?>">Analytical Address</label>
-                <input type="text" class="form-control" name="analyt-add" placeholder="Analytical Address" value="<?php echo $analytical_address; ?>">
+                <input type="text" class="form-control check-fill" name="analyt-add" placeholder="Analytical Address" value="<?php echo $analytical_address; ?>">
             </div>
         </div>
 
@@ -901,30 +902,30 @@ $check = null;
         <div class="row">
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Google Plus</label>
-                <input type="text" class="form-control" name="gplus" placeholder="Google +" value="<?php echo $google_plus; ?>">
+                <input type="text" class="form-control check-fill" name="gplus" placeholder="Google +" value="<?php echo $google_plus; ?>">
             </div>
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Google Maps</label>
-                <input type="text" class="form-control" name="gmap" placeholder="Google Maps" value="<?php echo $google_maps; ?>">
+                <input type="text" class="form-control check-fill" name="gmap" placeholder="Google Maps" value="<?php echo $google_maps; ?>">
             </div>
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Facebook</label>
-                <input type="text" class="form-control" name="fb" placeholder="Facebook" value="<?php echo $facebook; ?>">
+                <input type="text" class="form-control check-fill" name="fb" placeholder="Facebook" value="<?php echo $facebook; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Four Square</label>
-                <input type="text" class="form-control" name="foursq" placeholder="Four Square" value="<?php echo $foursquare; ?>">
+                <input type="text" class="form-control check-fill" name="foursq" placeholder="Four Square" value="<?php echo $foursquare; ?>">
             </div>
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">Twitter</label>
-                <input type="text" class="form-control" name="twit" placeholder="Twitter" value="<?php echo $twitter; ?>">
+                <input type="text" class="form-control check-fill" name="twit" placeholder="Twitter" value="<?php echo $twitter; ?>">
             </div>
             <div class="col-md-4">
                 <label class="<?php echo $check; ?>">LinkedIn</label>
-                <input type="text" class="form-control" name="linkedin" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
+                <input type="text" class="form-control check-fill" name="linkedin" placeholder="LinkedIn" value="<?php echo $linkedin; ?>">
             </div>
             <!--hidden ticket button for medium to large screens-->
              
@@ -947,6 +948,13 @@ $check = null;
             </div>
         </div>
         -->
+        <br><br>
+        <div id="myProgressbar" class="progress">
+            <div id="bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                <span class="count"></span>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-1 col-md-offset-5 col-sm-1 col-sm-offset-5 col-xs-1 col-xs-offset-4">
                 <button class="btn btn-danger" type="submit" name="upd_prov">Update</button>

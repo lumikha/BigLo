@@ -143,8 +143,10 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
     };
 
 
-    $(function(){ 
-    $(".check-fill").keyup(function(){ 
+    $(document).ready(function(){ 
+    	XX();
+    $(".check-fill").keyup(XX); 
+    function XX() {
         var $fields = $(".check-fill");
         var count = 0;
         $fields.each(function(){
@@ -158,8 +160,8 @@ if(isset($_SESSION['user_now_db_customer_id'])) {
     $(".progress-bar").css("width", percentage + "%");
     $(".count").text(percentage+"% Complete");
 
-
-    });  
+}
+     
 });
 
 }
